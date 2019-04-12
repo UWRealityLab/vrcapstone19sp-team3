@@ -44,8 +44,9 @@ body {
 }
 
 .blog-entry {
+    line-height: 1.35em;
     padding-left: 2rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .horizontal-divider {
@@ -69,6 +70,7 @@ body {
 }
 
 .navbar-entry {
+    font-size: 1.3rem;
     display: inline-block;
     padding: 0 1rem;
     color: #ffffff;
@@ -77,4 +79,54 @@ body {
 
 .navbar-entry:hover {
     text-decoration: underline;
+}
+
+.team-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.team-name {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+.mini-horizontal-divider {
+    width: 20%;
+    height: 1px;
+    border-radius: 2px;
+    background-color: #c0b283;
+    margin: 0.3rem 0;
+}
+
+.main-header {
+    font-size: 2rem;
+    text-decoration: underline;
+}
+
+.main-link {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: black;
+    display: block;
+    margin: 1rem 0;
+    padding-left: 1rem;
+}
+
+.main-link:hover {
+    text-decoration: underline;
+}
+
+.deliverable {
+    font-weight: bold;
+}
+
+.deliverable a {
+    font-weight: normal;
+}
+
+.references a {
+    display: block;
+    padding-left: 2rem;
+    /* line-height: 2.0rem; */
 }
