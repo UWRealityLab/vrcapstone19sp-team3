@@ -1,132 +1,138 @@
+@font-face {
+  font-family: "Raleway";
+  src: URL("./fonts/Raleway/Raleway-Regular.ttf") format("truetype");
+}
+
 html {
-    font-family: 'Raleway', sans-serif;
-    height: 100%;
+  font-family: "Raleway", sans-serif;
+  height: 100%;
 }
 
 body {
-    /* background-color: #e8e3d3; */
-    height: 100%;
-    background-color: #e8e3d3;
-    /* background-image: url("https://www.transparenttextures.com/patterns/az-subtle.png"); */
-    /* background-image: url("https://www.transparenttextures.com/patterns/little-pluses.png"); */
-    background-image: url("./little-pluses.png");
+  /* background-color: #e8e3d3; */
+  font-family: "Raleway", sans-serif;
+  height: 100%;
+  background-color: #e8e3d3;
+  /* background-image: url("https://www.transparenttextures.com/patterns/az-subtle.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/little-pluses.png"); */
+  background-image: url("./little-pluses.png");
 }
 
 .wrap {
-    width: 80%;
-    margin: 0 auto;
-    background-color: #f4f4f4;
-    /* border-left: 5px solid #e8e3d3; */
-    /* border-right: 5px solid #e8e3d3; */
-    position: relative;
-    height: 100%;
+  width: 80%;
+  margin: 0 auto;
+  background-color: #f4f4f4;
+  /* border-left: 5px solid #e8e3d3; */
+  /* border-right: 5px solid #e8e3d3; */
+  position: relative;
+  height: 100%;
 }
 
 .inner-wrap {
-    padding: 2rem 3rem 0;
+  padding: 2rem 3rem 0;
 }
 
 .header {
-    position: relative;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 2rem;
-    background-color: #4b2e83;
-    top: 0;
-    right: 0;
-    left: 0;
-    padding: 1rem 2rem;
+  position: relative;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 2rem;
+  background-color: #4b2e83;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 1rem 2rem;
 }
 
 .blog-header {
-    font-size: 2rem;
-    font-weight: bold
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .blog-entry {
-    line-height: 1.35em;
-    padding-left: 2rem;
-    font-size: 1.2rem;
+  line-height: 1.35em;
+  padding-left: 2rem;
+  font-size: 1.2rem;
 }
 
 .horizontal-divider {
-    width: 100%;
-    margin: 0 auto;
-    height: 2px;
-    border-radius: 2px;
-    background-color: #c0b283;
-    margin: 1rem 0;
+  width: 100%;
+  margin: 0 auto;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #c0b283;
+  margin: 1rem 0;
 }
 
 .navbar {
-    text-align: center;
-    float: right;
-    font-size: 1rem;
-    font-weight: normal;
-    vertical-align: middle;
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
+  text-align: center;
+  float: right;
+  font-size: 1rem;
+  font-weight: normal;
+  vertical-align: middle;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 }
 
 .navbar-entry {
-    font-size: 1.3rem;
-    display: inline-block;
-    padding: 0 1rem;
-    color: #ffffff;
-    text-decoration: none;
+  font-size: 1.3rem;
+  display: inline-block;
+  padding: 0 1rem;
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .navbar-entry:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .team-header {
-    font-size: 1.8rem;
-    font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
 .team-name {
-    margin-top: 1rem;
-    font-size: 1.5rem;
+  margin-top: 1rem;
+  font-size: 1.5rem;
 }
 
 .mini-horizontal-divider {
-    width: 20%;
-    height: 1px;
-    border-radius: 2px;
-    background-color: #c0b283;
-    margin: 0.3rem 0;
+  width: 20%;
+  height: 1px;
+  border-radius: 2px;
+  background-color: #c0b283;
+  margin: 0.3rem 0;
 }
 
 .main-header {
-    font-size: 2rem;
-    text-decoration: underline;
+  font-size: 2rem;
+  text-decoration: underline;
 }
 
 .main-link {
-    font-size: 1.5rem;
-    text-decoration: none;
-    color: black;
-    display: block;
-    margin: 1rem 0;
-    padding-left: 1rem;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: black;
+  display: block;
+  margin: 1rem 0;
+  padding-left: 1rem;
 }
 
 .main-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .deliverable {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .deliverable a {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .references a {
-    display: block;
-    padding-left: 2rem;
-    /* line-height: 2.0rem; */
+  display: block;
+  padding-left: 2rem;
+  /* line-height: 2.0rem; */
 }
