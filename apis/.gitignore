@@ -16,3 +16,6 @@
 !*.pdb
 !*.opendb
 arcap.json
+**/obj/
+
+**/.vs/
