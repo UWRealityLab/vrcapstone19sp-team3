@@ -15,8 +15,22 @@ namespace APITests
     {
         static public void Main()
         {
+            string homePath = (Environment.OSVersion.Platform == PlatformID.Unix ||
+                   Environment.OSVersion.Platform == PlatformID.MacOSX)
+                ? Environment.GetEnvironmentVariable("HOME")
+                : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+            //Console.WriteLine(homePath + "\\Downloads\\hellocanuhearmeplssendhelp.mp3");
+            //Console.WriteLine(homePath + "\\Downloads\\hellocanuhearmeplssendhelp.mp3");
+            fromAudioFile(homePath + "\\Downloads\\hellocanuhearmeplssendhelp.flac");
+            fromAudioFile(homePath + "\\Downloads\\peter.flac");
+            //fromAudioFile(homePath + "\\Downloads\\blueapple.mp3");
+            //fromAudioFile(homePath + "\\Downloads\\brooklyn.flac");
+            Console.WriteLine("part 2");
             var task = StreamingMicRecognizeAsync(10);
+            Console.WriteLine("part 4");
             var res = task.Result;
+            Console.WriteLine("part 5");
+            var original = "gs://cloud-samples-tests/speech/brooklyn.flac";
         }
 
         static public SpeechClient getSpeechClient()
@@ -31,26 +45,35 @@ namespace APITests
             return SpeechClient.Create(channel);
         }
 
-        static public void fromAudioFile()
+        static public void fromAudioFile(String url)
         {
             var speech = getSpeechClient();
             var config = new RecognitionConfig
             {
                 Encoding = RecognitionConfig.Types.AudioEncoding.Flac,
-                SampleRateHertz = 16000,
+                //Encoding = RecognitionConfig.Types.AudioEncoding.FLAC,
+                //SampleRateHertz = 16000,
                 LanguageCode = LanguageCodes.English.UnitedStates
             };
-            var audio = RecognitionAudio.FromStorageUri("gs://cloud-samples-tests/speech/brooklyn.flac");
+            //var audio = RecognitionAudio.FromStorageUri(url);
+            Console.WriteLine("Gettingfrom url" + url);
+            var audio = RecognitionAudio.FromFile(url);
 
+            Console.WriteLine("calling recognize");
             var response = speech.Recognize(config, audio);
+            Console.WriteLine("finished recognize");
+            Console.WriteLine(response.ToString());
 
             foreach (var result in response.Results)
             {
+                Console.WriteLine("res");
                 foreach (var alternative in result.Alternatives)
                 {
+                    Console.WriteLine("alt");
                     Console.WriteLine(alternative.Transcript);
                 }
             }
+            Console.WriteLine("done");
         }
 
         static async Task<object> StreamingMicRecognizeAsync(int seconds)
