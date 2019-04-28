@@ -1,0 +1,8 @@
+<manifest xmlns:ml="magicleap" ml:developer_id="72f18cf4-fd73-4038-83cc-1aba4b845fcb" ml:package="com.vrteam3.chatassist" ml:version_code="1" ml:version_name="">
+  <application ml:min_api_level="2" ml:sdk_version="1.0" ml:visible_name="ChatAssist">
+    <uses-privilege ml:name="LowLatencyLightwear" />
+    <component ml:binary_name="bin/Player.elf" ml:name=".fullscreen" ml:type="Fullscreen" ml:visible_name="ChatAssist">
+      <icon ml:model_folder="Icon/Model" ml:portal_folder="Icon/Portal" />
+    </component>
+  </application>
+</manifest>
