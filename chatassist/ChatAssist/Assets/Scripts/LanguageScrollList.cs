@@ -6,16 +6,21 @@ using System.IO;
 
 public class LanguageScrollList : MonoBehaviour
 {
+    public List<LanguageToggle> toggles = new List<LanguageToggle>();
     private List<System.String> languageList = new List<System.String>();
     public Transform contentPanel;
     public GameObject prefab;
     public ToggleGroup toggleGroup;
+    public Text languageDisplay;
+    private string language;
 
     // Start is called before the first frame update
     void Start()
     {
         populateList();
         AddButtons();
+        language = "English";
+        languageDisplay.text = language;
     }
 
     private void populateList()
@@ -36,19 +41,22 @@ public class LanguageScrollList : MonoBehaviour
         {
             // Make object
             GameObject newBtn = (GameObject)GameObject.Instantiate(prefab, contentPanel);
-            newBtn.SetActive(true);
-            Debug.Log(languageList[i]);
-            Toggle tog = newBtn.GetComponent<Toggle>();
-            tog.name = languageList[i] + "Toggle";
-            tog.GetComponentInChildren<Text>().text = languageList[i];
-            tog.group = toggleGroup;
-            //Debug.Log(t);
-            //
-            //newBtn.GetComponentInChildren<Text>().text = languageList[i];
-            //newBtn.GetComponentInChildren<Text>().text = languageList[i];
+            //newBtn.SetActive(true);
+            LanguageToggle lt = newBtn.GetComponent<LanguageToggle>();
+            lt.SetUp(languageList[i], toggleGroup, this);
+            toggles.Add(lt);
         }
         Debug.Log("Added buttons");
     }
 
+    public void SetLanguage(string l)
+    {
+        language = l;
+        languageDisplay.text = l;
+    }
     
+    public string GetLanguage()
+    {
+        return language;
+    }
 }
