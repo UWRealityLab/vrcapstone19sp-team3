@@ -49,10 +49,12 @@ public class LanguageScrollList : MonoBehaviour
         Debug.Log("Added buttons");
     }
 
-    public void SetLanguage(string l)
+    public void SetLanguage(int index)
     {
-        language = l;
-        languageDisplay.text = l;
+        language = languageList[index];
+        languageDisplay.text = languageList[index];
+        toggles[index].toggle.isOn = true;
+
     }
     
     public string GetLanguage()

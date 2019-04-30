@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 
 namespace MagicLeap
@@ -12,21 +13,25 @@ namespace MagicLeap
         //Needs access to list of things from 
         public LanguageScrollList lsl;
         //public ChatScrollList csl;
+        public CanvasGroup languageMenuOpacity;
+        public CanvasGroup chatLogOpacity;
 
-
+        public EdgeScroll languageScroll;
         #endregion
 
         #region Private Variables
         private ControllerConnectionHandler _controllerConnectionHandler;
 
         private int _lastLEDindex = -1;
-        private int leftIndex = 0;
+        public float leftIndex = 0;
         private bool languageSelection = true;
-        private int rightIndex = 0;
+        public int rightIndex = 0;
+        private LanguageToggle curr;
         #endregion
 
         #region Const Variables
         private const float TRIGGER_DOWN_MIN_VALUE = 0.2f;
+        private const float SCROLL_LENGTH = 0.1f;
 
         // UpdateLED - Constants
         private const float HALF_HOUR_IN_DEGREES = 15.0f;
@@ -45,6 +50,8 @@ namespace MagicLeap
             MLInput.OnControllerButtonUp += HandleOnButtonUp;
             MLInput.OnControllerButtonDown += HandleOnButtonDown;
             MLInput.OnTriggerDown += HandleOnTriggerDown;
+            curr = lsl.toggles[(int)leftIndex];
+            curr.languageName.fontStyle = FontStyle.Bold;
         }
 
         // Update is called once per frame
@@ -69,22 +76,39 @@ namespace MagicLeap
                     // CounterClockwise = 8
                     // controller.TouchpadGesture.Direction
                     MLInputControllerTouchpadGestureDirection dir = controller.TouchpadGesture.Direction;
+                    Debug.Log("active controller: " + controller.Touch1Active);
+                    Debug.Log(leftIndex);
+                    Debug.Log("language selection: " + languageSelection);
+
+                    // TODO: Make the fade away nicer
+                    if (!languageSelection) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.0f ? languageMenuOpacity.alpha - 0.01f : 0.0f;
+                    else languageMenuOpacity.alpha += 0.1f;
+
+                    if (!controller.Touch1Active) return;
                     if (dir == MLInputControllerTouchpadGestureDirection.Down)
                     {
                         // Move down list
-                        if (languageSelection && leftIndex > 0) leftIndex--;
+                        curr.languageName.fontStyle = FontStyle.Normal;
+                        if (languageSelection && leftIndex < lsl.toggles.Count - 1) leftIndex += SCROLL_LENGTH;
+                        curr = lsl.toggles[(int)leftIndex];
+                        curr.languageName.fontStyle = FontStyle.Bold;
                         //if (!languageSelection && rightIndex > 0) rightIndex--;
                         // unbold previous (current) text, update current text, bold current text. 
                         // If it goes above or below the screen, need to update the LanguageScrollList view thing to capture the change
+                        //ShowInLanguageScroll((int)leftIndex);
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Up)
                     {
                         // move up list
-                        if (languageSelection && leftIndex < lsl.toggles.Count - 1) leftIndex++;
+                        curr.languageName.fontStyle = FontStyle.Normal;
+                        if (languageSelection && leftIndex > 0) leftIndex -= SCROLL_LENGTH;
+                        curr = lsl.toggles[(int)leftIndex];
+                        curr.languageName.fontStyle = FontStyle.Bold;
                         // if (!languageSelection && rightIndex < csl.log.Count - 1) rightIndex++;
                         // unbold previous (current) text, update current text, bold current text. 
                         // If it goes above or below the screen, need to update the LanguageScrollList view thing to capture the change
                         // Maybe need scrollbar incrementer 
+                        //ShowInLanguageScroll((int)leftIndex);
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Left)
                     {
@@ -102,6 +126,18 @@ namespace MagicLeap
             }
         }
 
+        /// <summary>
+        /// Stop input api and unregister callbacks.
+        /// </summary>
+        void OnDestroy()
+        {
+            if (MLInput.IsStarted)
+            {
+                MLInput.OnTriggerDown -= HandleOnTriggerDown;
+                MLInput.OnControllerButtonDown -= HandleOnButtonDown;
+                MLInput.OnControllerButtonUp -= HandleOnButtonUp;
+            }
+        }
 
         /// <summary>
         /// Updates LED on the physical controller based on touch pad input.
@@ -191,6 +227,7 @@ namespace MagicLeap
                 // TODO: CHANGE INTENSITY to just be a slight buzz.
                 MLInputControllerFeedbackIntensity intensity = (MLInputControllerFeedbackIntensity)((int)(value * 2.0f));
                 controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.Buzz, intensity);
+                if (languageSelection) lsl.SetLanguage((int)leftIndex);
             }
         }
         #endregion

@@ -13,9 +13,9 @@ public class LanguageToggle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        toggle.onValueChanged.AddListener(delegate {
-            ToggleValueChanged();
-        });
+//        toggle.onValueChanged.AddListener(delegate {
+//            ToggleValueChanged();
+//        });
 
     }
 
@@ -32,11 +32,11 @@ public class LanguageToggle : MonoBehaviour
         }
     }
 
-    public void ToggleValueChanged()
-    {
-        if (toggle.isOn)
-        {
-            scrollList.SetLanguage(languageName.text);
-        }
-    }
+//    public void ToggleValueChanged()
+//    {
+//        if (toggle.isOn)
+//        {
+//            scrollList.SetLanguage(languageName.text);
+//        }
+//    }
 }
