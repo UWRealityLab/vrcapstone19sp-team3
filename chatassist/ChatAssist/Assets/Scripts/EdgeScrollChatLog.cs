@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 // Following: https://forum.unity.com/threads/how-to-position-scrollrect-to-another-item.268794/
 [RequireComponent(typeof(ScrollRect))]
-public class EdgeScroll : MonoBehaviour
+public class EdgeScrollChatLog : MonoBehaviour
 {
     public ScrollRect scrollRect;
     public RectTransform rectTransform;
     public RectTransform contentRectTransform;
     RectTransform selectedRectTransform;
     public MagicLeap.ControllerSelection contSelect;
-    public LanguageScrollList lsl;
+    public ChatList cl;
     public float scrollSpeed = 10f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -29,8 +29,9 @@ public class EdgeScroll : MonoBehaviour
 
     void UpdateScrollToSelected()
     {
-        int index = (int)contSelect.leftIndex;
-        selectedRectTransform = lsl.toggles[index].GetComponent<RectTransform>();
+        if (cl.list == null || cl.list.Count == 0 || contSelect.rightIndex < 0) return;
+        int index = (int)contSelect.rightIndex;
+        selectedRectTransform = cl.list[index].GetComponent<RectTransform>();
         Vector3 selectedDifference = rectTransform.localPosition - selectedRectTransform.localPosition;
         float contentHeightDifference = (contentRectTransform.rect.height - rectTransform.rect.height);
         float selectedPosition = (contentRectTransform.rect.height - selectedDifference.y);

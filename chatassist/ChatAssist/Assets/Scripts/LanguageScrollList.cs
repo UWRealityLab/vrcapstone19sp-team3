@@ -31,12 +31,12 @@ public class LanguageScrollList : MonoBehaviour
             languageList.Add(stream.ReadLine());
         }
         stream.Close();
-        Debug.Log(languageList.Count);
+        //Debug.Log(languageList.Count);
     }
     
     private void AddButtons()
     {
-        Debug.Log("Adding buttons");
+        //Debug.Log("Adding buttons");
         for (int i = 0; i < languageList.Count; i++)
         {
             // Make object
@@ -46,7 +46,7 @@ public class LanguageScrollList : MonoBehaviour
             lt.SetUp(languageList[i], toggleGroup, this);
             toggles.Add(lt);
         }
-        Debug.Log("Added buttons");
+        //Debug.Log("Added buttons");
     }
 
     public void SetLanguage(int index)

@@ -12,26 +12,27 @@ namespace MagicLeap
         #region Public Variables
         //Needs access to list of things from 
         public LanguageScrollList lsl;
-        //public ChatScrollList csl;
+        public ChatList cl;
         public CanvasGroup languageMenuOpacity;
         public CanvasGroup chatLogOpacity;
 
-        public EdgeScroll languageScroll;
         #endregion
 
         #region Private Variables
         private ControllerConnectionHandler _controllerConnectionHandler;
 
         private int _lastLEDindex = -1;
-        public float leftIndex = 0;
-        private bool languageSelection = true;
-        public int rightIndex = 0;
-        private LanguageToggle curr;
+        public float leftIndex;
+        private float selection;
+        public float rightIndex = 0;
+        private LanguageToggle currTog;
+        private Text currText;
         #endregion
 
         #region Const Variables
-        private const float TRIGGER_DOWN_MIN_VALUE = 0.2f;
-        private const float SCROLL_LENGTH = 0.1f;
+        private const float TRIGGER_DOWN_MIN_VALUE = 0.4f;
+        // TODO: Change this to make the scroll easier to use;
+        private const float SCROLL_LENGTH = 0.2f;
 
         // UpdateLED - Constants
         private const float HALF_HOUR_IN_DEGREES = 15.0f;
@@ -40,18 +41,21 @@ namespace MagicLeap
         private const int MIN_LED_INDEX = (int)(MLInputControllerFeedbackPatternLED.Clock12);
         private const int MAX_LED_INDEX = (int)(MLInputControllerFeedbackPatternLED.Clock6And12);
         private const int LED_INDEX_DELTA = MAX_LED_INDEX - MIN_LED_INDEX;
+        bool reset = true;
         #endregion
 
         // Start is called before the first frame update
         void Start()
         {
             _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
-
             MLInput.OnControllerButtonUp += HandleOnButtonUp;
             MLInput.OnControllerButtonDown += HandleOnButtonDown;
             MLInput.OnTriggerDown += HandleOnTriggerDown;
-            curr = lsl.toggles[(int)leftIndex];
-            curr.languageName.fontStyle = FontStyle.Bold;
+            currText = null;
+            currTog = lsl.toggles[(int)leftIndex]; // TODO: Possibly change this so that it isn't 0 initially;
+            currTog.languageName.fontStyle = FontStyle.Bold;
+            selection = 0.0f;
+            leftIndex = 24.0f;
         }
 
         // Update is called once per frame
@@ -76,53 +80,86 @@ namespace MagicLeap
                     // CounterClockwise = 8
                     // controller.TouchpadGesture.Direction
                     MLInputControllerTouchpadGestureDirection dir = controller.TouchpadGesture.Direction;
-                    Debug.Log("active controller: " + controller.Touch1Active);
-                    Debug.Log(leftIndex);
-                    Debug.Log("language selection: " + languageSelection);
+                    //Debug.Log("active controller: " + controller.Touch1Active);
 
                     // TODO: Make the fade away nicer
-                    if (!languageSelection) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.0f ? languageMenuOpacity.alpha - 0.01f : 0.0f;
+                    if (selection > -0.5f) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.0f ? languageMenuOpacity.alpha - 0.01f : 0.0f;
                     else languageMenuOpacity.alpha += 0.1f;
 
+                    if (selection < 0.5f) chatLogOpacity.alpha = chatLogOpacity.alpha > 0.0f ? chatLogOpacity.alpha - 0.01f : 0.0f;
+                    else chatLogOpacity.alpha += 0.1f;
+                    //Debug.Log(selection);
                     if (!controller.Touch1Active) return;
                     if (dir == MLInputControllerTouchpadGestureDirection.Down)
                     {
                         // Move down list
-                        curr.languageName.fontStyle = FontStyle.Normal;
-                        if (languageSelection && leftIndex < lsl.toggles.Count - 1) leftIndex += SCROLL_LENGTH;
-                        curr = lsl.toggles[(int)leftIndex];
-                        curr.languageName.fontStyle = FontStyle.Bold;
+                        if (selection < -0.5f) {
+                            currTog.languageName.fontStyle = FontStyle.Normal;
+                            if (leftIndex + SCROLL_LENGTH < lsl.toggles.Count) leftIndex += SCROLL_LENGTH;
+                            currTog = lsl.toggles[(int)leftIndex];
+                            currTog.languageName.fontStyle = FontStyle.Bold;
+                        }
+
                         //if (!languageSelection && rightIndex > 0) rightIndex--;
-                        // unbold previous (current) text, update current text, bold current text. 
-                        // If it goes above or below the screen, need to update the LanguageScrollList view thing to capture the change
                         //ShowInLanguageScroll((int)leftIndex);
+                        if (selection > 0.5f)
+                        {
+                            if (currText != null) currText.fontStyle = FontStyle.Normal;
+                            if (rightIndex + SCROLL_LENGTH < cl.list.Count) rightIndex += SCROLL_LENGTH;
+                            if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
+                            if (currText != null) currText.fontStyle = FontStyle.Bold;
+                        }
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Up)
                     {
                         // move up list
-                        curr.languageName.fontStyle = FontStyle.Normal;
-                        if (languageSelection && leftIndex > 0) leftIndex -= SCROLL_LENGTH;
-                        curr = lsl.toggles[(int)leftIndex];
-                        curr.languageName.fontStyle = FontStyle.Bold;
+                        if (selection < -0.5f)
+                        {
+                            currTog.languageName.fontStyle = FontStyle.Normal;
+                            if (leftIndex > 0) leftIndex -= SCROLL_LENGTH;
+                            currTog = lsl.toggles[(int)leftIndex];
+                            currTog.languageName.fontStyle = FontStyle.Bold;
+                        }
                         // if (!languageSelection && rightIndex < csl.log.Count - 1) rightIndex++;
-                        // unbold previous (current) text, update current text, bold current text. 
-                        // If it goes above or below the screen, need to update the LanguageScrollList view thing to capture the change
                         // Maybe need scrollbar incrementer 
                         //ShowInLanguageScroll((int)leftIndex);
+                        if (selection > 0.5f)
+                        {
+                            if (currText != null) currText.fontStyle = FontStyle.Normal;
+                            if (rightIndex > 0) rightIndex -= SCROLL_LENGTH;
+                            if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
+                            if (currText != null) currText.fontStyle = FontStyle.Bold;
+                        }
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Left)
                     {
                         // move to left menu
                         // TODO: Maybe check for two consecutive lefts or rights before switching
-                        if (!languageSelection) languageSelection = true;
+                        if (selection > -1.0f) selection -= 0.1f;
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Right)
                     {
                         // move to right menu
-                        if (languageSelection) languageSelection = false;
+                        if (selection < 1.0f) selection += 0.1f;
+                        else if (selection + 0.1f > 1.0f)
+                        {
+                            if (currText != null) currText.fontStyle = FontStyle.Normal;
+                            if (rightIndex > 0 && (int)rightIndex < cl.list.Count)
+                            {
+                                rightIndex = cl.list.Count - 0.5f;
+                                currText = cl.list[(int)rightIndex];
+                            }
+                            if (currText != null) currText.fontStyle = FontStyle.Bold;
+                            selection = 0.6f;
+                        }
                     }
-                    
+
                 }
+            }
+            if (reset)
+            {
+                leftIndex = 21.0f;
+                reset = false;
             }
         }
 
@@ -219,6 +256,7 @@ namespace MagicLeap
         /// </summary>
         /// <param name="controller_id">The id of the controller.</param>
         /// <param name="value">The value of the trigger button.</param>
+        int count = 0;
         private void HandleOnTriggerDown(byte controllerId, float value)
         {
             MLInputController controller = _controllerConnectionHandler.ConnectedController;
@@ -227,8 +265,21 @@ namespace MagicLeap
                 // TODO: CHANGE INTENSITY to just be a slight buzz.
                 MLInputControllerFeedbackIntensity intensity = (MLInputControllerFeedbackIntensity)((int)(value * 2.0f));
                 controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.Buzz, intensity);
-                if (languageSelection) lsl.SetLanguage((int)leftIndex);
+                if (selection < -0.5f) lsl.SetLanguage((int)leftIndex);
+                if (selection > 0.5f) addText(count++ + "");
             }
+        }
+
+        private void addText(string text)
+        {
+            cl.AddChatBox(text);
+            if ((int)rightIndex == cl.list.Count - 2) rightIndex++;
+            if (currText != null) currText.fontStyle = FontStyle.Normal;
+            if (rightIndex > 0 && (int)rightIndex < cl.list.Count)
+            {
+                currText = cl.list[(int)rightIndex];
+            }
+            if (currText != null) currText.fontStyle = FontStyle.Bold;
         }
         #endregion
     }
