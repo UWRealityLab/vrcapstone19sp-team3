@@ -25,12 +25,11 @@ public class PanelGen : MonoBehaviour
         speechToTextInstantiations[2] = Instantiate(original: speechToTextPanel, new Vector3(0, 0, 100), Quaternion.identity);
         speechToTextInstantiations[3] = Instantiate(original: speechToTextPanel, new Vector3(0, 0, -100), Quaternion.identity);
 
-        /*
+        
         for (int i = 0; i < 4; i++)
         {
-            speechToTextInstantiations[i] = Instantiate(original: speechToTextPanel, new Vector3(100 * (i % 2 - 1), 0, 100 * ((i + 1) % 2 - 1)), Quaternion.identity);
         }
-        */
+        
     }
 
     // Update is called once per frame
@@ -45,6 +44,7 @@ public class PanelGen : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 speechToTextInstantiations[i].transform.LookAt(m_Camera.transform);
+                speechToTextInstantiations[i].transform.RotateAround(speechToTextInstantiations[i].transform.position, speechToTextInstantiations[i].transform.up, 180f);
             }
             count++;
         }
