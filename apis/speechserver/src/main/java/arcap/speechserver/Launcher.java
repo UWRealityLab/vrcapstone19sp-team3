@@ -20,7 +20,7 @@ import java.util.Scanner;
 public class Launcher {
 
     public static void main(String[] args) throws IOException {
-//        request("./brooklyn.flac");
+        request("./brooklyn.flac");
         new Thread(() -> {
             Scanner scan = new Scanner(System.in);
             while (scan.hasNextLine()) {

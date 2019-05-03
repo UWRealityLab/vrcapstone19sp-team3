@@ -43,40 +43,121 @@
           Deliverable: Demo as seen below
         </div>
         <p>
-          <strong>Andrew:</strong><br/>
+          <span style="font-size: 1.3em"><strong>Andrew:</strong></span><br />
+          The code for this work is in the _____
         </p>
         <p>
-          <strong>James:</strong><br/>
+          <span style="font-size: 1.3em"><strong>James:</strong></span><br />
+          The code for this work is in the _____
         </p>
         <p>
-          <strong>Ron and Laurissa:</strong><br/>
-          This week, we had a number of technical challenges which took a long time to figure out, but managed to come up with and build a functional workaround (and plan for next steps) after understanding what the problems were. We continued to work together on this part, since our work required a lot of reading various documentation, finding solutions to obscure problems, and choosing the correct libraries to use, that was more effective with two people searching and discussing design decisions.
-          Specifically though, although we sat and wrote all the code in person together, 
+          <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
+          This week, we had a number of technical challenges which took a long time to figure out, but managed to come
+          up with and build a functional workaround (and plan for next steps) after understanding what the problems
+          were. We continued to work together on this part, since our work required a lot of reading various
+          documentation, finding solutions to obscure problems, and choosing the correct libraries to use, that was more
+          effective with two people searching and discussing design decisions.
+          <br />
+          Specifically though, although we sat and wrote all the code in person together so we both wrote code for both
+          parts, we can roughly ascribe the C#/Unity-side stuff to Laurissa, and the Java WebSocket server and Google
+          Cloud Platform (GCP) API setup to Ron.
+          <br />
+          Now we will discuss the various challenges we had in more detail, and the end results we were able to produce.
         </p>
         <p>
-          <strong>Running Google Cloud Platform code on MagicLeap / Unity</strong>
-        </p>
-
-          At first, we were having some trouble with connecting the Google Speech-To-Text API with Unity. We found out
-          that since Unity runs an old version
-          of Mono which is a cross-platform of C#, it is not compatible with any of the APIs. We considered using the
-          AWS API instead since it has
-          a Unity package but we found out that Unity did not support the Speech-To-Text API. We tried copying the C#
-          package to Unity but it sometimes
-          regenerates the VS solution which clears out everything. We got it to keep the code using a custom nuget
-          config but it still doesn't compile
-          because of incompatibility. Therefore, we have a workaround which is using a server-based approach so that it
-          connects to a hosted server
-          to handle the speech part. We found that this approach is actually more applicable in a real-world situation
-          because if we send the data to
-          the API directly from the application, there might be security issues. We have decided to use websockets
-          because they are streaming sockets
-          but we found out that they are not supported for native unity. We found a solution which is using a library,
-          the websocket-sharp, which
-          is supported in the most updated version of Magic Leap (Lumin SDK 0.20).
+          <strong>Running GCP code on MagicLeap / Unity</strong>
         </p>
         <p>
-          Our current plan for next week is
+          As a reminder, last week we wrote working API calls to GCP in a generic C# solution in Visual Studio. This
+          week, we found out that just having C# code does not mean it'll run on Unity. Unity actually runs Mono, a
+          cross-platform version of C#, whereas Visual Studio uses Visual C#, which is *slightly* different.
+          Unfortunately, these differences are enough to make it really difficult to run arbitrary C# libraries on
+          Unity.
+          <br />
+          Basically, things do not compile out of the box. It's possible to make it work, but pretty complicated. We
+          tried
+          a variety of approaches. For example, we tried just copying the GCP packages over to Packages in the Unity
+          project, but it turns out that you need to make the library you want into a Unity package, which also means
+          bundling all its dependencies. Otherwise, Unity may occasionally clear out the Packages folder on its own as
+          it regenerates the solution. We also tried using NuGet with Unity, but couldn't get the configurations to
+          work. In the meantime, we also found out that the MagicLeap does not necessarily support the C# APIs used in
+          the GCP codebase.
+          <br />
+          At one point we also looked at the Amazon AWS API. Unfortunately, their Unity-specific API does not support
+          speech-to-text, so we would probably run into the same issues trying to use their .NET API.
+          <br />
+          We decided at this point that while we could invest a lot more time (already took us many hours to exhaust the
+          different approaches) in getting GCP queries to run on MagicLeap by building it as a Unity package, it might
+          make sense to have a standalone server handling those queries. This design choice also makes sense from a
+          realistic perspective: consumer apps will typically not make API calls directly, since that would involve
+          exposing the private API key to the client. Instead, most apps that use cloud APIs will send requests from
+          clients to a hosted server and then run the actual queries through that server. So, it's totally reasonable
+          for us to follow a similar approach.
+          <br />
+          Here is what we are envisioning now <strong>(we worked out this design as a team of 4,</strong> Ron made it in
+          Powerpoint):
+          <br />
+          <img src="./design.png" />
+          <br />
+          <strong>Conclusion:</strong> GCP code is hard to run on MagicLeap. Instead, we've decided to go with a
+          server-based approach.
+        </p>
+        <p>
+          <strong>Setting up the client and server</strong>
+        </p>
+        <p>
+          We decided to use WebSockets to handle client-server connections, since they seem appropriate for the
+          long-held socket connections that we want to have for constantly displaying text.
+          <br />
+          Once again, WebSockets do not exist in native Unity code. Unity has networking code, but it does not play too
+          well with non-Unity servers. We looked around at various libraries, and found that MagicLeap actually didn't
+          support WebSockets at all until recently - a couple months ago - in the Lumin SDK 0.20 version that we're
+          using. We found that websocket-sharp seems to suit our purposes and was confirmed to work on MagicLeap.
+          <br />
+          To get the library to be on Unity, we had to build it as a DLL since there is no prebuilt solution for
+          Windows, which we are developing on. This meant we had to set up the MonoDevelop IDE, since websocket-sharp
+          was written in Mono (which is why it plays well with Unity). After that, we were able to build a DLL file
+          containing the library, and we put it in Assets/Plugins in our Unity project.
+          <br />
+          Once we had the DLL file working, it was just a couple of lines to get a working WebSocket client in
+          Unity/MagicLeap that would connect to a WebSocket server and be able to send and receive messages.
+          <br />
+          We then put together a WebSocket server. We decided to use Java for this, since this is the language we're
+          most familiar with since we will need to write some more networking code in the near future. We also had to
+          rewrite the code for using the GCP speech-to-text API in Java.
+          <br />
+          At this point, we have a fully functioning connection between the MagicLeap and our server. The MagicLeap can
+          send arbitrary binary strings to the server, and the server can respond with a binary string. This covers all
+          the networking functionality we'll need betwen the MagicLeap and non-MagicLeap things.
+          <br />
+        </p>
+        <p>
+          <strong>Integrating our code</strong>
+        </p>
+        <p>
+          We worked together as a team of 4 for this part. Basically, we've now tied our code together so that the MagicLeap is able to show arbitrary text sent to it from the server. For the sake of this mini demo we also wrote some code on our server to arbitrarily change the text to a user input, although that functionality isn't actually needed since the microphone clients will update the server with text data.
+          <br />
+          Here is a video showing what our project now looks like:
+          <br />
+        </p>
+        <p>
+          <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
+        </p>
+        <p>
+          We will continue to integrate our code for our demo on Thursday. Specifically...
+          <br />
+          Ron and Laurissa will:
+          <ul>
+            <li>Get the streaming speech-to-text API to work (fairly complex, streams are tough to work with)</li>
+            <li>Use a microphone with the streaming API</li>
+            <li>Write the microphone client and make it forward data to the server</li>
+            <li>Make the server send data to the MagicLeap in a structured fashion</li>
+            <li>Update the MagicLeap / Unity code to accept text updates in a structured fashion</li>
+          </ul>
+          Andrew and James will:
+          <ul>
+            <li>Figure out anchoring</li>
+          </ul>
         </p>
       </div>
 

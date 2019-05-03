@@ -148,3 +148,11 @@ body {
   height: 70vh;
   width: 100%;
 }
+
+br {
+  margin-bottom: 1rem;
+}
+
+p {
+  line-height: 1.3rem;
+}
