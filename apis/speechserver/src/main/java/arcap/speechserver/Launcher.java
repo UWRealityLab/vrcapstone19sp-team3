@@ -15,23 +15,34 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
 
 public class Launcher {
 
     public static void main(String[] args) throws IOException {
-        request("./brooklyn.flac");
+//        request("./brooklyn.flac");
+        new Thread(() -> {
+            Scanner scan = new Scanner(System.in);
+            while (scan.hasNextLine()) {
+                String s = scan.nextLine();
+                System.out.println(s);
+                server.broadcast(s);
+            }
+        }).start();
         startServer();
     }
+
+    static WebSocketServer server;
 
     public static void startServer() {
         String host = "localhost";
         int port = 8887;
 
-        WebSocketServer server = new Server(new InetSocketAddress(host, port));
+        server = new Server(new InetSocketAddress(host, port));
         server.run();
     }
 
-    public static void request(String fileName) throws IOException {
+    public static String request(String fileName) throws IOException {
         FileInputStream credentialsStream = new FileInputStream("./arcap.json");
         GoogleCredentials credentials = GoogleCredentials.fromStream(credentialsStream);
         FixedCredentialsProvider credentialsProvider = FixedCredentialsProvider.create(credentials);
@@ -52,8 +63,8 @@ public class Launcher {
 
             // Builds the sync recognize request
             RecognitionConfig config = RecognitionConfig.newBuilder()
-                    .setEncoding(RecognitionConfig.AudioEncoding.FLAC)
-                    .setSampleRateHertz(16000)
+//                    .setEncoding(RecognitionConfig.AudioEncoding.FLAC)
+//                    .setSampleRateHertz(16000)
                     .setLanguageCode("en-US")
                     .build();
             RecognitionAudio audio = RecognitionAudio.newBuilder()
@@ -68,11 +79,14 @@ public class Launcher {
                 // There can be several alternative transcripts for a given chunk of speech. Just use the
                 // first (most likely) one here.
                 SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
-                System.out.printf("Transcription: %s%n", alternative.getTranscript());
+                String s = alternative.getTranscript();
+                System.out.printf("Transcription: %s%n", s);
+                return s;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "@transcription_failed@";
     }
 
 }

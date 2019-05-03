@@ -4,10 +4,12 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 
 public class Server extends WebSocketServer {
+
     public Server(InetSocketAddress address) {
         super(address);
     }
@@ -27,6 +29,12 @@ public class Server extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         System.out.println("received message from " + conn.getRemoteSocketAddress() + ": " + message);
+         try {
+            String res = Launcher.request(message);
+            broadcast(res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

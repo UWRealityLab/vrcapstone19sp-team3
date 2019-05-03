@@ -1,0 +1,9 @@
+Temp/
+Library/
+Assets/TextMesh Pro/
+Assets/MagicLeap/
+.vs/
+*.csproj
+obj/Debug/
+*.sln
+*.meta
