@@ -48,7 +48,6 @@ body {
 .blog-header {
   font-size: 2rem;
   font-weight: bold;
-
 }
 
 .blog-entry {
@@ -151,6 +150,8 @@ body {
 
 br {
   margin-bottom: 1rem;
+  content: "";
+  display: block;
 }
 
 p {
