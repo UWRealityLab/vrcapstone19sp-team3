@@ -36,90 +36,110 @@
     </div>
     <div class="inner-wrap">
 
-		<div class="blog-header">Week 5: April 29 - May 3, 2019</div>
-        <div class="horizontal-divider"></div>
-        <div class="blog-entry">
-			<div class="deliverable">
-			Deliverable: Demo as seen below
-			</div>
-			<p>
-				Andrew:
-			</p>
-			<p>
-				James:
-			</p>
-			<p>
-        Ron and Laurissa:
-        At first, we were having some trouble with connecting the Google Speech-To-Text API with Unity. We found out that since Unity runs an old version
-        of mono which is a cross-platform of C#, it is not compatible with any of the APIs. We considered using the AWS API instead since it has 
-        a Unity package but we found out that Unity did not support the Speech-To-Text API. We tried copying the C# package to Unity but it sometimes
-        regenerates the VS solution which clears out everything. We got it to keep the code using a custom nuget config but it still doesn't compile
-        because of incompatibility. Therefore, we have a workaround which is using a server-based approach so that it connects to a hosted server
-        to handle the speech part. We found that this approach is actually more applicable in a real-world situation because if we send the data to 
-        the API directly from the application, there might be security issues. We have decided to use websockets because they are streaming sockets 
-        but we found out that they are not supported for native unity. We found a solution which is using a library, the websocket-sharp, which
-        is supported in the most updated version of Magic Leap (Lumin SDK 0.20). 
-			</p>
-			<p>
-				Our current plan for next week is 
-			</p>
-		</div>
-		
-        <div class="blog-header">Week 4: April 22 - 26, 2019</div>
-        <div class="horizontal-divider"></div>
-        <div class="blog-entry">
-  
-          <div class="deliverable">
-            Deliverable: <a href="./index.html"> Updated PRD (on Home page)</a>
-          </div>
-  
-          <p>
-          	Ron and Laurissa:
-            This week, we tested different Speech-To-Text APIs including Microsoft Azure, Amazon Transcribe, 
-            and Google Cloud. We tested them out by using our phone as a microphone since we haven't bought
-            a proper one yet. At first, we thought that the room was too loud to pick up the exact words 
-            we're saying and it made us think about how when we demo our final product on our demo day,
-            it might have the same amount of noise. After some trial and error, we found out that it only works
-            for .flac audio files. In the example, they provided a .flac file which worked pretty well. We
-            learned that we have to convert our mp3 file to a .flac file so that it is compatible with it. 
-            We decided to use Google's Cloud Speech-to-Text API because it supports widest 
-            variety of languages and contains different feature that we found useful. Some of which includes
-            the language detection and multispeaker content. 
+      <div class="blog-header">Week 5: April 29 - May 3, 2019</div>
+      <div class="horizontal-divider"></div>
+      <div class="blog-entry">
+        <div class="deliverable">
+          Deliverable: Demo as seen below
+        </div>
+        <p>
+          <strong>Andrew:</strong><br/>
+        </p>
+        <p>
+          <strong>James:</strong><br/>
+        </p>
+        <p>
+          <strong>Ron and Laurissa:</strong><br/>
+          This week, we had a number of technical challenges which took a long time to figure out, but managed to come up with and build a functional workaround (and plan for next steps) after understanding what the problems were. We continued to work together on this part, since our work required a lot of reading various documentation, finding solutions to obscure problems, and choosing the correct libraries to use, that was more effective with two people searching and discussing design decisions.
+          Specifically though, although we sat and wrote all the code in person together, 
+        </p>
+        <p>
+          <strong>Running Google Cloud Platform code on MagicLeap / Unity</strong>
+        </p>
+
+          At first, we were having some trouble with connecting the Google Speech-To-Text API with Unity. We found out
+          that since Unity runs an old version
+          of Mono which is a cross-platform of C#, it is not compatible with any of the APIs. We considered using the
+          AWS API instead since it has
+          a Unity package but we found out that Unity did not support the Speech-To-Text API. We tried copying the C#
+          package to Unity but it sometimes
+          regenerates the VS solution which clears out everything. We got it to keep the code using a custom nuget
+          config but it still doesn't compile
+          because of incompatibility. Therefore, we have a workaround which is using a server-based approach so that it
+          connects to a hosted server
+          to handle the speech part. We found that this approach is actually more applicable in a real-world situation
+          because if we send the data to
+          the API directly from the application, there might be security issues. We have decided to use websockets
+          because they are streaming sockets
+          but we found out that they are not supported for native unity. We found a solution which is using a library,
+          the websocket-sharp, which
+          is supported in the most updated version of Magic Leap (Lumin SDK 0.20).
+        </p>
+        <p>
+          Our current plan for next week is
+        </p>
+      </div>
+
+      <div class="blog-header">Week 4: April 22 - 26, 2019</div>
+      <div class="horizontal-divider"></div>
+      <div class="blog-entry">
+
+        <div class="deliverable">
+          Deliverable: <a href="./index.html"> Updated PRD (on Home page)</a>
+        </div>
+
+        <p>
+          Ron and Laurissa:
+          This week, we tested different Speech-To-Text APIs including Microsoft Azure, Amazon Transcribe,
+          and Google Cloud. We tested them out by using our phone as a microphone since we haven't bought
+          a proper one yet. At first, we thought that the room was too loud to pick up the exact words
+          we're saying and it made us think about how when we demo our final product on our demo day,
+          it might have the same amount of noise. After some trial and error, we found out that it only works
+          for .flac audio files. In the example, they provided a .flac file which worked pretty well. We
+          learned that we have to convert our mp3 file to a .flac file so that it is compatible with it.
+          We decided to use Google's Cloud Speech-to-Text API because it supports widest
+          variety of languages and contains different feature that we found useful. Some of which includes
+          the language detection and multispeaker content.
         </p>
 
         <p>
-            Andrew and James:
-            We also tested different ways of generating some preliminary chat bubbles with some text in Unity. 
-            Right now, they are simply objects within Unity that have a fixed text in them. From what we saw, 
-            the text itself is a bit visible, but the visual itself still has much to be desired in terms of 
-            presentation to the user with respect to other objects. 
-            The text boxes are aligned with the camera, which can be good in some contexts with respect to our UI menu 
-            for setting the language of the user, as it keeps the bubble in the view of the user, but it still needs some 
-            more work to be better fleshed out.
-            What was currently visible by the user is this...
-            <figure align="center">
-  				<img src="imgs/week4_2.jpg" alt="Magic Leap Week 4 ChatAssist Display">
-  				<figcaption>Fig.1 - Magic Leap Week 4 ChatAssist Display</figcaption>
-			</figure>
-            
-         </p>
+          Andrew and James:
+          We also tested different ways of generating some preliminary chat bubbles with some text in Unity.
+          Right now, they are simply objects within Unity that have a fixed text in them. From what we saw,
+          the text itself is a bit visible, but the visual itself still has much to be desired in terms of
+          presentation to the user with respect to other objects.
+          The text boxes are aligned with the camera, which can be good in some contexts with respect to our UI menu
+          for setting the language of the user, as it keeps the bubble in the view of the user, but it still needs some
+          more work to be better fleshed out.
+          What was currently visible by the user is this...
+          <figure align="center">
+            <img src="imgs/week4_2.jpg" alt="Magic Leap Week 4 ChatAssist Display">
+            <figcaption>Fig.1 - Magic Leap Week 4 ChatAssist Display</figcaption>
+          </figure>
 
-          <p>
-            Our current plan for next week is to order some wireless clip-on microphones so that we can test and
-            we also want to get the Speech-To-Text API up and running on the Magic Leap. Additionally, we will develop
-            the pipeline to generate text that can be seen by the user, play around with some of the Magic Leap examples, and 
-            develop the chat bubbles more into an actual product which can display text effectively to the user. We will also look
-            into a way to anchor the bubble to something in the real world, ideally something that can be held by a person. 
-            We will also look into some chat box assets as well to make them look more appealing compared to what they are now.
-            The overall goal for next week is to combine the work from our two teams to make a soft demo of ChatAssist.
-          </p>
-  
-          <div class="references">
-            Some useful references for this week:
-            <a href="https://www.youtube.com/watch?v=SxYvufk7Hrs&feature=youtu.be">Perfect Text in Unity</a>
-            <a href="https://assetstore.unity.com/search/?k=chat+box&order_by=relevance&q=chat&q=box&rows=42">Possible Chat Box Assets</a>
-          </div>
+        </p>
+
+        <p>
+          Our current plan for next week is to order some wireless clip-on microphones so that we can test and
+          we also want to get the Speech-To-Text API up and running on the Magic Leap. Additionally, we will develop
+          the pipeline to generate text that can be seen by the user, play around with some of the Magic Leap examples,
+          and
+          develop the chat bubbles more into an actual product which can display text effectively to the user. We will
+          also look
+          into a way to anchor the bubble to something in the real world, ideally something that can be held by a
+          person.
+          We will also look into some chat box assets as well to make them look more appealing compared to what they are
+          now.
+          The overall goal for next week is to combine the work from our two teams to make a soft demo of ChatAssist.
+        </p>
+
+        <div class="references">
+          Some useful references for this week:
+          <a href="https://www.youtube.com/watch?v=SxYvufk7Hrs&feature=youtu.be">Perfect Text in Unity</a>
+          <a href="https://assetstore.unity.com/search/?k=chat+box&order_by=relevance&q=chat&q=box&rows=42">Possible
+            Chat Box Assets</a>
         </div>
+      </div>
 
       <div class="blog-header">Week 3: April 15 - 19, 2019</div>
       <div class="horizontal-divider"></div>
