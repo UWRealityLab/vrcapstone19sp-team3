@@ -48,7 +48,6 @@ body {
 .blog-header {
   font-size: 2rem;
   font-weight: bold;
-
 }
 
 .blog-entry {
@@ -147,4 +146,14 @@ body {
 .prd iframe {
   height: 70vh;
   width: 100%;
+}
+
+br {
+  margin-bottom: 1rem;
+  content: "";
+  display: block;
+}
+
+p {
+  line-height: 1.3rem;
 }
