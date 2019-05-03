@@ -49,7 +49,16 @@
 				James:
 			</p>
 			<p>
-				Ron and Laurissa:
+        Ron and Laurissa:
+        At first, we were having some trouble with connecting the Google Speech-To-Text API with Unity. We found out that since Unity runs an old version
+        of mono which is a cross-platform of C#, it is not compatible with any of the APIs. We considered using the AWS API instead since it has 
+        a Unity package but we found out that Unity did not support the Speech-To-Text API. We tried copying the C# package to Unity but it sometimes
+        regenerates the VS solution which clears out everything. We got it to keep the code using a custom nuget config but it still doesn't compile
+        because of incompatibility. Therefore, we have a workaround which is using a server-based approach so that it connects to a hosted server
+        to handle the speech part. We found that this approach is actually more applicable in a real-world situation because if we send the data to 
+        the API directly from the application, there might be security issues. We have decided to use websockets because they are streaming sockets 
+        but we found out that they are not supported for native unity. We found a solution which is using a library, the websocket-sharp, which
+        is supported in the most updated version of Magic Leap (Lumin SDK 0.20). 
 			</p>
 			<p>
 				Our current plan for next week is 
