@@ -46,19 +46,33 @@
           <span style="font-size: 1.3em"><strong>Andrew:</strong></span><br />
           This week, I made the UI that we presented last week better and integrated the Magic Leap controller into the project. I added a menu for the user to select the language they want the speech to be translated to, following the feedback for the PRD, and added an initial chat log that we had during our project proposal. The scene lets users scroll through a list of languages on the left and go through a log of messages on the right and allows for easy integration with other parts of the project by having public methods that can be called to get the language the user selects and append to the chat log. 
           <br />
-          I took the feedback from last week about not having static things on the screen because that obstructs the field of view of the user and it feels unnatural to have something follow you everywhere as you move your head, so the boxes sort of float into place and we let the user hide the language selection and chat logs by scrolling to the center. I added a scroll feature by getting the direction the user swipes on the controller and made the language selection and chat logs only visible if the user scrolls towards it. I also tested adding text to the chat log by adding text on the down trigger to make sure that text can be added. Ideally, the chat log will allow easier support for multiple speakers to help distinguish who said what when as it'll maintain a transcript of the conversation. If we can't figure out how to anchor the text onto something, we will still be able to display the text on the chat log; but we will work to avoid this by getting the image recognition to work for the anchoring. 
+          I took the feedback from last week about not having static things on the screen because that obstructs the field of view of the user and it feels unnatural to have something follow you everywhere as you move your head, so the boxes sort of float into place and we let the user hide the language selection and chat logs by scrolling to the center. I added a scroll feature by getting the direction the user swipes on the controller and made the language selection and chat logs only visible if the user scrolls towards it. The current iteration of the scrolling is a little janky because it reads off the gestures on the touchpad, which aren't entirely accurate. 
           <br />
-          <img src="./initial_ui.png"/>
+          I also tested adding text to the chat log by adding text on the down trigger to make sure that text can be added. Ideally, the chat log will allow easier support for multiple speakers by distinguishing who said what when as it'll maintain a transcript of the conversation. If we can't figure out how to anchor the text to some image, we will still be able to display the text on the chat log; but we will work to avoid this by getting the image recognition to work for the anchoring. 
           <br />
-          Alan gave some feedback saying that we should probably consider hooking the menu up to the controller because that's what people have been doing nowadays with menus in AR/VR. I didn't know this and I plan on working on that in the future, but I need to focus on getting the anchoring down for the demo next week. I also wanted to include a video of the language selection and the chat log, but the Magic Leap was running low on battery and the controller got unpaired, so we just put it back into the locker and charged it. 
+          <figure align="center">
+            <img src="./initial_ui.png"/>
+            <figcaption>Fig.2 - Magic Leap Week 5 ChatAssist UI</figcaption>
+          </figure>
           <br />
-          The code for this work is in the following links: <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ChatList.cs">appending to the chat log</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ControllerSelection.cs">controller integration</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/EdgeScrollChatLog.cs">scrolling in chat log</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageScrollList.cs">adding language selection and scrolling</a>, and the <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageToggle.cs">toggle for the languages</a>
+          Alan gave some feedback saying that we should probably consider hooking the menu up to the controller because that's what people have been doing nowadays with menus in AR/VR. I didn't know this and I plan on working on that in the future, but I need to focus on getting the anchoring down for the demo next week. I also wanted to include a video of the language selection and the chat log, but the Magic Leap was running low on battery and the controller got unpaired. I somehow missed the last resort in the instructions for how to pair it again, so I couldn't get it to pair and I just put it back into the locker and charged it. James later fixed this.
+          <br />
+          The code for this work is in the following links: <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ChatList.cs">appending to the chat log</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ControllerSelection.cs">controller integration</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/EdgeScrollChatLog.cs">scrolling in chat log</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageScrollList.cs">adding language selection and scrolling</a>, and the <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageToggle.cs">toggle for the languages</a>.
         </p>
         <p>
           <span style="font-size: 1.3em"><strong>James:</strong></span><br />
           The code for this work is in the _____
         </p>
         <p>
+          <strong>On Image Tracking</strong>
+        <p>
+          <p> 
+          We started testing out the Magic Leap's image recognition examples last week, but were unable to get the examples to work, thinking that we needed physical copies of the images. We tested it again after class on Thursday using images on the computer and printed copies on sheets of paper and met more success, getting the demo to work on some preset images. 
+          <b/>
+          We tried doing the same with some solid-color images and tried to replace the images to see if they could detect new images right off the bat. The fastest path to a working demo is to take the code they have and the images they recognize and use those as the basis of our method for anchoring. This will give us a working product for the demo and we'd be done.
+          <b/>
+          But we want to at least look through the code and see what can be done with it, like push the boundaries of the size of the image so that people don't have to wear 8.5" by 11" sheets of paper to get this to work. We will continue exploring this on Friday, the weekend, and days leading up to the demo day. We also plan on meeting with Alan on Friday. 
+          </p>
           <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
           This week, we had a number of technical challenges which took a long time to figure out, but managed to come
           up with and build a functional workaround (and plan for next steps) after understanding what the problems
@@ -178,9 +192,12 @@
           <br/>
           Andrew and James will:
           <ul>
-            <li>Figure out anchoring</li>
+            <li>Test the Magic Leap's image recognition capabilities</li>
+            <li>Hack up a version of anchoring using the Magic Leap examples</li>
+            <li>Determine where we want to generate the messages relative to the the anchor</li>
+            <li>Determine what unique images we want to detect</li>
           </ul>
-          More specifically Andrew will ___ and James will ___
+          More specifically Andrew will look into the Magic Leap image tracking code and determine the extent in which we can use the code base and James will look into the Magic Leap image tracking example to hack up a rudimentary version of anchoring. 
         </p>
       </div>
 
