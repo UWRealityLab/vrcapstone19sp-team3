@@ -30,7 +30,7 @@ public class Server extends WebSocketServer {
     public void onMessage(WebSocket conn, String message) {
         System.out.println("received message from " + conn.getRemoteSocketAddress() + ": " + message);
          try {
-            String res = Launcher.request(message);
+            String res = SpeechHandler.request(message);
             broadcast(res);
         } catch (IOException e) {
             e.printStackTrace();
