@@ -276,7 +276,7 @@ namespace MagicLeap
             }
         }
 
-        private void addText(string text)
+        public void addText(string text)
         {
             cl.AddChatBox(text);
             if ((int)rightIndex == cl.list.Count - 2) rightIndex++;

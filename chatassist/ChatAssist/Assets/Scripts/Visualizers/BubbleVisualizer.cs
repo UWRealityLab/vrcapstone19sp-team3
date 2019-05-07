@@ -68,6 +68,7 @@ namespace MagicLeap
         {
             //_planetInstance = Instantiate(_planetPrefabAnimator.transform, GetPosition(), Quaternion.identity);
             _explorerInstance = Instantiate(_explorerPrefab.transform, GetPosition(), Quaternion.identity);
+            _explorerInstance.SetParent(this.transform.parent.parent);
         }
 
         /// <summary>
