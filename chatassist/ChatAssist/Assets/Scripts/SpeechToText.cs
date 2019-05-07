@@ -34,6 +34,8 @@ public class SpeechToText : MonoBehaviour
         if (this.text.text != this.currString)
         {
             this.text.text = currString;
+            MagicLeap.ControllerSelection cs = this.transform.parent.gameObject.GetComponentInChildren<MagicLeap.ControllerSelection>();
+            cs.addText(currString);
         }
     }
 
