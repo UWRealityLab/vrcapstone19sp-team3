@@ -67,8 +67,15 @@ namespace MagicLeap
         void OnEnable()
         {
             //_planetInstance = Instantiate(_planetPrefabAnimator.transform, GetPosition(), Quaternion.identity);
-            _explorerInstance = Instantiate(_explorerPrefab.transform, GetPosition(), Quaternion.identity);
-            _explorerInstance.SetParent(this.transform.parent.parent);
+            if (null != _explorerInstance)
+            {
+                _explorerInstance.gameObject.SetActive(true);
+            }
+            else
+            {
+                _explorerInstance = Instantiate(_explorerPrefab.transform, GetPosition(), Quaternion.identity);
+                _explorerInstance.SetParent(this.transform.parent.parent);
+            }
         }
 
         /// <summary>
@@ -79,8 +86,9 @@ namespace MagicLeap
             if (null != _explorerInstance)
             {
                 //_planetInstance.GetComponent<Animator>().Play("EarthShrinking");
-                Destroy(_explorerInstance.gameObject, 1.1f);
-                _explorerInstance = null;
+                _explorerInstance.gameObject.SetActive(false);
+                //Destroy(_explorerInstance.gameObject, 1.1f);
+                //_explorerInstance = null;
             }
         }
 
