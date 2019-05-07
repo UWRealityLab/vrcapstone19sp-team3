@@ -47,12 +47,15 @@ namespace MagicLeap
         // Start is called before the first frame update
         void Start()
         {
+            //Debug.Log("DOES THIS EVER CALL START?");
             _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
             MLInput.OnControllerButtonUp += HandleOnButtonUp;
             MLInput.OnControllerButtonDown += HandleOnButtonDown;
             MLInput.OnTriggerDown += HandleOnTriggerDown;
             currText = null;
             currTog = lsl.toggles[(int)leftIndex]; // TODO: Possibly change this so that it isn't 0 initially;
+            //Debug.Log(lsl.toggles.Count);
+            //Debug.Log("DOES THIS EVER CALL START?");
             currTog.languageName.fontStyle = FontStyle.Bold;
             selection = 0.0f;
             leftIndex = 24.0f;
@@ -94,8 +97,10 @@ namespace MagicLeap
                     {
                         // Move down list
                         if (selection < -0.5f) {
+                            Debug.Log("well, that's probably why it doesn't work");
                             currTog.languageName.fontStyle = FontStyle.Normal;
                             if (leftIndex + SCROLL_LENGTH < lsl.toggles.Count) leftIndex += SCROLL_LENGTH;
+                            Debug.Log("down" + leftIndex);
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
@@ -117,6 +122,7 @@ namespace MagicLeap
                         {
                             currTog.languageName.fontStyle = FontStyle.Normal;
                             if (leftIndex > 0) leftIndex -= SCROLL_LENGTH;
+                            Debug.Log("up" + leftIndex);
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
