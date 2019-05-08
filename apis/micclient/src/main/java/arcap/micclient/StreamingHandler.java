@@ -47,6 +47,8 @@ public class StreamingHandler {
                                 public void onResponse(StreamingRecognizeResponse response) {
                                     System.out.println("got resp " + response.getResultsList().get(0).getAlternativesList().get(0).getTranscript());
                                     responses.add(response);
+                                    String transcript = response.getResultsList().get(0).getAlternativesList().get(0).getTranscript();
+                                    Launcher.client.send(transcript);
                                 }
 
                                 public void onComplete() {
@@ -54,8 +56,6 @@ public class StreamingHandler {
                                         StreamingRecognitionResult result = response.getResultsList().get(0);
                                         SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
                                         System.out.printf("Transcript : %s\n", alternative.getTranscript());
-                                        String transcript = alternative.getTranscript();
-                                        Launcher.client.send(transcript);
                                     }
                                 }
 
