@@ -14,29 +14,13 @@ namespace MagicLeap
 
         public Camera m_Camera;
 
-        /*
-        [Header("Planet")]
-        [SerializeField, Tooltip("Prefab of the bubble")]
-        private Animator _planetPrefabAnimator = null;
-        private Transform _planetInstance = null;
-        */
-        private Vector3 _planetVel = Vector3.zero;
+        private Vector3 _bubbleVel = Vector3.zero;
 
-        [Header("Explorer")]
+        [Header("Chat Bubble")]
         [SerializeField, Tooltip("Prefab of the Chat bubble")]
-        private GameObject _explorerPrefab = null;
-        private Transform _explorerInstance = null;
+        private GameObject _bubblePrefab = null;
+        private Transform _bubbleInstance = null;
 
-        /*
-        private float _timeLastLaunch = 0;
-        [SerializeField, Tooltip("Time interval between instances (seconds)")]
-        private float _timeInterval = 0.5f;
-
-        [SerializeField, Tooltip("Minimum distance from the center of the planet")]
-        private float _minOrbitRadius = 0.1f;
-        [SerializeField, Tooltip("Maximum distance from the center of the planet")]
-        private float _maxOrbitRadius = 0.2f;
-        */
         #endregion
 
         #region Unity Methods
@@ -45,17 +29,9 @@ namespace MagicLeap
         /// </summary>
         void Awake()
         {
-            /*
-            if (null == _planetPrefabAnimator)
+            if (null == _bubblePrefab)
             {
-                Debug.LogError("Error: DeepSpaceExplorerLauncher._planetPrefabAnimator is not set, disabling script.");
-                enabled = false;
-                return;
-            }
-            */
-            if (null == _explorerPrefab)
-            {
-                Debug.LogError("Error: DeepSpaceExplorerLauncher._explorerPrefab is not set, disabling script.");
+                Debug.LogError("Error: ChatBubbleLauncher._bubblePrefab is not set, disabling script.");
                 enabled = false;
                 return;
             }
@@ -67,14 +43,14 @@ namespace MagicLeap
         void OnEnable()
         {
             //_planetInstance = Instantiate(_planetPrefabAnimator.transform, GetPosition(), Quaternion.identity);
-            if (null != _explorerInstance)
+            if (null != _bubbleInstance)
             {
-                _explorerInstance.gameObject.SetActive(true);
+                _bubbleInstance.gameObject.SetActive(true);
             }
             else
             {
-                _explorerInstance = Instantiate(_explorerPrefab.transform, GetPosition(), Quaternion.identity);
-                _explorerInstance.SetParent(this.transform.parent.parent);
+                _bubbleInstance = Instantiate(_bubblePrefab.transform, GetPosition(), Quaternion.identity);
+                _bubbleInstance.SetParent(this.transform.parent.parent);
             }
         }
 
@@ -83,10 +59,10 @@ namespace MagicLeap
         /// </summary>
         void OnDisable()
         {
-            if (null != _explorerInstance)
+            if (null != _bubbleInstance)
             {
                 //_planetInstance.GetComponent<Animator>().Play("EarthShrinking");
-                _explorerInstance.gameObject.SetActive(false);
+                _bubbleInstance.gameObject.SetActive(false);
                 //Destroy(_explorerInstance.gameObject, 1.1f);
                 //_explorerInstance = null;
             }
@@ -98,25 +74,13 @@ namespace MagicLeap
         void Update()
         {
             Vector3 position = GetPosition();
-
+            //Debug.Log("Updating position from " + _bubbleInstance.position);
             // Update planet position
-            _explorerInstance.position = Vector3.SmoothDamp(_explorerInstance.position, position, ref _planetVel, 1.0f);
-            _explorerInstance.LookAt(m_Camera.transform);
-            _explorerInstance.RotateAround(_explorerInstance.position, _explorerInstance.up, 180f);
+            _bubbleInstance.position = Vector3.SmoothDamp(_bubbleInstance.position, position, ref _bubbleVel, 1.0f);
+            _bubbleInstance.LookAt(m_Camera.transform);
+            _bubbleInstance.RotateAround(_bubbleInstance.position, _bubbleInstance.up, 180f);
 
-            /*
-            // Launch explorers
-            if (Time.time - _timeInterval > _timeLastLaunch)
-            {
-                _timeLastLaunch = Time.time;
-                GameObject explorer = Instantiate(_explorerPrefab, position, Random.rotation);
-                DeepSpaceExplorerController explorerController = explorer.GetComponent<DeepSpaceExplorerController>();
-                if (explorerController)
-                {
-                    explorerController.OrbitRadius = Random.Range(_minOrbitRadius, _maxOrbitRadius);
-                }
-            }
-            */
+            Debug.Log("Updating position to " + _bubbleInstance.position);
         }
         #endregion
 
@@ -127,6 +91,11 @@ namespace MagicLeap
         /// <returns>The absolute position of the new target</returns>
         private Vector3 GetPosition()
         {
+            /*
+            Debug.Log("Getting current position: " + transform.position);
+            Debug.Log("Getting position: " + transform.TransformDirection(_positionOffset));
+            Debug.Log("Getting position offset: " + _positionOffset);
+            */
             return transform.position + transform.TransformDirection(_positionOffset);
         }
         #endregion
