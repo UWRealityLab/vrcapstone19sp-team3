@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Launcher {
 
     public static void main(String[] args) throws IOException {
-        SpeechHandler.request("./brooklyn.flac");
+//        SpeechHandler.request("./brooklyn.flac");
         new Thread(() -> {
             Scanner scan = new Scanner(System.in);
             while (scan.hasNextLine()) {
@@ -24,10 +24,9 @@ public class Launcher {
     static WebSocketServer server;
 
     public static void startServer() {
-        String host = "localhost";
         int port = 10000;
 
-        server = new Server(new InetSocketAddress(host, port));
+        server = new Server(new InetSocketAddress(port));
         server.run();
     }
 

@@ -24,7 +24,7 @@ public class Launcher {
                 client.send(s);
             }
         }).start();
-        startClient("ws://localhost:10000");
+        startClient("ws://45.33.55.95:10000");
     }
 
 
