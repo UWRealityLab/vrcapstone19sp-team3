@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class Launcher {
 
-    private static MicWSClient client;
+    public static MicWSClient client;
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws Exception {
         /*
         TODO: run StreamingHandler on a timer of ~55 seconds
         the goog streaming speech api has a limit of 60 seconds.
@@ -25,8 +25,8 @@ public class Launcher {
             }
         }).start();
         startClient("ws://45.33.55.95:10000");
+        StreamingHandler.streamingMicRecognize();
     }
-
 
     public static void startClient(String addr) throws URISyntaxException {
         URI uri = new URI(addr);
