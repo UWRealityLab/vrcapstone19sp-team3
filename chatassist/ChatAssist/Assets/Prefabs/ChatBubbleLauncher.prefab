@@ -41,13 +41,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 9080686242355428727}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c4e043fc2ce0e4c9ba3cef3fa3c17f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3745b48ab8f229e499fecfd0ad263eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _positionOffset: {x: 0, y: 0, z: 0}
   m_Camera: {fileID: 0}
-  _bubblePrefab: {fileID: 7880180988512256226, guid: c3eb6707c5bd97e40b18af739de5f854,
-    type: 3}
+  _bubblePrefab: {fileID: 0}
 --- !u!114 &9079597325439080487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,10 +56,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9080686242355428727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a451d89f54e2baa4f9926a4f2e353ec5, type: 3}
+  m_Script: {fileID: 11500000, guid: c8c58985a2adfb6419809325d8b7ccb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positionOffset: {x: -0.3, y: 0, z: 0.3}
-  m_Camera: {fileID: 0}
-  _explorerPrefab: {fileID: 7880180988512256226, guid: c3eb6707c5bd97e40b18af739de5f854,
+  _positionOffset: {x: 0.3, y: 0, z: -0.3}
+  m_Camera: {fileID: 20294507499185110, guid: 24158fb1437dc8e418d893939758764d, type: 3}
+  _bubblePrefab: {fileID: 7880180988512256226, guid: c3eb6707c5bd97e40b18af739de5f854,
     type: 3}
