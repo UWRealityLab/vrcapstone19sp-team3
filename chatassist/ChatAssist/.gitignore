@@ -6,3 +6,4 @@ Assets/MagicLeap/
 *.csproj
 obj/Debug/
 *.sln
+*.meta
