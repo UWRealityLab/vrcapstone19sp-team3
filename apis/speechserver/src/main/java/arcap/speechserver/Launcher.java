@@ -25,7 +25,7 @@ public class Launcher {
 
     public static void startServer() {
         String host = "localhost";
-        int port = 8887;
+        int port = 10000;
 
         server = new Server(new InetSocketAddress(host, port));
         server.run();

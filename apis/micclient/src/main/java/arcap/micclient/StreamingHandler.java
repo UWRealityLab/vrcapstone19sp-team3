@@ -11,6 +11,8 @@ import com.google.protobuf.ByteString;
 import javax.sound.sampled.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class StreamingHandler {
     /**
@@ -76,18 +78,18 @@ public class StreamingHandler {
             // SampleRate:16000Hz, SampleSizeInBits: 16, Number of channels: 1, Signed: true,
             // bigEndian: false
             AudioFormat audioFormat = new AudioFormat(16000, 16, 1, true, false);
-            DataLine.Info targetInfo =
-                    new DataLine.Info(
-                            TargetDataLine.class,
-                            audioFormat); // Set the system information to read from the microphone audio stream
+            // Set the system information to read from the microphone audio stream
+            DataLine.Info targetInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
 
             if (!AudioSystem.isLineSupported(targetInfo)) {
                 System.out.println("Microphone not supported");
                 System.exit(0);
             }
             // Target data line captures the audio stream the microphone produces.
+//            TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
             TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
-            targetDataLine.open(audioFormat);
+//            targetDataLine.open(audioFormat);
+            targetDataLine.open();
             targetDataLine.start();
             System.out.println(targetDataLine.getLineInfo().toString());
             System.out.println("Start speaking");
@@ -112,12 +114,68 @@ public class StreamingHandler {
             }
         } catch (Exception e) {
             System.out.println(e);
+            e.printStackTrace();
         }
         responseObserver.onComplete();
     }
 
-    public static void main(String[] args) throws Exception {
-        streamingMicRecognize();
+    public static List<AudioFormat> audioFormats() throws LineUnavailableException {
+        Mixer.Info[] mi = AudioSystem.getMixerInfo();
+        List<AudioFormat> audioFormats = new ArrayList<AudioFormat>();
+        for (Mixer.Info info : mi) {
+            System.out.println("info: " + info);
+            Mixer m = AudioSystem.getMixer(info);
+            System.out.println("mixer " + m);
+            Line.Info[] sl = m.getSourceLineInfo();
+            for (Line.Info info2 : sl) {
+                System.out.println("    info: " + info2);
+                Line line = AudioSystem.getLine(info2);
+                if (line instanceof SourceDataLine) {
+                    SourceDataLine source = (SourceDataLine) line;
+
+                    DataLine.Info i = (DataLine.Info) source.getLineInfo();
+                    for (AudioFormat format : i.getFormats()) {
+                        audioFormats.add(format);
+                        System.out.println("    format: " + format);
+                    }
+                }
+            }
+        }
+        return audioFormats;
+    }
+
+    public static void main(String[] args) {
+        try {
+            AudioFormat audioFormat = new AudioFormat(8000, 16, 1, true, true);
+            // Set the system information to read from the microphone audio stream
+            DataLine.Info targetInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
+
+            System.out.println(Arrays.toString(AudioSystem.getTargetLineInfo(targetInfo)));
+//            System.out.println(Arrays.toString(AudioSystem.getAudioFileTypes()));
+            System.out.println(Arrays.toString(AudioSystem.getMixerInfo()));
+            System.out.println(AudioSystem.getSourceDataLine(audioFormat));
+
+            if (!AudioSystem.isLineSupported(targetInfo)) {
+                System.out.println("Microphone not supported");
+                System.exit(0);
+            }
+            // Target data line captures the audio stream the microphone produces.
+//            TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
+            TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
+//            targetDataLine.open(audioFormat);
+            targetDataLine.open();
+            targetDataLine.start();
+            AudioInputStream audio = new AudioInputStream(targetDataLine);
+            System.out.println("now parsing stream");
+            while (true) {
+                byte[] data = new byte[6400];
+                audio.read(data);
+            }
+//        audioFormats();
+//        streamingMicRecognize();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

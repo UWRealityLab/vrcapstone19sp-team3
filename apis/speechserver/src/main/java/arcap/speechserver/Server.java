@@ -29,12 +29,8 @@ public class Server extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         System.out.println("received message from " + conn.getRemoteSocketAddress() + ": " + message);
-         try {
-            String res = SpeechHandler.request(message);
-            broadcast(res);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //            String res = SpeechHandler.request(message);
+        broadcast(message);
     }
 
     @Override

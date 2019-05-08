@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class Launcher {
 
+    private static MicWSClient client;
+
     public static void main(String[] args) throws IOException, URISyntaxException {
         /*
         TODO: run StreamingHandler on a timer of ~55 seconds
@@ -19,15 +21,16 @@ public class Launcher {
                 String s = scan.nextLine();
                 System.out.println(s);
 //                server.broadcast(s);
+                client.send(s);
             }
         }).start();
-        startClient("ws://localhost:8887");
+        startClient("ws://localhost:10000");
     }
 
 
     public static void startClient(String addr) throws URISyntaxException {
         URI uri = new URI(addr);
-        MicWSClient client = new MicWSClient(uri);
+        client = new MicWSClient(uri);
         client.connect();
     }
 
