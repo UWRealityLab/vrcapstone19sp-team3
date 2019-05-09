@@ -205,7 +205,6 @@ GameObject:
   - component: {fileID: 132219642}
   - component: {fileID: 132219643}
   - component: {fileID: 132219644}
-  - component: {fileID: 132219645}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -270,23 +269,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
---- !u!114 &132219645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 132219641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a77b866ec47f6a4ebd7f9de32a60672, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toggles: []
-  contentPanel: {fileID: 132219642}
-  prefab: {fileID: 6752519735391631215, guid: 04e763ad380373b4dbe2cffad1a274d7, type: 3}
-  toggleGroup: {fileID: 2096760852}
-  languageDisplay: {fileID: 1343601694}
 --- !u!1 &135414928
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +282,7 @@ GameObject:
   - component: {fileID: 135414931}
   - component: {fileID: 135414930}
   - component: {fileID: 135414933}
+  - component: {fileID: 135414934}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -405,14 +388,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 135414928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d4c903c424443640a2a5b71d5faa191, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a77b866ec47f6a4ebd7f9de32a60672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggles: []
+  contentPanel: {fileID: 132219642}
+  prefab: {fileID: 6752519735391631215, guid: 04e763ad380373b4dbe2cffad1a274d7, type: 3}
+  toggleGroup: {fileID: 2096760852}
+  languageDisplay: {fileID: 1343601694}
+--- !u!114 &135414934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135414928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382b72f00aac9964a99742810f11e272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 135414932}
   rectTransform: {fileID: 135414929}
   contentRectTransform: {fileID: 132219642}
   contSelect: {fileID: 171642998}
-  lsl: {fileID: 132219645}
+  lsl: {fileID: 135414933}
   scrollSpeed: 10
 --- !u!1001 &171642993
 PrefabInstance:
@@ -522,8 +522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09dbf5e1887ed1744a8ecd74a4b7a72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lsl: {fileID: 132219645}
-  cl: {fileID: 400972793}
+  lsl: {fileID: 135414933}
+  cl: {fileID: 766229577}
   languageMenuOpacity: {fileID: 808189000}
   chatLogOpacity: {fileID: 382174764}
   leftIndex: 21
@@ -624,11 +624,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1442209370}
     m_Modifications:
-    - target: {fileID: 20294507499185110, guid: 24158fb1437dc8e418d893939758764d,
-        type: 3}
-      propertyPath: far clip plane
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 1011244501761250, guid: 24158fb1437dc8e418d893939758764d, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -676,6 +671,11 @@ PrefabInstance:
     - target: {fileID: 4214550324010282, guid: 24158fb1437dc8e418d893939758764d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20294507499185110, guid: 24158fb1437dc8e418d893939758764d,
+        type: 3}
+      propertyPath: far clip plane
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24158fb1437dc8e418d893939758764d, type: 3}
@@ -916,7 +916,6 @@ GameObject:
   - component: {fileID: 400972790}
   - component: {fileID: 400972791}
   - component: {fileID: 400972792}
-  - component: {fileID: 400972793}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -981,21 +980,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
---- !u!114 &400972793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 400972789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cc39c995fed9eb489fa8fda8050328c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 572209271486511744, guid: f17b4b98ae44a3942b74ea31e2dbfb4a, type: 3}
-  contentPanel: {fileID: 400972790}
-  list: []
 --- !u!1 &506549688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,6 +1083,7 @@ GameObject:
   - component: {fileID: 766229574}
   - component: {fileID: 766229573}
   - component: {fileID: 766229576}
+  - component: {fileID: 766229577}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -1205,15 +1190,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 766229571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bef77c018ef7dc4297586b6d56b56e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 58505b1cd7a5f73458166ecf292888df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 766229575}
   rectTransform: {fileID: 766229572}
   contentRectTransform: {fileID: 400972790}
   contSelect: {fileID: 171642998}
-  cl: {fileID: 400972793}
+  cl: {fileID: 766229577}
   scrollSpeed: 10
+--- !u!114 &766229577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766229571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423e436d67cec3645aaec6dda1b64a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 572209271486511744, guid: 4f1eece241fc5f0418a10dab87d49532, type: 3}
+  contentPanel: {fileID: 400972790}
+  list: []
 --- !u!1 &808188996
 GameObject:
   m_ObjectHideFlags: 0

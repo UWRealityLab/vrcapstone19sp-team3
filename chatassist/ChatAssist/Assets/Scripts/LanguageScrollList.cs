@@ -14,8 +14,8 @@ public class LanguageScrollList : MonoBehaviour
     public Text languageDisplay;
     private string language;
 
-    // Start is called before the first frame update
-    void Start()
+    // Awake is called before Start
+    void Awake()
     {
         populateList();
         AddButtons();

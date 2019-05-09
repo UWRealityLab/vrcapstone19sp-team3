@@ -67,6 +67,7 @@ namespace MagicLeap
             UpdateLED();
             // TODO: Look at ControllerStatsText for how to get direction of motion
             // Then after that, MLInputController -> MLInputControllerTouchpadGesture -> MLInputControllerTouchpadGestureDirection
+
             if (_controllerConnectionHandler.IsControllerValid())
             {
                 MLInputController controller = _controllerConnectionHandler.ConnectedController;
@@ -97,10 +98,8 @@ namespace MagicLeap
                     {
                         // Move down list
                         if (selection < -0.5f) {
-                            Debug.Log("well, that's probably why it doesn't work");
                             currTog.languageName.fontStyle = FontStyle.Normal;
                             if (leftIndex + SCROLL_LENGTH < lsl.toggles.Count) leftIndex += SCROLL_LENGTH;
-                            Debug.Log("down" + leftIndex);
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
@@ -122,7 +121,6 @@ namespace MagicLeap
                         {
                             currTog.languageName.fontStyle = FontStyle.Normal;
                             if (leftIndex > 0) leftIndex -= SCROLL_LENGTH;
-                            Debug.Log("up" + leftIndex);
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
@@ -133,6 +131,7 @@ namespace MagicLeap
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
                             if (rightIndex > 0) rightIndex -= SCROLL_LENGTH;
+                            Debug.Log(rightIndex);
                             if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
                             if (currText != null) currText.fontStyle = FontStyle.Bold;
                         }
@@ -150,7 +149,7 @@ namespace MagicLeap
                         else if (selection + 0.1f > 1.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
-                            if (rightIndex > 0 && (int)rightIndex < cl.list.Count)
+                            if ((int)rightIndex < cl.list.Count)
                             {
                                 rightIndex = cl.list.Count - 0.5f;
                                 currText = cl.list[(int)rightIndex];

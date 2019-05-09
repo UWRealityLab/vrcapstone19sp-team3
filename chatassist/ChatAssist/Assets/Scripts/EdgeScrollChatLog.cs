@@ -29,7 +29,7 @@ public class EdgeScrollChatLog : MonoBehaviour
 
     void UpdateScrollToSelected()
     {
-        if (cl.list == null || cl.list.Count == 0 || contSelect.rightIndex < 0) return;
+        if (cl.list == null || cl.list.Count == 0 || contSelect.rightIndex < -0.4) return;
         int index = (int)contSelect.rightIndex;
         selectedRectTransform = cl.list[index].GetComponent<RectTransform>();
         Vector3 selectedDifference = rectTransform.localPosition - selectedRectTransform.localPosition;
