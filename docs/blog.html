@@ -47,21 +47,56 @@
         </div>
         <p>
           <span style="font-size: 1.3em"><strong>Andrew:</strong></span><br />
-          James and I met up over the weekend to combine the image tracking scene that had the server with the UI from a week ago. After that, we spent a few hours testing out differently-sized images for tracking. We used a small printed-out version of the original larger image that we have in the demo video and it worked decently. The main problem we had with that was that even covering a small portion of the image gave the Magic Leap a hard time detecting the image, which isn't ideal because we want the end-user to wear some small image that won't get in the way of the conversation. We think that this happens because image tracking/detection is essentially based on feature-detection. A lot of features are based on edges/corners, so it's possible that we were covering up some important features for detection. 
+          James and I met up over the weekend to combine the image tracking scene that had the server with the UI from a
+          week ago. After that, we spent a few hours testing out differently-sized images for tracking. We used a small
+          printed-out version of the original larger image that we have in the demo video and it worked decently. The
+          main problem we had with that was that even covering a small portion of the image gave the Magic Leap a hard
+          time detecting the image, which isn't ideal because we want the end-user to wear some small image that won't
+          get in the way of the conversation. We think that this happens because image tracking/detection is essentially
+          based on feature-detection. A lot of features are based on edges/corners, so it's possible that we were
+          covering up some important features for detection.
           <br />
-          We're going to try detecting a smaller version of the image as the base for what we're trying to detect so that we have a better idea of what features the image we are going to use for our final product should have. We'll also test out newer images and we're going to revisit the QR code idea because QR codes have clearly defined features. We spent some time on Tuesday after the class testing out microphones. James and I were there earlier and we came upon a weird bug that moved where the chat bubble was generated around 2000 times further than what we coded. We couldn't find out a reason for why it did that because the code for setting the position wasn't complicated, but it still did that. Eventually, it fixed itself after we restarted Unity. I spent some time trying to get the bluetooth microphone to work. From what I could find online, it seems like it was initially meant for amplifiers and speakers rather than to be used as input for a computer. We were able to get it to run on some websites, but when we try to access it on our application, it kind of just died and wouldn't respond. We also looked for some information on the microphone, but we couldn't find anything relevant on the internet. 
+          We're going to try detecting a smaller version of the image as the base for what we're trying to detect so
+          that we have a better idea of what features the image we are going to use for our final product should have.
+          We'll also test out newer images and we're going to revisit the QR code idea because QR codes have clearly
+          defined features. We spent some time on Tuesday after the class testing out microphones. James and I were
+          there earlier and we came upon a weird bug that moved where the chat bubble was generated around 2000 times
+          further than what we coded. We couldn't find out a reason for why it did that because the code for setting the
+          position wasn't complicated, but it still did that. Eventually, it fixed itself after we restarted Unity. I
+          spent some time trying to get the bluetooth microphone to work. From what I could find online, it seems like
+          it was initially meant for amplifiers and speakers rather than to be used as input for a computer. We were
+          able to get it to run on some websites, but when we try to access it on our application, it kind of just died
+          and wouldn't respond. We also looked for some information on the microphone, but we couldn't find anything
+          relevant on the internet.
           <br />
-          I created the initial outline for the presentation and then we all added parts and information about the things that we worked on. Tuesday night, I was informed that the scene that we had that had all the components was broken and that some scripts became unset on some of the components, which was strange because it was working when I left the labs. This was why the UI didn't show up in the demo video. I ended up coming in and fixing it on Wednesday, but I'm still confused as to how that happened. Our current hypothesis for why that happened was that we accidentally changed the metadata in some way and it just became lost. We presented on Thursday and I left early to start the blog post for the week. 
+          I created the initial outline for the presentation and then we all added parts and information about the
+          things that we worked on. Tuesday night, I was informed that the scene that we had that had all the components
+          was broken and that some scripts became unset on some of the components, which was strange because it was
+          working when I left the labs. This was why the UI didn't show up in the demo video. I ended up coming in and
+          fixing it on Wednesday, but I'm still confused as to how that happened. Our current hypothesis for why that
+          happened was that we accidentally changed the metadata in some way and it just became lost. We presented on
+          Thursday and I left early to start the blog post for the week.
         </p>
         <p>
           <span style="font-size: 1.3em"><strong>James:</strong></span><br />
         </p>
         <figure align="center">
-          <img src="./imgs/current_setup.PNG"/>
+          <img src="./imgs/current_setup.PNG" />
           <figcaption>Fig.4 - Current diagram of setup minus servers/API calls</figcaption>
         </figure>
         <p>
           <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
+        </p>
+        <p>
+          Like in previous weeks, we worked on all of the following progress/code together in person. We both were
+          involved in every part, but if we had to assign one person to each section then we would say Ron worked
+          slightly more on the streaming APIs and microphone setup, while Laurissa worked slightly more on setting up
+          the microphone client.
+          <br />
+          Most of the code we wrote this week is in <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/tree/master/apis/micclient">apis/micclient</a>
+          and <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/tree/master/apis/speechserver">apis/speechserver</a>.
         </p>
         <p>
           <strong>Streaming Speech-to-Text</strong>
@@ -94,17 +129,24 @@
           <strong>Microphone Client</strong>
         </p>
         <p>
-          We set up the microphone client this week. The microphone client is a Java process that does three things.
+          We set up the microphone client this week. The microphone client is a Java process that does three things:
+          <ol>
+            <li>The client connects to an audio input (i.e. microphone) on the computer and retrieves an audio stream
+              from that input.</li>
+            <li>The client connects the stream to a speech-to-text API call.</li>
+            <li>The client listens for responses from the API and forwards them to the central server.</li>
+          </ol>
+          Internally, the microphone client creates a WebSocket client that connects to the central server address. It
+          then sets up an audio stream and feeds that to the GCP API, establishing a listener for responses which
+          forwards the responses to the central server via the WebSocket.
           <br />
-          First, the client connects to an audio input (i.e. microphone) on the computer and retrieves an audio stream from that input.
+          We modified the central server so that it now looks for messages from microphone clients and forwards them to
+          connected MagicLeaps. Our current design is very close to fully supporting multiple microphones - we just need
+          to add an identifier to each client and have the server and MagicLeap handle the identifiers correctly.
           <br />
-          Second, the client connects the stream to a speech-to-text API call.
-          <br />
-          Third, the client listens for responses from the API and forwards them to the central server.
-          <br />
-          We modified the central server so that it now looks for messages from microphone clients and forwards them to connected MagicLeaps. Our current design is very close to fully supporting multiple microphones - we just need to add an identifier to each client and have the server and MagicLeap handle the identifiers correctly.
-          <br />
-          Here's an example of what the server log looks like - you can see text being received from an IP corresponding to the microphone client:
+          Below is an example of what the server log looks like - you can see text being received from an IP
+          corresponding to the microphone client. The disconnection at the end happens because of the 60 second time
+          limit on GCP API calls that we discussed above.
           <br />
           <img src="./imgs/server.png" />
         </p>
@@ -113,11 +155,30 @@
           <strong>Microphone Setup</strong>
         </p>
         <p>
-          test
+          It turns out microphones are pretty tricky to work with as audio streams. We ordered two microphones from
+          Amazon, one wireless and one wired. Thus far, we have been unable to get the wireless microphone to work,
+          although we'll continue trying different options. Our computers literally just don't detect it at all. We have
+          gotten the wired microphone working on some of our computers, which is what we use for our demo.
           <br />
+          We are considering buying another microphone to test with, since it's important to us that we have a working
+          set of mics. Ideally, for the demo we'll be able to have three mic clients running with wireless microphones.
         </p>
         <span style="font-size: 1.3em"><strong>Update on ideas: </strong></span><br />
+        <p>
+          We don't have any major updates on ideas - our vision is still pretty close to what we described in our PRD. A couple clarifying ideas are:
+          <ul>
+            <li>We may need a different approach for tracking</li>
+            <li>We may need to switch to a different API due to challenges from GCP's 60-second streaming restriction</li>
+            <li>We will probably pick a couple supported spoken languages and have more languages available to translate to</li>
+          </ul>
+        </p>
         <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
+        <p>
+          Here is the video we made for this week's update presentation. In it, you can see that the chat bubble follows the image being held, and that speaking into the microphone results in the spoken words being displayed in the chat bubble shortly after a pause. This fully meets our goals at the beginning of the project for an MVP. We're really excited to have gotten this working! We've also tested the microphone with a lot of background noise by turning up a street walk Youtube video to max volume and speaking next to the speakers, and the speech detection still works well in that scenario!
+        </p>
+        <p>
+          Here is a hard link in case the embed doesn't work: <a href="https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview">https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview</a>.
+        </p>
         <figure align="center"><iframe width="700" height="500"
             src="https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview" frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -127,12 +188,13 @@
           <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
         </p>
         <p>
-          <br />
           Ron and Laurissa will:
           <ul>
-            <li></li>
+            <li>Figure out a solution to the streaming 60-second-limit problem</li>
+            <li>Set up support for multiple mic clients</li>
+            <li>Set up a translation API to display spoken text in different languages</li>
+            <li>Experiment with detecting spoken text in different languages (French and Spanish)</li>
           </ul>
-
           <br />
           Andrew and James will:
           <ul>
@@ -142,11 +204,15 @@
             <li>Cut down the number of supported languages to speed up language detection and for easier testing</li>
             <li>Send messages from the MagicLeap to the server for the choice of language</li>
           </ul>
-
         </p>
 
         <p>
           <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
+        </p>
+        <p>
+          We don't have any major blocking issues. Our primary concerns right now are tracking (built-in image tracking
+          seems to be pretty awful) and the streaming limits, but we have promising ideas for solving both of these
+          problems.
         </p>
       </div>
 
@@ -183,7 +249,7 @@
           the image recognition to work for the anchoring.
           <br />
           <figure align="center">
-            <img src="./imgs/initial_ui.png"/>
+            <img src="./imgs/initial_ui.png" />
             <figcaption>Fig.2 - Magic Leap Week 5 ChatAssist UI</figcaption>
           </figure>
           <br />
@@ -319,7 +385,10 @@
             in
             Powerpoint):
             <br />
-            <img src="./imgs/design.png" />
+            <figure align="center">
+              <img src="./imgs/design.png" />
+              <figcaption>Fig.3 - Overall Infrastructure Design</figcaption>
+            </figure>
             <br />
             <strong>Conclusion:</strong> GCP code is hard to run on MagicLeap. Instead, we've decided to go with a
             server-based approach.

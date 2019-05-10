@@ -15,7 +15,6 @@ public class MicWSClient extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-        send("Hello, it is me. Mario :)");
         System.out.println("opened connection");
     }
 
