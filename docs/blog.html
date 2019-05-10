@@ -46,11 +46,17 @@
             update presentation</a> and video (under 'Current results')
         </div>
         <p>
-          <span style="font-size: 1.3em"><strong>Andrew:</strong></span><br />
-          James and I met up over the weekend to combine the image tracking scene that had the server with the UI from a
-          week ago. After that, we spent a few hours testing out differently-sized images for tracking. We used a small
-          printed-out version of the original larger image that we have in the demo video and it worked decently. The
-          main problem we had with that was that even covering a small portion of the image gave the Magic Leap a hard
+          <span style="font-size: 1.3em"><strong>Andrew and James</strong></span><br />
+      </p>
+          <p>
+          <p>
+             <strong>Implementing Image Tracking</strong>
+          </p>
+          James and Andrew met up over the weekend to combine the image tracking scene that had the server with the UI from a
+          week ago. We first created the image tracking scene from our first scene that we create with built-in image tracking based 
+          on the example provided from Magic Leap. After that, we spent a few hours testing out differently-sized images for 
+          tracking. We used a small printed-out version of the original larger image that we have in the demo video and it worked 
+          decently. The main problem we had with that was that even covering a small portion of the image gave the Magic Leap a hard
           time detecting the image, which isn't ideal because we want the end-user to wear some small image that won't
           get in the way of the conversation. We think that this happens because image tracking/detection is essentially
           based on feature-detection. A lot of features are based on edges/corners, so it's possible that we were
@@ -59,26 +65,26 @@
           We're going to try detecting a smaller version of the image as the base for what we're trying to detect so
           that we have a better idea of what features the image we are going to use for our final product should have.
           We'll also test out newer images and we're going to revisit the QR code idea because QR codes have clearly
-          defined features. We spent some time on Tuesday after the class testing out microphones. James and I were
+          defined features. We spent some time on Tuesday after the class testing out microphones. We were
           there earlier and we came upon a weird bug that moved where the chat bubble was generated around 2000 times
           further than what we coded. We couldn't find out a reason for why it did that because the code for setting the
-          position wasn't complicated, but it still did that. Eventually, it fixed itself after we restarted Unity. I
-          spent some time trying to get the bluetooth microphone to work. From what I could find online, it seems like
+          position wasn't complicated, but it still did that. Eventually, it fixed itself after we restarted Unity. Our group as a whole 
+          spent some time trying to get the bluetooth microphone to work. From what we could find online, it seems like
           it was initially meant for amplifiers and speakers rather than to be used as input for a computer. We were
           able to get it to run on some websites, but when we try to access it on our application, it kind of just died
           and wouldn't respond. We also looked for some information on the microphone, but we couldn't find anything
           relevant on the internet.
           <br />
-          I created the initial outline for the presentation and then we all added parts and information about the
-          things that we worked on. Tuesday night, I was informed that the scene that we had that had all the components
+          Andrew created the initial outline for the presentation and then we all added parts and information about the
+          things that we worked on. Tuesday night, he was informed that the scene that we had that had all the components
           was broken and that some scripts became unset on some of the components, which was strange because it was
-          working when I left the labs. This was why the UI didn't show up in the demo video. I ended up coming in and
-          fixing it on Wednesday, but I'm still confused as to how that happened. Our current hypothesis for why that
+          working when Andrew left the labs. This was why the UI didn't show up in the demo video. He ended up coming in and
+          fixed it on Wednesday, but he still wonders as to how that happened. Our current hypothesis for why that
           happened was that we accidentally changed the metadata in some way and it just became lost. We presented on
-          Thursday and I left early to start the blog post for the week.
-        </p>
-        <p>
-          <span style="font-size: 1.3em"><strong>James:</strong></span><br />
+          Thursday and we left early to start the blog post for the week.
+          <br />
+          The code we wrote this week mainly consists of a <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Prefabs/ChatBubbleLauncher.prefab">new chat bubble launcher prefab</a>, 
+          <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scenes/Combined.unity">the combined unity scene with Andrew's chat language selection UI and James's chat bubbles</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/Visualizers/BubbleVisualizer.cs">a new bubble visualizer script</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/MultiBubbleVisualizer.cs">an attempt at a multiple bubble visualizer script</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/EdgeScrollChatLog.cs">an updated chat log scrolling script</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ImageTracking.cs">an image tracking driver script</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ImageTrackingViz.cs"> and finally an image tracking visualizer script</a>.
         </p>
         <figure align="center">
           <img src="./imgs/current_setup.PNG" />
