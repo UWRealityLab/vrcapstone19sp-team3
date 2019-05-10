@@ -41,7 +41,9 @@
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <div class="deliverable">
-          Deliverable: <a href="https://docs.google.com/presentation/d/1-ahWr0YxFX5gXWFuWkPIt9mwZaGf7DaV7nHO_27TEtM/edit?usp=sharing">Mid-project update presentation</a> and video (under 'Current results')
+          Deliverable: <a
+            href="https://docs.google.com/presentation/d/1-ahWr0YxFX5gXWFuWkPIt9mwZaGf7DaV7nHO_27TEtM/edit?usp=sharing">Mid-project
+            update presentation</a> and video (under 'Current results')
         </div>
         <p>
           <span style="font-size: 1.3em"><strong>Andrew:</strong></span><br />
@@ -53,31 +55,85 @@
           <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
         </p>
         <p>
-          <span style="font-size: 1.3em"><strong>Update on ideas: </strong></span><br />
-          <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
-          <figure align="center"><iframe width="700" height="500" src="https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
-        </p>  
-        <p>
-        <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
+          <strong>Streaming Speech-to-Text</strong>
         </p>
         <p>
-          // Put stuff here
+          Our first order of business was figuring out streaming speech-to-text. In prior weeks, we had set up
+          speech-to-text for recorded audio. For our application to work smoothly, we need speech-to-text to work live,
+          which means it must transcribe an open audio stream. To handle this, we use GCP's Streaming Speech-to-Text
+          API, which requires us to set up an AudioInputStream in Java. We then set up a response observer that receives
+          transcripts from GCP.
+          <br />
+          The way the API works is that it reads the audio stream and automatically detects pauses. When it detects a
+          pause, it does a transcription and sends the transcript to the API caller. This means that you do have to kind
+          of force pauses into a conversation for there to be transcriptions, but we've found it to be fairly
+          reasonable. The latency is also quite good - we're able to get and display the transcript within a second of a
+          pause in speech.
+          <br />
+          There is one major challenge to overcome here: the GCP streaming API has a hard limit of 60 seconds. It cuts
+          off transcriptions after this 60 second limit. This is not good for our application - if you're in the middle
+          of speaking, that audio is not transcribed at all. We are planning to explore workarounds, including
+          potentially swapping API providers. A preliminary readthrough of docs suggests that AWS has a streaming time
+          limit of 4 hours, which is much more suitable for our purposes. However, it supports fewer spoken languages.
+          <br />
+          The streaming transcription looks something like this:
+          <br />
+          <img src="./mic-transcribe.png" />
+        </p>
+
+        <p>
+          <strong>Microphone Client</strong>
+        </p>
+        <p>
+          We set up the microphone client this week. The microphone client is a Java process that does three things.
+          <br />
+          First, the client connects to an audio input (i.e. microphone) on the computer and retrieves an audio stream from that input.
+          <br />
+          Second, the client connects the stream to a speech-to-text API call.
+          <br />
+          Third, the client listens for responses from the API and forwards them to the central server.
+          <br />
+          We modified the central server so that it now looks for messages from microphone clients and forwards them to connected MagicLeaps. Our current design is very close to fully supporting multiple microphones - we just need to add an identifier to each client and have the server and MagicLeap handle the identifiers correctly.
+          <br />
+          Here's an example of what the server log looks like - you can see text being received from an IP corresponding to the microphone client:
+          <br />
+          <img src="./server.png" />
+        </p>
+
+        <p>
+          <strong>Microphone Setup</strong>
+        </p>
+        <p>
+          test
+          <br />
+        </p>
+        <span style="font-size: 1.3em"><strong>Update on ideas: </strong></span><br />
+        <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
+        <figure align="center"><iframe width="700" height="500"
+            src="https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </figure>
+        </p>
+        <p>
+          <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
+        </p>
+        <p>
           <br />
           Ron and Laurissa will:
           <ul>
             <li></li>
           </ul>
-          
-          <br/>
+
+          <br />
           Andrew and James will:
           <ul>
             <li></li>
           </ul>
-          
+
         </p>
 
         <p>
-        <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
+          <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
         </p>
       </div>
 
@@ -92,176 +148,258 @@
         </div>
         <p>
           <span style="font-size: 1.3em"><strong>Andrew:</strong></span><br />
-          This week, I made the UI that we presented last week better and integrated the Magic Leap controller into the project. I added a menu for the user to select the language they want the speech to be translated to, following the feedback for the PRD, and added an initial chat log that we had during our project proposal. The scene lets users scroll through a list of languages on the left and go through a log of messages on the right and allows for easy integration with other parts of the project by having public methods that can be called to get the language the user selects and append to the chat log. 
+          This week, I made the UI that we presented last week better and integrated the Magic Leap controller into the
+          project. I added a menu for the user to select the language they want the speech to be translated to,
+          following the feedback for the PRD, and added an initial chat log that we had during our project proposal. The
+          scene lets users scroll through a list of languages on the left and go through a log of messages on the right
+          and allows for easy integration with other parts of the project by having public methods that can be called to
+          get the language the user selects and append to the chat log.
           <br />
-          I took the feedback from last week about not having static things on the screen because that obstructs the field of view of the user and it feels unnatural to have something follow you everywhere as you move your head, so the boxes sort of float into place and we let the user hide the language selection and chat logs by scrolling to the center. I added a scroll feature by getting the direction the user swipes on the controller and made the language selection and chat logs only visible if the user scrolls towards it. The current iteration of the scrolling is a little janky because it reads off the gestures on the touchpad, which aren't entirely accurate. 
+          I took the feedback from last week about not having static things on the screen because that obstructs the
+          field of view of the user and it feels unnatural to have something follow you everywhere as you move your
+          head, so the boxes sort of float into place and we let the user hide the language selection and chat logs by
+          scrolling to the center. I added a scroll feature by getting the direction the user swipes on the controller
+          and made the language selection and chat logs only visible if the user scrolls towards it. The current
+          iteration of the scrolling is a little janky because it reads off the gestures on the touchpad, which aren't
+          entirely accurate.
           <br />
-          I also tested adding text to the chat log by adding text on the down trigger to make sure that text can be added. Ideally, the chat log will allow easier support for multiple speakers by distinguishing who said what when as it'll maintain a transcript of the conversation. If we can't figure out how to anchor the text to some image, we will still be able to display the text on the chat log; but we will work to avoid this by getting the image recognition to work for the anchoring. 
+          I also tested adding text to the chat log by adding text on the down trigger to make sure that text can be
+          added. Ideally, the chat log will allow easier support for multiple speakers by distinguishing who said what
+          when as it'll maintain a transcript of the conversation. If we can't figure out how to anchor the text to some
+          image, we will still be able to display the text on the chat log; but we will work to avoid this by getting
+          the image recognition to work for the anchoring.
           <br />
           <figure align="center">
-            <img src="./initial_ui.png"/>
+            <img src="./initial_ui.png" />
             <figcaption>Fig.2 - Magic Leap Week 5 ChatAssist UI</figcaption>
           </figure>
           <br />
-          Alan gave some feedback saying that we should probably consider hooking the menu up to the controller because that's what people have been doing nowadays with menus in AR/VR. I didn't know this and I plan on working on that in the future, but I need to focus on getting the anchoring down for the demo next week. I also wanted to include a video of the language selection and the chat log, but the Magic Leap was running low on battery and the controller got unpaired. I somehow missed the last resort in the instructions for how to pair it again, so I couldn't get it to pair and I just put it back into the locker and charged it. James later fixed this.
+          Alan gave some feedback saying that we should probably consider hooking the menu up to the controller because
+          that's what people have been doing nowadays with menus in AR/VR. I didn't know this and I plan on working on
+          that in the future, but I need to focus on getting the anchoring down for the demo next week. I also wanted to
+          include a video of the language selection and the chat log, but the Magic Leap was running low on battery and
+          the controller got unpaired. I somehow missed the last resort in the instructions for how to pair it again, so
+          I couldn't get it to pair and I just put it back into the locker and charged it. James later fixed this.
           <br />
-          The code for this work is in the following links: <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ChatList.cs">appending to the chat log</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ControllerSelection.cs">controller integration</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/EdgeScrollChatLog.cs">scrolling in chat log</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageScrollList.cs">adding language selection and scrolling</a>, and the <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageToggle.cs">toggle for the languages</a>.
+          The code for this work is in the following links: <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ChatList.cs">appending
+            to the chat log</a>, <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/ControllerSelection.cs">controller
+            integration</a>, <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/EdgeScrollChatLog.cs">scrolling
+            in chat log</a>, <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageScrollList.cs">adding
+            language selection and scrolling</a>, and the <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageToggle.cs">toggle
+            for the languages</a>.
         </p>
         <p>
           <span style="font-size: 1.3em"><strong>James:</strong></span><br />
-          This week, I made the UI for displaying the chat bubbles better than the demo that we presented last week. I added some 
-          scripts to the code, as well as created prefabs of the speech-to-text bubbles so that we will be able to generate as many 
-          of these bubbles as we want. The scene currently presents four bubbles generated by the script in real space in four directions around the user. These bubbles always are able to face the user so that the text transcribed is readable 
-          i.e. not flipped in the opposite way. I had some issues early on with the structure of the prefab, as I had it originally 
-          as a two-part design where I had the bubbles as a separate prefab, and I had an additional prefab for the canvas that will 
-          generate these bubbles, but they were not able to display. After discussing the issue with John, I changed the design so that there will be a single empty game object in the scene that will automatically generate these bubble prefabs, and that 
-          prefab contains a Canvas, image sprite of the chat bubble, and the TextMesh Pro text inside to give the display. With the 
-          feedback from last week to not have static objects on the screen, the chat bubbles as they are right now are a step in the 
-          right direction, as you can move around and have the bubbles not be in sight anymore. 
+          This week, I made the UI for displaying the chat bubbles better than the demo that we presented last week. I
+          added some
+          scripts to the code, as well as created prefabs of the speech-to-text bubbles so that we will be able to
+          generate as many
+          of these bubbles as we want. The scene currently presents four bubbles generated by the script in real space
+          in four directions around the user. These bubbles always are able to face the user so that the text
+          transcribed is readable
+          i.e. not flipped in the opposite way. I had some issues early on with the structure of the prefab, as I had it
+          originally
+          as a two-part design where I had the bubbles as a separate prefab, and I had an additional prefab for the
+          canvas that will
+          generate these bubbles, but they were not able to display. After discussing the issue with John, I changed the
+          design so that there will be a single empty game object in the scene that will automatically generate these
+          bubble prefabs, and that
+          prefab contains a Canvas, image sprite of the chat bubble, and the TextMesh Pro text inside to give the
+          display. With the
+          feedback from last week to not have static objects on the screen, the chat bubbles as they are right now are a
+          step in the
+          right direction, as you can move around and have the bubbles not be in sight anymore.
           <br />
-          More development needs to be done on how much text we should display in the chat bubble, either through automatically resizing the bubble when text is generated, adding some user interaction to the bubble for them to resize the bubbles and expand them, changing look of chat bubble via custom image, and etc., but the following tasks that we have layed out below for next week are more important at the moment.
+          More development needs to be done on how much text we should display in the chat bubble, either through
+          automatically resizing the bubble when text is generated, adding some user interaction to the bubble for them
+          to resize the bubbles and expand them, changing look of chat bubble via custom image, and etc., but the
+          following tasks that we have layed out below for next week are more important at the moment.
           <br />
-          I also collaborated with Ron and Laurissa to hook up and test the server code that they made with the bubble generation 
-          scripts so that these bubbles will be able to display the text from that code in roughly real time. More details and a 
+          I also collaborated with Ron and Laurissa to hook up and test the server code that they made with the bubble
+          generation
+          scripts so that these bubbles will be able to display the text from that code in roughly real time. More
+          details and a
           video of the demo are presented below in the code integration section.
           <br />
-          The code for this work is in the following links: <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Prefabs/SpeechToTextCanvas.prefab">prefab for the chat bubble</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/tree/master/chatassist/ChatAssist/Assets/Images">images for chat bubbles</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/PanelGen.cs">script for generating the bubbles</a>, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/SpeechToText.cs">script for producing the text in the bubble</a>.
+          The code for this work is in the following links: <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Prefabs/SpeechToTextCanvas.prefab">prefab
+            for the chat bubble</a>, <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/tree/master/chatassist/ChatAssist/Assets/Images">images
+            for chat bubbles</a>, <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/PanelGen.cs">script
+            for generating the bubbles</a>, <a
+            href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/SpeechToText.cs">script
+            for producing the text in the bubble</a>.
         </p>
         <p>
           <strong>On Image Tracking</strong>
-        <p>
-          <p> 
-          We started testing out the Magic Leap's image recognition examples last week, but were unable to get the examples to work, thinking that we needed physical copies of the images. We tested it again after class on Thursday using images on the computer and printed copies on sheets of paper and met more success, getting the demo to work on some preset images. 
-          <br/>
-          We tried doing the same with some solid-color images and tried to replace the images to see if they could detect new images right off the bat. The fastest path to a working demo is to take the code they have and the images they recognize and use those as the basis of our method for anchoring. This will give us a working product for the demo and we'd be done.
-          <br/>
-          But we want to at least look through the code and see what can be done with it, like push the boundaries of the size of the image so that people don't have to wear 8.5" by 11" sheets of paper to get this to work. We will continue exploring this on Friday, the weekend, and days leading up to the demo day. We also plan on meeting with Alan on Friday. 
+          <p>
+            <p>
+              We started testing out the Magic Leap's image recognition examples last week, but were unable to get the
+              examples to work, thinking that we needed physical copies of the images. We tested it again after class on
+              Thursday using images on the computer and printed copies on sheets of paper and met more success, getting
+              the demo to work on some preset images.
+              <br />
+              We tried doing the same with some solid-color images and tried to replace the images to see if they could
+              detect new images right off the bat. The fastest path to a working demo is to take the code they have and
+              the images they recognize and use those as the basis of our method for anchoring. This will give us a
+              working product for the demo and we'd be done.
+              <br />
+              But we want to at least look through the code and see what can be done with it, like push the boundaries
+              of the size of the image so that people don't have to wear 8.5" by 11" sheets of paper to get this to
+              work. We will continue exploring this on Friday, the weekend, and days leading up to the demo day. We also
+              plan on meeting with Alan on Friday.
+            </p>
+            <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
+            This week, we had a number of technical challenges which took a long time to figure out, but managed to come
+            up with and build a functional workaround (and plan for next steps) after understanding what the problems
+            were. We continued to work together on this part, since our work required a lot of reading various
+            documentation, finding solutions to obscure problems, and choosing the correct libraries to use, that was
+            more
+            effective with two people searching and discussing design decisions.
+            <br />
+            Specifically though, although we sat and wrote all the code in person together so we both wrote code for
+            both
+            parts, we can roughly ascribe the C#/Unity-side stuff to Laurissa, and the Java WebSocket server and Google
+            Cloud Platform (GCP) API setup to Ron.
+            <br />
+            Now we will discuss the various challenges we had in more detail, and the end results we were able to
+            produce.
           </p>
-          <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
-          This week, we had a number of technical challenges which took a long time to figure out, but managed to come
-          up with and build a functional workaround (and plan for next steps) after understanding what the problems
-          were. We continued to work together on this part, since our work required a lot of reading various
-          documentation, finding solutions to obscure problems, and choosing the correct libraries to use, that was more
-          effective with two people searching and discussing design decisions.
-          <br />
-          Specifically though, although we sat and wrote all the code in person together so we both wrote code for both
-          parts, we can roughly ascribe the C#/Unity-side stuff to Laurissa, and the Java WebSocket server and Google
-          Cloud Platform (GCP) API setup to Ron.
-          <br />
-          Now we will discuss the various challenges we had in more detail, and the end results we were able to produce.
-        </p>
-        <p>
-          <strong>Running GCP code on MagicLeap / Unity</strong>
-        </p>
-        <p>
-          As a reminder, last week we wrote working API calls to GCP in a generic C# solution in Visual Studio. This
-          week, we found out that just having C# code does not mean it'll run on Unity. Unity actually runs Mono, a
-          cross-platform version of C#, whereas Visual Studio uses Visual C#, which is *slightly* different.
-          Unfortunately, these differences are enough to make it really difficult to run arbitrary C# libraries on
-          Unity.
-          <br />
-          Basically, things do not compile out of the box. It's possible to make it work, but pretty complicated. We
-          tried
-          a variety of approaches. For example, we tried just copying the GCP packages over to Packages in the Unity
-          project, but it turns out that you need to make the library you want into a Unity package, which also means
-          bundling all its dependencies. Otherwise, Unity may occasionally clear out the Packages folder on its own as
-          it regenerates the solution. We also tried using NuGet with Unity, but couldn't get the configurations to
-          work. In the meantime, we also found out that the MagicLeap does not necessarily support the C# APIs used in
-          the GCP codebase.
-          <br />
-          At one point we also looked at the Amazon AWS API. Unfortunately, their Unity-specific API does not support
-          speech-to-text, so we would probably run into the same issues trying to use their .NET API.
-          <br />
-          We decided at this point that while we could invest a lot more time (already took us many hours to exhaust the
-          different approaches) in getting GCP queries to run on MagicLeap by building it as a Unity package, it might
-          make sense to have a standalone server handling those queries. This design choice also makes sense from a
-          realistic perspective: consumer apps will typically not make API calls directly, since that would involve
-          exposing the private API key to the client. Instead, most apps that use cloud APIs will send requests from
-          clients to a hosted server and then run the actual queries through that server. So, it's totally reasonable
-          for us to follow a similar approach.
-          <br />
-          Here is what we are envisioning now <strong>(we worked out this design as a team of 4,</strong> Ron made it in
-          Powerpoint):
-          <br />
+          <p>
+            <strong>Running GCP code on MagicLeap / Unity</strong>
+          </p>
+          <p>
+            As a reminder, last week we wrote working API calls to GCP in a generic C# solution in Visual Studio. This
+            week, we found out that just having C# code does not mean it'll run on Unity. Unity actually runs Mono, a
+            cross-platform version of C#, whereas Visual Studio uses Visual C#, which is *slightly* different.
+            Unfortunately, these differences are enough to make it really difficult to run arbitrary C# libraries on
+            Unity.
+            <br />
+            Basically, things do not compile out of the box. It's possible to make it work, but pretty complicated. We
+            tried
+            a variety of approaches. For example, we tried just copying the GCP packages over to Packages in the Unity
+            project, but it turns out that you need to make the library you want into a Unity package, which also means
+            bundling all its dependencies. Otherwise, Unity may occasionally clear out the Packages folder on its own as
+            it regenerates the solution. We also tried using NuGet with Unity, but couldn't get the configurations to
+            work. In the meantime, we also found out that the MagicLeap does not necessarily support the C# APIs used in
+            the GCP codebase.
+            <br />
+            At one point we also looked at the Amazon AWS API. Unfortunately, their Unity-specific API does not support
+            speech-to-text, so we would probably run into the same issues trying to use their .NET API.
+            <br />
+            We decided at this point that while we could invest a lot more time (already took us many hours to exhaust
+            the
+            different approaches) in getting GCP queries to run on MagicLeap by building it as a Unity package, it might
+            make sense to have a standalone server handling those queries. This design choice also makes sense from a
+            realistic perspective: consumer apps will typically not make API calls directly, since that would involve
+            exposing the private API key to the client. Instead, most apps that use cloud APIs will send requests from
+            clients to a hosted server and then run the actual queries through that server. So, it's totally reasonable
+            for us to follow a similar approach.
+            <br />
+            Here is what we are envisioning now <strong>(we worked out this design as a team of 4,</strong> Ron made it
+            in
+            Powerpoint):
+            <br />
             <img src="./design.png" />
-          <br />
-          <strong>Conclusion:</strong> GCP code is hard to run on MagicLeap. Instead, we've decided to go with a
-          server-based approach.
-        </p>
-        <p>
-          <strong>Setting up the client and server</strong>
-        </p>
-        <p>
-          We decided to use WebSockets to handle client-server connections, since they seem appropriate for the
-          long-held socket connections that we want to have for constantly displaying text.
-          <br />
-          Once again, WebSockets do not exist in native Unity code. Unity has networking code, but it does not play too
-          well with non-Unity servers. We looked around at various libraries, and found that MagicLeap actually didn't
-          support WebSockets at all until recently - a couple months ago - in the Lumin SDK 0.20 version that we're
-          using. We found that websocket-sharp seems to suit our purposes and was confirmed to work on MagicLeap.
-          <br />
-          To get the library to be on Unity, we had to build it as a DLL since there is no prebuilt solution for
-          Windows, which we are developing on. This meant we had to set up the MonoDevelop IDE, since websocket-sharp
-          was written in Mono (which is why it plays well with Unity). After that, we were able to build a DLL file
-          containing the library, and we put it in Assets/Plugins in our Unity project.
-          <br />
-          Once we had the DLL file working, it was just a couple of lines to get a working WebSocket client in
-          Unity/MagicLeap that would connect to a WebSocket server and be able to send and receive messages.
-          <br />
-          We then put together a WebSocket server. We decided to use Java for this, since this is the language we're
-          most familiar with since we will need to write some more networking code in the near future. We also had to
-          rewrite the code for using the GCP speech-to-text API in Java.
-          <br />
-          At this point, we have a fully functioning connection between the MagicLeap and our server. The MagicLeap can
-          send arbitrary binary strings to the server, and the server can respond with a binary string. This covers all
-          the networking functionality we'll need betwen the MagicLeap and non-MagicLeap things.
-          <br />
-          <strong>Conclusion:</strong> We have fully working networking between the MagicLeap client and a server now!
-          The MagicLeap can receive text from the server and display it. The server is getting this text by making a
-          call to GCP. Next week the server will actually receive the text from other microphone clients that will individually making calls to GCP. We've found the latency is low enough to be totally acceptable.
-        </p>
-        <p>
-          The code for our work is mostly in the <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/tree/master/apis">apis</a> folder. We also hooked up our code in ChatAssist's <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/SpeechToText.cs">SpeechToText.cs</a> script.
-        </p>
-        <p>
-          <strong>Integrating our code</strong>
-        </p>
-        <p>
-          We worked together as a team of 4 for this part. Basically, we've now tied our code together so that the
-          MagicLeap is able to show arbitrary text sent to it from the server. For the sake of this mini demo we also
-          wrote some code on our server to arbitrarily change the text to a user input, although that functionality
-          isn't actually needed since the microphone clients will update the server with text data.
-          <br />
-          Here is a video showing what our project now looks like (should be embedded below but we've also put the link <a href="https://www.youtube.com/embed/bW56ecAwUH4" target="_blank">here</a>):
-          <br />
-          <br />
-          <figure align="center"><iframe width="700" height="500" src="https://www.youtube.com/embed/bW56ecAwUH4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
-        </p>
-        <p>
-          <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
-        </p>
-        <p>
-          We will continue to integrate our code for our demo on Thursday. Specifically...
-          <br />
-          Ron and Laurissa will:
-          <ul>
-            <li>Get the streaming speech-to-text API to work (fairly complex, streams are tough to work with)</li>
-            <li>Use a microphone with the streaming API</li>
-            <li>Write the microphone client and make it forward data to the server</li>
-            <li>Make the server send data to the MagicLeap in a structured fashion</li>
-            <li>Update the MagicLeap / Unity code to accept text updates in a structured fashion</li>
-          </ul>
-          We haven't totally decided how we'll split this work, but probably Ron will work on the streaming API and the basic microphone client setup, and Laurissa will work on linking that to the current server and structuring the data in some consistent way.
-          <br/>
-          Andrew and James will:
-          <ul>
-            <li>Test the Magic Leap's image recognition capabilities</li>
-            <li>Hack up a version of anchoring using the Magic Leap examples</li>
-            <li>Determine where we want to generate the messages relative to the the anchor</li>
-            <li>Determine what unique images we want to detect</li>
-          </ul>
-          More specifically Andrew will look into the Magic Leap image tracking code and determine the extent in which we can use the code base and James will look into the Magic Leap image tracking example to hack up a rudimentary version of anchoring. 
-        </p>
+            <br />
+            <strong>Conclusion:</strong> GCP code is hard to run on MagicLeap. Instead, we've decided to go with a
+            server-based approach.
+          </p>
+          <p>
+            <strong>Setting up the client and server</strong>
+          </p>
+          <p>
+            We decided to use WebSockets to handle client-server connections, since they seem appropriate for the
+            long-held socket connections that we want to have for constantly displaying text.
+            <br />
+            Once again, WebSockets do not exist in native Unity code. Unity has networking code, but it does not play
+            too
+            well with non-Unity servers. We looked around at various libraries, and found that MagicLeap actually didn't
+            support WebSockets at all until recently - a couple months ago - in the Lumin SDK 0.20 version that we're
+            using. We found that websocket-sharp seems to suit our purposes and was confirmed to work on MagicLeap.
+            <br />
+            To get the library to be on Unity, we had to build it as a DLL since there is no prebuilt solution for
+            Windows, which we are developing on. This meant we had to set up the MonoDevelop IDE, since websocket-sharp
+            was written in Mono (which is why it plays well with Unity). After that, we were able to build a DLL file
+            containing the library, and we put it in Assets/Plugins in our Unity project.
+            <br />
+            Once we had the DLL file working, it was just a couple of lines to get a working WebSocket client in
+            Unity/MagicLeap that would connect to a WebSocket server and be able to send and receive messages.
+            <br />
+            We then put together a WebSocket server. We decided to use Java for this, since this is the language we're
+            most familiar with since we will need to write some more networking code in the near future. We also had to
+            rewrite the code for using the GCP speech-to-text API in Java.
+            <br />
+            At this point, we have a fully functioning connection between the MagicLeap and our server. The MagicLeap
+            can
+            send arbitrary binary strings to the server, and the server can respond with a binary string. This covers
+            all
+            the networking functionality we'll need betwen the MagicLeap and non-MagicLeap things.
+            <br />
+            <strong>Conclusion:</strong> We have fully working networking between the MagicLeap client and a server now!
+            The MagicLeap can receive text from the server and display it. The server is getting this text by making a
+            call to GCP. Next week the server will actually receive the text from other microphone clients that will
+            individually making calls to GCP. We've found the latency is low enough to be totally acceptable.
+          </p>
+          <p>
+            The code for our work is mostly in the <a
+              href="https://github.com/UWRealityLab/vrcapstone19sp-team3/tree/master/apis">apis</a> folder. We also
+            hooked up our code in ChatAssist's <a
+              href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/SpeechToText.cs">SpeechToText.cs</a>
+            script.
+          </p>
+          <p>
+            <strong>Integrating our code</strong>
+          </p>
+          <p>
+            We worked together as a team of 4 for this part. Basically, we've now tied our code together so that the
+            MagicLeap is able to show arbitrary text sent to it from the server. For the sake of this mini demo we also
+            wrote some code on our server to arbitrarily change the text to a user input, although that functionality
+            isn't actually needed since the microphone clients will update the server with text data.
+            <br />
+            Here is a video showing what our project now looks like (should be embedded below but we've also put the
+            link <a href="https://www.youtube.com/embed/bW56ecAwUH4" target="_blank">here</a>):
+            <br />
+            <br />
+            <figure align="center"><iframe width="700" height="500" src="https://www.youtube.com/embed/bW56ecAwUH4"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe></figure>
+          </p>
+          <p>
+            <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
+          </p>
+          <p>
+            We will continue to integrate our code for our demo on Thursday. Specifically...
+            <br />
+            Ron and Laurissa will:
+            <ul>
+              <li>Get the streaming speech-to-text API to work (fairly complex, streams are tough to work with)</li>
+              <li>Use a microphone with the streaming API</li>
+              <li>Write the microphone client and make it forward data to the server</li>
+              <li>Make the server send data to the MagicLeap in a structured fashion</li>
+              <li>Update the MagicLeap / Unity code to accept text updates in a structured fashion</li>
+            </ul>
+            We haven't totally decided how we'll split this work, but probably Ron will work on the streaming API and
+            the basic microphone client setup, and Laurissa will work on linking that to the current server and
+            structuring the data in some consistent way.
+            <br />
+            Andrew and James will:
+            <ul>
+              <li>Test the Magic Leap's image recognition capabilities</li>
+              <li>Hack up a version of anchoring using the Magic Leap examples</li>
+              <li>Determine where we want to generate the messages relative to the the anchor</li>
+              <li>Determine what unique images we want to detect</li>
+            </ul>
+            More specifically Andrew will look into the Magic Leap image tracking code and determine the extent in which
+            we can use the code base and James will look into the Magic Leap image tracking example to hack up a
+            rudimentary version of anchoring.
+          </p>
       </div>
 
       <div class="blog-header">Week 4: April 22 - 26, 2019</div>

@@ -48,7 +48,7 @@ public class StreamingHandler {
                                     System.out.println("got resp " + response.getResultsList().get(0).getAlternativesList().get(0).getTranscript());
                                     responses.add(response);
                                     String transcript = response.getResultsList().get(0).getAlternativesList().get(0).getTranscript();
-                                    Launcher.client.send(transcript);
+//                                    Launcher.client.send(transcript);
                                 }
 
                                 public void onComplete() {
@@ -158,36 +158,41 @@ public class StreamingHandler {
 
     public static void main(String[] args) {
         try {
-            AudioFormat audioFormat = new AudioFormat(8000, 16, 1, true, true);
-            // Set the system information to read from the microphone audio stream
-            DataLine.Info targetInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
-
-            System.out.println(Arrays.toString(AudioSystem.getTargetLineInfo(targetInfo)));
-//            System.out.println(Arrays.toString(AudioSystem.getAudioFileTypes()));
-            System.out.println(Arrays.toString(AudioSystem.getMixerInfo()));
-            System.out.println(AudioSystem.getSourceDataLine(audioFormat));
-
-            if (!AudioSystem.isLineSupported(targetInfo)) {
-                System.out.println("Microphone not supported");
-                System.exit(0);
-            }
-            // Target data line captures the audio stream the microphone produces.
-//            TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
-            TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
-//            targetDataLine.open(audioFormat);
-            targetDataLine.open();
-            targetDataLine.start();
-            AudioInputStream audio = new AudioInputStream(targetDataLine);
-            System.out.println("now parsing stream");
-            while (true) {
-                byte[] data = new byte[6400];
-                audio.read(data);
-            }
-//        audioFormats();
-//        streamingMicRecognize();
+            streamingMicRecognize();
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        try {
+//            AudioFormat audioFormat = new AudioFormat(8000, 16, 1, true, true);
+//            // Set the system information to read from the microphone audio stream
+//            DataLine.Info targetInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
+//
+//            System.out.println(Arrays.toString(AudioSystem.getTargetLineInfo(targetInfo)));
+////            System.out.println(Arrays.toString(AudioSystem.getAudioFileTypes()));
+//            System.out.println(Arrays.toString(AudioSystem.getMixerInfo()));
+//            System.out.println(AudioSystem.getSourceDataLine(audioFormat));
+//
+//            if (!AudioSystem.isLineSupported(targetInfo)) {
+//                System.out.println("Microphone not supported");
+//                System.exit(0);
+//            }
+//            // Target data line captures the audio stream the microphone produces.
+////            TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
+//            TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
+////            targetDataLine.open(audioFormat);
+//            targetDataLine.open();
+//            targetDataLine.start();
+//            AudioInputStream audio = new AudioInputStream(targetDataLine);
+//            System.out.println("now parsing stream");
+//            while (true) {
+//                byte[] data = new byte[6400];
+//                audio.read(data);
+//            }
+////        audioFormats();
+////        streamingMicRecognize();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
