@@ -25,7 +25,7 @@ public class LanguageScrollList : MonoBehaviour
 
     private void populateList()
     {
-        StreamReader stream = new StreamReader("./languageList.txt");
+        StreamReader stream = new StreamReader("./shortLanguageList.txt");
         while (!stream.EndOfStream)
         {
             languageList.Add(stream.ReadLine());

@@ -80,7 +80,7 @@ namespace MagicLeap
             _bubbleInstance.LookAt(m_Camera.transform);
             _bubbleInstance.RotateAround(_bubbleInstance.position, _bubbleInstance.up, 180f);
 
-            Debug.Log("Updating position to " + _bubbleInstance.position);
+            // Debug.Log("Updating position to " + _bubbleInstance.position);
         }
         #endregion
 

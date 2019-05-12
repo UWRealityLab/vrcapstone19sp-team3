@@ -1,0 +1,7 @@
+Arabic
+Chinese
+English
+French
+Hindi
+Japanese
+Spanish

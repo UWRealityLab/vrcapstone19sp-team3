@@ -58,7 +58,7 @@ namespace MagicLeap
             //Debug.Log("DOES THIS EVER CALL START?");
             currTog.languageName.fontStyle = FontStyle.Bold;
             selection = 0.0f;
-            leftIndex = 24.0f;
+            leftIndex = 1.0f;
         }
 
         // Update is called once per frame
@@ -163,7 +163,7 @@ namespace MagicLeap
             }
             if (reset)
             {
-                leftIndex = 21.0f;
+                leftIndex = 2.0f;
                 reset = false;
             }
         }
