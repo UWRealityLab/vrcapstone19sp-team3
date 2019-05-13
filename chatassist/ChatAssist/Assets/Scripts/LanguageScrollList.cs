@@ -8,11 +8,13 @@ public class LanguageScrollList : MonoBehaviour
 {
     public List<LanguageToggle> toggles = new List<LanguageToggle>();
     private List<System.String> languageList = new List<System.String>();
+    private List<System.String> languageEncode = new List<System.String>();
     public Transform contentPanel;
     public GameObject prefab;
     public ToggleGroup toggleGroup;
     public Text languageDisplay;
     private string language;
+    private string languageCode;
 
     // Awake is called before Start
     void Awake()
@@ -33,13 +35,20 @@ public class LanguageScrollList : MonoBehaviour
         //    languageList.Add(stream.ReadLine());
         //}
         //stream.Close();
-        languageList.Add("Arabic");
-        languageList.Add("Chinese");
+
+        
         languageList.Add("English");
+        languageEncode.Add("en-US");
         languageList.Add("French");
-        languageList.Add("Hindi");
-        languageList.Add("Japanese");
+        languageEncode.Add("fr-FR");
+        languageList.Add("German");
+        languageEncode.Add("de-DE");
+        languageList.Add("Italian");
+        languageEncode.Add("it-IT");
+        languageList.Add("Korean");
+        languageEncode.Add("ko-KR");
         languageList.Add("Spanish");
+        languageEncode.Add("es-US");
         //Debug.Log(languageList.Count);
     }
     
@@ -61,6 +70,7 @@ public class LanguageScrollList : MonoBehaviour
     public void SetLanguage(int index)
     {
         language = languageList[index];
+        languageCode = languageEncode[index];
         languageDisplay.text = languageList[index];
         toggles[index].toggle.isOn = true;
 
@@ -69,5 +79,10 @@ public class LanguageScrollList : MonoBehaviour
     public string GetLanguage()
     {
         return language;
+    }
+
+    public string GetLanguageCode()
+    {
+        return languageCode;
     }
 }
