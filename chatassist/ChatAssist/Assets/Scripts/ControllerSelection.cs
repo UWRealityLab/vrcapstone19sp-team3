@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
+using System.Timers;
+using WebSocketSharp;
 
 namespace MagicLeap
 {
@@ -27,6 +29,9 @@ namespace MagicLeap
         public float rightIndex = 0;
         private LanguageToggle currTog;
         private Text currText;
+        private Timer timer;
+        private bool languageAck;
+
         #endregion
 
         #region Const Variables
@@ -59,6 +64,11 @@ namespace MagicLeap
             currTog.languageName.fontStyle = FontStyle.Bold;
             selection = 0.0f;
             leftIndex = 1.0f;
+            // Set how frequent you want to set the timer.
+            timer = new Timer(50);
+            timer.Elapsed += onTimer;
+            timer.AutoReset = false;
+            languageAck = true;
         }
 
         // Update is called once per frame
@@ -270,7 +280,14 @@ namespace MagicLeap
                 // TODO: CHANGE INTENSITY to just be a slight buzz.
                 MLInputControllerFeedbackIntensity intensity = (MLInputControllerFeedbackIntensity)((int)(value * 2.0f));
                 controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.Buzz, intensity);
-                if (selection < -0.5f) lsl.SetLanguage((int)leftIndex);
+                if (selection < -0.5f)
+                {
+                    lsl.SetLanguage((int)leftIndex);
+                    languageAck = false;
+                    // TODO: Send to server
+                    // ws.Send(lsl.GetLanguageCode());
+                    timer.Enabled = true;
+                }
                 if (selection > 0.5f) addText(count++ + "");
             }
         }
@@ -285,6 +302,26 @@ namespace MagicLeap
                 currText = cl.list[(int)rightIndex];
             }
             if (currText != null) currText.fontStyle = FontStyle.Bold;
+        }
+
+        public void onTimer(object source, System.Timers.ElapsedEventArgs e)
+        {
+            if (!languageAck)
+            {
+                // TODO: Send to server
+                // Maybe add some prepended thing so that you know it's a language code
+                // ws.Send(lsl.GetLanguageCode());
+                timer.Enabled = true;
+            }
+        }
+
+        // TODO: Add server reply handler.
+        private void reseponse_get(object sender, MessageEventArgs mssg)
+        {
+            if (mssg.Data.Equals(lsl.GetLanguageCode()))
+            {
+                languageAck = true;
+            }
         }
         #endregion
     }
