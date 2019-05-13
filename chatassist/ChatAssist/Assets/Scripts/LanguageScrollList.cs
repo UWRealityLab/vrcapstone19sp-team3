@@ -23,14 +23,23 @@ public class LanguageScrollList : MonoBehaviour
         languageDisplay.text = language;
     }
 
+
+
     private void populateList()
     {
-        StreamReader stream = new StreamReader("./shortLanguageList.txt");
-        while (!stream.EndOfStream)
-        {
-            languageList.Add(stream.ReadLine());
-        }
-        stream.Close();
+        //StreamReader stream = new StreamReader("./shortLanguageList.txt");
+        //while (!stream.EndOfStream)
+        //{
+        //    languageList.Add(stream.ReadLine());
+        //}
+        //stream.Close();
+        languageList.Add("Arabic");
+        languageList.Add("Chinese");
+        languageList.Add("English");
+        languageList.Add("French");
+        languageList.Add("Hindi");
+        languageList.Add("Japanese");
+        languageList.Add("Spanish");
         //Debug.Log(languageList.Count);
     }
     
