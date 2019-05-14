@@ -286,7 +286,7 @@ namespace MagicLeap
                     languageAck = false;
                     // TODO: Send to server
                     // ws.Send(lsl.GetLanguageCode());
-                    timer.Enabled = true;
+                    // timer.Enabled = true;
                 }
                 if (selection > 0.5f) addText(count++ + "");
             }
