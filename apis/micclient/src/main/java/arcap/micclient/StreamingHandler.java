@@ -2,7 +2,6 @@ package arcap.micclient;
 
 import arcap.micclient.aws.StreamTranscriptionBehavior;
 import arcap.micclient.aws.TranscribeStreamingClientWrapper;
-import javafx.application.Platform;
 import software.amazon.awssdk.services.transcribestreaming.model.Result;
 import software.amazon.awssdk.services.transcribestreaming.model.StartStreamTranscriptionResponse;
 import software.amazon.awssdk.services.transcribestreaming.model.TranscriptEvent;
@@ -72,9 +71,7 @@ public class StreamingHandler {
 
             @Override
             public void onComplete() {
-                Platform.runLater(() -> {
-                    System.out.println("final transcript: " + finalTranscript);
-                });
+                System.out.println("final transcript: " + finalTranscript);
             }
         };
     }
