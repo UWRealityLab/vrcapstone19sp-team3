@@ -1,6 +1,5 @@
 package arcap.micclient;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Scanner;
@@ -9,9 +8,11 @@ public class Launcher {
 
     public static MicWSClient client;
 
+    public static final String ID = "mic1";
+
     public static void main(String[] args) throws Exception {
         /*
-        TODO: run StreamingHandler on a timer of ~55 seconds
+        TODO: run OldStreamingHandler on a timer of ~55 seconds
         the goog streaming speech api has a limit of 60 seconds.
         so we must restat the streaming when it stops
          */
@@ -25,13 +26,19 @@ public class Launcher {
             }
         }).start();
         startClient("ws://45.33.55.95:10000");
-        StreamingHandler.streamingMicRecognize();
+        StreamingHandler sh = new StreamingHandler();
+        sh.streamingMicRecognize();
+    }
+
+    public static void message(String msg) {
+        client.send(ID + ":" + msg);
     }
 
     public static void startClient(String addr) throws URISyntaxException {
         URI uri = new URI(addr);
         client = new MicWSClient(uri);
         client.connect();
+        System.out.println("finished startClient()");
     }
 
 }

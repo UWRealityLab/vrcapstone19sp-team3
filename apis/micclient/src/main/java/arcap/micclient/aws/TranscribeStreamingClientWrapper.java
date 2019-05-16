@@ -15,25 +15,23 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.amazonaws.transcribestreaming;
+package arcap.micclient.aws;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
-import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.regions.providers.DefaultAwsRegionProviderChain;
 import software.amazon.awssdk.services.transcribestreaming.TranscribeStreamingAsyncClient;
-import software.amazon.awssdk.services.transcribestreaming.model.AudioStream;
 import software.amazon.awssdk.services.transcribestreaming.model.LanguageCode;
 import software.amazon.awssdk.services.transcribestreaming.model.MediaEncoding;
 import software.amazon.awssdk.services.transcribestreaming.model.StartStreamTranscriptionRequest;
 
 import javax.sound.sampled.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Scanner;
@@ -49,37 +47,23 @@ public class TranscribeStreamingClientWrapper {
     private TranscribeStreamingRetryClient client;
     private AudioStreamPublisher requestStream;
 
-    public TranscribeStreamingClientWrapper() {
-        client = new TranscribeStreamingRetryClient(getClient());
-    }
+    private static boolean loadedCredentials = false;
+    private static String id = null;
+    private static String secret = null;
 
-    public static TranscribeStreamingAsyncClient getClient() {
-        Region region = getRegion();
-//        String endpoint = "https://transcribestreaming." + region.toString().toLowerCase().replace('_','-') + ".amazonaws.com";
+
+    public TranscribeStreamingClientWrapper() {
         String endpoint = "https://transcribestreaming.us-west-2.amazonaws.com";
         try {
-            return TranscribeStreamingAsyncClient.builder()
-                    .credentialsProvider(getCredentials())
-                    .endpointOverride(new URI(endpoint))
-                    .region(region)
-                    .build();
+            client = new TranscribeStreamingRetryClient(
+                    TranscribeStreamingAsyncClient.builder()
+                            .credentialsProvider(getCredentials())
+                            .endpointOverride(new URI(endpoint))
+                            .region(Region.US_WEST_2)
+                            .build());
         } catch (URISyntaxException e) {
-            throw new IllegalArgumentException("Invalid URI syntax for endpoint: " + endpoint);
+            e.printStackTrace();
         }
-
-    }
-
-    /**
-     * Get region from default region provider chain, default to PDX (us-west-2)
-     */
-    private static Region getRegion() {
-        Region region;
-        try {
-            region = new DefaultAwsRegionProviderChain().getRegion();
-        } catch (SdkClientException e) {
-            region = Region.US_WEST_2;
-        }
-        return region;
     }
 
     /**
@@ -88,21 +72,15 @@ public class TranscribeStreamingClientWrapper {
      *
      * @param responseHandler StartStreamTranscriptionResponseHandler that determines what to do with the response
      *                        objects as they are received from the streaming service
-     * @param inputFile       optional input file to stream audio from. Will stream from the microphone if this is set to null
      */
-    public CompletableFuture<Void> startTranscription(StreamTranscriptionBehavior responseHandler, File inputFile) {
+    public CompletableFuture<Void> startTranscription(StreamTranscriptionBehavior responseHandler) {
         if (requestStream != null) {
             throw new IllegalStateException("Stream is already open");
         }
         try {
             System.out.println("setting up completable future");
             int sampleRate = 16_000; //default
-            if (inputFile != null) {
-                sampleRate = (int) AudioSystem.getAudioInputStream(inputFile).getFormat().getSampleRate();
-                requestStream = new AudioStreamPublisher(getStreamFromFile(inputFile));
-            } else {
-                requestStream = new AudioStreamPublisher(getStreamFromMic());
-            }
+            requestStream = new AudioStreamPublisher(getStreamFromMic());
             System.out.println("returning completable future");
             return client.startStreamTranscription(
                     //Request parameters. Refer to API documentation for details.
@@ -111,10 +89,10 @@ public class TranscribeStreamingClientWrapper {
                     requestStream,
                     //Defines what to do with transcripts as they arrive from the service
                     responseHandler);
-        } catch (LineUnavailableException | UnsupportedAudioFileException | IOException ex) {
-            ex.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
             CompletableFuture<Void> failedFuture = new CompletableFuture<>();
-            failedFuture.completeExceptionally(ex);
+            failedFuture.completeExceptionally(e);
             return failedFuture;
         }
     }
@@ -156,7 +134,6 @@ public class TranscribeStreamingClientWrapper {
      * @throws LineUnavailableException When a microphone is not detected or isn't properly working
      */
     private static InputStream getStreamFromMic() throws LineUnavailableException {
-
         // Signed PCM AudioFormat with 16kHz, 16 bit sample size, mono
         int sampleRate = 16000;
         AudioFormat format = new AudioFormat(sampleRate, 16, 1, true, false);
@@ -175,20 +152,6 @@ public class TranscribeStreamingClientWrapper {
     }
 
     /**
-     * Build an input stream from an audio file
-     *
-     * @param inputFile Name of the file containing audio to transcribe
-     * @return InputStream built from reading the file's audio
-     */
-    private static InputStream getStreamFromFile(File inputFile) {
-        try {
-            return new FileInputStream(inputFile);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * Build StartStreamTranscriptionRequestObject containing required parameters to open a streaming transcription
      * request, such as audio sample rate and language spoken in audio
      *
@@ -202,10 +165,6 @@ public class TranscribeStreamingClientWrapper {
                 .mediaSampleRateHertz(mediaSampleRateHertz)
                 .build();
     }
-
-    private static boolean loadedCredentials = false;
-    private static String id = null;
-    private static String secret = null;
 
     /**
      * @return AWS credentials to be used to connect to Transcribe service. This example uses the default credentials
@@ -229,20 +188,4 @@ public class TranscribeStreamingClientWrapper {
         return StaticCredentialsProvider.create(creds);
     }
 
-    /**
-     * AudioStreamPublisher implements audio stream publisher.
-     * AudioStreamPublisher emits audio stream asynchronously in a separate thread
-     */
-    private static class AudioStreamPublisher implements Publisher<AudioStream> {
-        private final InputStream inputStream;
-
-        private AudioStreamPublisher(InputStream inputStream) {
-            this.inputStream = inputStream;
-        }
-
-        @Override
-        public void subscribe(Subscriber<? super AudioStream> s) {
-            s.onSubscribe(new ByteToAudioEventSubscription(s, inputStream));
-        }
-    }
 }
