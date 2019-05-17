@@ -245,6 +245,10 @@
         <img src="./imgs/translate.png"/>
         </p>
         <p>
+        <span style="font-size: 1.3em"><strong>Full integration with MagicLeap</strong></span> <br />
+        We discussed this a bit earlier, but we now have fully integrated our server / mic client with the MagicLeap. Everything works as expected now! We had to resolve some permissions issues to get ChatAssist to run standalone on the MagicLeap (instead of running through Unity and ML Remote).
+        </p>
+        <p>
         <span style="font-size: 1.3em"><strong>Microphone Issues</strong></span> <br />
       Our wired microphone works well with our application but it would be nice if it is not wired to the laptop.
       We tried to get the wireless microphone to connect to our laptop but for some reason, it is detected as an
@@ -253,17 +257,17 @@
       is compatible with a Mac. 
         </p>
 		
-        </p>
         <span style="font-size: 1.3em"><strong>Update on Ideas:</strong></span><br />
         <p>
-		
+          Nothing major to update about, but here's a couple thoughts:
           <ul>
-            <li></li>
+            <li>Transcribe sends a *lot* of responses, many inaccurate (due to noise). We should see if we can improve this.</li>
+            <li>We'll try to make the UI prettier.</li>
           </ul>
         </p>
         <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
         <p>
-		  Here's a video of us demoing our translation from English to German on the bubble.
+		  Here's a video of us demoing our translation from English to German on the bubble. The quality is not ideal (it looks much better in person!) but you can make out some of the German text.
         </p>
         <p>
           Here is a hard link in case the embed doesn't work: <a href="https://drive.google.com/file/d/1hFi5NNre3yu277flu2kmQ9Sb00YpArKI/view">https://drive.google.com/file/d/1hFi5NNre3yu277flu2kmQ9Sb00YpArKI/view</a>.
@@ -274,30 +278,32 @@
         <p>
           <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
         </p>
-		Generally, get ready for the open house:
+      Generally, get ready for the open house:
         <p>
           Ron and Laurissa will:
           <ul>
-            <li></li>
+            <li>Fix latency issues with mass translation</li>
+            <li>Try to not forward partial transcriptions that are inaccurate</li>
           </ul>
           <br />
           Andrew and James will:
           <ul>
             <li>Process language change requests by sending to server</li>
-			<li>Testing out how much space we will need for the demo (before Tuesday)</li>
-			<li>Adjust offsets and UI to improve user experience</li>
-			<li>Test out transparency of the text and depending on results, add controls for changing opacity</li>
+        <li>Testing out how much space we will need for the demo (before Tuesday)</li>
+        <li>Adjust offsets and UI to improve user experience</li>
+        <li>Test out transparency of the text and depending on results, add controls for changing opacity</li>
           </ul>
         </p>
 
         <p>
           <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
-        </p>
-        <p>
+          <ul>
 			<li>We're not sure about how to isolate the voices of the speaker for the microphones, i.e. decreasing microphone sensitivity. </li>
 			<li>We need more people to test this so that we can get feedback on our project. </li>
-			<li>Amazon Transcribe's transcription is not very accurate, but we can't exactly fix this, and it might be possibly worse for other languages.</li>
+      <li>Amazon Transcribe's transcription is not very accurate, but we can't exactly fix this, and it might be worse for other languages like Spanish.</li>
+</ul>
         </p>
+
       </div>
 	
 	
