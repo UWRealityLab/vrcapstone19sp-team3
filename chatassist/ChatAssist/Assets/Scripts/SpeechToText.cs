@@ -17,15 +17,14 @@ public class SpeechToText : MonoBehaviour
     private WebSocket ws;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         currString = "Lorem ipsum dolor sit amet consectetur adipiscing elit nisi, platea at neque porta nostra scelerisque a eleifend ornare, cum accumsan cursus torquent parturient laoreet condimentum. Suspendisse congue faucibus cum sodales sem euismod, mollis dis augue primis dui nullam, erat conubia massa posuere fames. Justo varius erat netus id libero auctor malesuada cum dapibus, hac dis conubia enim ligula bibendum tincidunt nullam, vulputate integer eu non commodo vitae congue lobortis." +
             "Metus euismod sodales nibh nascetur duis parturient eu commodo, sed mauris per urna quis laoreet suspendisse, fames neque magnis mus a leo suscipit.Interdum nisi natoque porttitor nulla ridiculus molestie ut, arcu pretium ligula augue mollis ac velit, parturient faucibus hac porta et tristique.Pulvinar dui in gravida dis sociis mollis semper ornare, pellentesque turpis a eu quis himenaeos ut inceptos, felis senectus lobortis taciti arcu habitant nulla.Nullam fringilla etiam tempus aliquam pellentesque sociosqu iaculis cubilia arcu, posuere cras praesent ligula sem parturient lacinia lectus penatibus sodales, duis facilisis porttitor varius diam egestas conubia velit.";
         Debug.Log("connecting to ws...");
-        ws = new WebSocket("ws://45.33.55.95:10000/");
-        ws.OnMessage += response_get;
-        ws.Connect();
         //ws.Send("./peter.flac");
+        WebSocketManager.initialize();
+        WebSocketManager.Register(this);
     }
 
     // Update is called once per frame
@@ -39,21 +38,6 @@ public class SpeechToText : MonoBehaviour
         }
     }
 
-    private void response_get(object sender, MessageEventArgs mssg)
-    {
-        string data = mssg.Data;
-        Debug.Log("speech server says2: " + data);
-        Debug.Log("step1: " + data);
-        //this.mydude.text = data;
-        Debug.Log("step2: " + data);
-        this.currString = data;
-        Debug.Log("step3: " + data);
-        Debug.Log("set currtext to " + data);
-        //this.mydude.text = "helloabc!!!";
-        //this.mydude.text = data;
-        //this.UpdateText(data);
-    }
-
     void getSpeechToText()
     {
         if ((count / 10) * 80 + 80 < currString.Length)
@@ -62,5 +46,10 @@ public class SpeechToText : MonoBehaviour
             text.text = currString.Substring((count / 10) * 80, 80);
             count++;
         }
+    }
+
+    public void updateCurrText(string currText)
+    {
+        this.currString = currText;
     }
 }

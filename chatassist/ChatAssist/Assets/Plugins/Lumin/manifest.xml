@@ -42,6 +42,7 @@ Unity will automatically fill in areas marked as Placeholder from the Player Set
     <uses-privilege ml:name="GesturesConfig" />
     <!--Examples using Internet: MediaPlayer, Screens-->
     <uses-privilege ml:name="Internet" />
+    <uses-privilege ml:name="LocalAreaNetwork" /> 
     <!--Examples using PwFoundObjRead: Persistence-->
     <uses-privilege ml:name="PwFoundObjRead" />
     <!--Examples using ScreensProvider: Screens-->

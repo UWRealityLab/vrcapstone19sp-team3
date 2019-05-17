@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 780297702, guid: d2693ba6024983942ac9e154580fa026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Image: {fileID: 2800000, guid: 791fec7e7734448ac87e98c56212b2ec, type: 3}
+  Image: {fileID: 2800000, guid: 17f0a990a2687bc41af0a3669162b6b4, type: 3}
   IsStationary: 1
   AutoUpdate: 1
   LongerDimensionInSceneUnits: 0.265
@@ -726,85 +726,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &428977571
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 428977572}
-  - component: {fileID: 428977574}
-  - component: {fileID: 428977573}
-  m_Layer: 5
-  m_Name: 'Text: Deep Sea Exploration Status'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &428977572
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428977571}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0015, y: 0.0015, z: 0}
-  m_Children: []
-  m_Father: {fileID: 1455486063}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.26, y: -0.072}
-  m_SizeDelta: {x: 300, y: 16.5}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &428977573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428977571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: adcae46baa3736748a69f9f489676bd7, type: 3}
-    m_FontSize: 12
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
-    m_LineSpacing: 1
-  m_Text: 'Deep Sea Status: '
---- !u!222 &428977574
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428977571}
-  m_CullTransparentMesh: 0
 --- !u!1 &441105331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2372,7 +2293,7 @@ RectTransform:
   m_LocalScale: {x: 0.0015, y: 0.0015, z: 0}
   m_Children: []
   m_Father: {fileID: 1455486063}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2733,7 +2654,6 @@ RectTransform:
   m_Children:
   - {fileID: 2135327631}
   - {fileID: 850317929}
-  - {fileID: 428977572}
   - {fileID: 1744929190}
   - {fileID: 1084949889}
   - {fileID: 1619052705}
@@ -3084,7 +3004,7 @@ RectTransform:
   m_Children:
   - {fileID: 462088308}
   m_Father: {fileID: 1455486063}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -3325,7 +3245,7 @@ RectTransform:
   m_LocalScale: {x: 0.0015, y: 0.0015, z: 0}
   m_Children: []
   m_Father: {fileID: 1455486063}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3647,7 +3567,7 @@ GameObject:
   - component: {fileID: 1744929192}
   - component: {fileID: 1744929191}
   m_Layer: 5
-  m_Name: 'Text: Deep Space Exploration Status'
+  m_Name: 'Text: Chat Bubble Status'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3665,7 +3585,7 @@ RectTransform:
   m_LocalScale: {x: 0.0015, y: 0.0015, z: 0}
   m_Children: []
   m_Father: {fileID: 1455486063}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3705,7 +3625,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 'Chat Bubble Status: '
 --- !u!222 &1744929192
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4246,7 +4166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c890bdf354698ba429472b626542bcc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _privileges: 1a000000
+  _privileges: 1a000000ab000000
 --- !u!1 &2129136599
 GameObject:
   m_ObjectHideFlags: 0
