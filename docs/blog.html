@@ -114,69 +114,100 @@
         <p>
           <span style="font-size: 1.3em"><strong>Andrew and James</strong></span><br />
       </p>
-		<p>
+		  <p>
         <span style="font-size: 1.3em"><strong>Image Tracking <s>2</s> 3: Electric Boogaloo</strong></span> <br />
-		  We tested different images for image tracking/anchoring and learned that it was able to track images with very basic features. 
+		  We tested different images for image tracking/anchoring and learned that it was able to track images with very 
+      basic features. 
 		  </p>
 		  <p>
-		  [Insert image here]
+		    <figure align="center">
+          <img width=45% src="../chatassist/ChatAssist/Assets/Images/ImageFeature2.png" />
+          <img width=45% src="../chatassist/ChatAssist/Assets/Images/ImageFeature1.png" />
+          <figcaption>Basic images we tested</figcaption>
+        </figure>
 		  </p>
 		  <p>
-		  We find that the _____ performed the best in terms of tracking ability and range. Based on these results, our plan going forward is to utilize the current image 
-		  tracking and create images with more complex features to maximize the performance as much as possible. In order to do so, these images are planned to be different 
+		  We find that the the left image performed the best in terms of tracking ability and range. Based on these results, 
+      our plan going forward is to utilize the current image tracking and create images with more complex features 
+      to maximize the performance as much as possible. In order to do so, these images are planned to be different 
 		  variations of a logo for our product. 
 		  </p>
 		  <p>
-		  We attempted to program a QR code reader to track different QR codes and read from them based on something we found off of the Unity Asset Store. 
-		  As we explored this option, we found that it was infeasible with the time we had and wouldn't perform much better than the built-in image tracking
-		  features available on the Magic Leap. We say this because the image tracking is already built in there, so it is probably optimized for the hardware and if the Magic 
-		  Leap can only do this well with something built for it, it's unlikely that something we hack up over the next few weeks would be much better. We learned that the Magic 
-		  Leap only allows us to take photos instead of a video stream, so we'd have to take a photo, scan it for multiple QR codes (which QR code readers generally don't do),
-		  then realign the anchors. We felt like this would be detrimental to the user experience, as they would have to wait some period of time for the chat bubbles to be realigned.
-		  We talked to Alan about these issues and decided that it would be better to spend the next few weeks refining the UI rather than further explore improving the image tracking.
-		  Just in case we had extra time, we bought OpenCV for Unity and an example built for the Magic Leap for detecting facial landmarks so that we could improve the anchoring.
+		  We attempted to program a QR code reader to track different QR codes and read from them based on something we 
+      found off of the Unity Asset Store. As we explored this option, we found that it was infeasible with the time 
+      we had and wouldn't perform much better than the built-in image tracking features available on the Magic Leap. 
+      We say this because the image tracking is already built in there, so it is probably optimized for the hardware 
+      and if the Magic Leap can only do this well with something built for it, it's unlikely that something we hack 
+      up over the next few weeks would be much better. We learned that the Magic Leap only allows us to take photos 
+      instead of a video stream, so we'd have to take a photo, scan it for multiple QR codes (which QR code readers 
+      generally don't do), then realign the anchors. We felt like this would be detrimental to the user experience, 
+      as they would have to wait some period of time for the chat bubbles to be realigned. We talked to Alan about 
+      these issues and decided that it would be better to spend the next few weeks refining the UI rather than 
+      further explore improving the image tracking. Just in case we had extra time, we bought OpenCV for Unity and 
+      an example built for the Magic Leap for detecting facial landmarks so that we could improve the anchoring.
+		  </p>
+      <p>
+        <figure align="center">
+          <img width=45% src="../chatassist/ChatAssist/Assets/Images/qrcode1.png" />
+          <img width=45% src="../chatassist/ChatAssist/Assets/Images/qrcode2.png" />
+          <figcaption>QR codes that the Magic Leap couldn't distinguish between</figcaption>
+        </figure>
+      </p>
+		  <p>
+		  Laurissa is making the logo for us and we also spent some more time testing the different images like QR codes 
+      and seeing how good the Magic Leap's image tracking is. We learned that if we showed it two QR codes, it could 
+      not distinguish between the two. We think that this is the case because the features of a QR code are pretty 
+      similar, i.e. black edges/squares and white edges/squares. This means that going forward, we need to make sure 
+      that the features are fairly distinct and differentiable.
+		  </p>
+		  
+		  <p>
+        <span style="font-size: 1.3em"><strong>Video Recording</strong></span><br />
+		  We tried to record the video directly off the Magic Leap by testing out the Magic Leap mobile app's beta 
+      feature, Device Streaming. We learned that this also uses the camera, so we were unable to record footage using 
+      this app. We did this because we were concerned about the final video quality of our project, since the current 
+      solution leaves things to be desired. We are going to experiment further with this by bringing a Google Cardboard 
+      to put behind the Magic Leap display to see if the video would be more adequate than its current state. 
+		  </p>
+		  
+		  <p>		
+        <span style="font-size: 1.3em"><strong>UI Improvements</strong></span><br />
+		  James has created a resizable chat bubble so that the bubble will dynamically resize to the amount of text put 
+      into the bubble to prevent overflowing. Steve and Ira also suggested making the bubble image transparent so that 
+      it doesn't occlude the surroundings. Ira also pointed out that we have some unnecessary things on the UI that 
+      we kept for debugging purposes that we should take out, especially since the demo day is coming up. I encountered 
+      an error when porting the application to the Magic Leap in that is some jittering/lag that happens when updating 
+      the UI via the script connected to the controller. This issue doesn't come up when scrolling (or when receiving 
+      text from the server) and it doesn't present any major issues (especially since it doesn't do this when recording 
+      the chat log or the speech bubble), but it should still be addressed. I think that it might have something to do 
+      with the timer I set up on the controller to send messages to the controller. He plans to move the timer outside 
+		  in the future so that there's more modularity in the methods. I'm also going to move the chat log onto the 
+      controller so that the user's field of view is less obstructed overall and move it back from the controller a bit 
+      more in accordance with Alan's suggestions. I also need to make the scrolling through the language list more intuitive 
+		  because the current state of the scrolling is not very accurate. 
 		  </p>
 		  <p>
-		  Laurissa is making the logo for us and we also spent some more time testing the different images like QR codes and seeing how good the Magic Leap's image tracking is. We learned
-		  that if we showed it two QR codes, it could not distinguish between the two. We think that this is the case because the features of a QR code are pretty similar, i.e. black 
-		  edges/squares and white edges/squares. This means that going forward, we need to make sure that the features are fairly distinct and differentiable.
-		  </p>
-		  
-		<p>
-        <span style="font-size: 1.3em"><strong>Video Recording</strong></span><br />
-		  We tried to record the video directly off the Magic Leap by testing out the Magic Leap mobile app's beta feature, Device Streaming. We learned that this also uses
-		  the camera, so we were unable to record footage using this app. We did this because we were concerned about the final video quality of our project, since the current
-		  solution leaves things to be desired. We are going to experiment further with this by bringing a Google Cardboard to put behind the Magic Leap display to see if the 
-		  video would be more adequate than its current state. 
-		</p>
-		  
-		<p>		
-        <span style="font-size: 1.3em"><strong>UI Improvements</strong></span><br />
-		  James has created a resizable chat bubble so that the bubble will dynamically resize to the amount of text put into the bubble to prevent overflowing. Steve and Ira also
-		  suggested making the bubble image transparent so that it doesn't occlude the surroundings. Ira also pointed out that we have some unnecessary things on the UI that we
-		  kept for debugging purposes that we should take out, especially since the demo day is coming up. I encountered an error when porting the application to the Magic Leap
-		  in that is some jittering/lag that happens when updating the UI via the script connected to the controller. This issue doesn't come up when scrolling (or when receiving
-		  text from the server) and it doesn't present any major issues (especially since it doesn't do this when recording the chat log or the speech bubble), but it should still 
-		  be addressed. I think that it might have something to do with the timer I set up on the controller to send messages to the controller. He plans to move the timer outside 
-		  in the future so that there's more modularity in the methods. I'm also going to move the chat log onto the controller so that the user's field of view is less obstructed 
-		  overall and move it back from the controller a bit more in accordance with Alan's suggestions. I also need to make the scrolling through the language list more intuitive 
-		  because the current state of the scrolling is not very accurate. 
-		</p>
-		<p>
-		  Steve also suggested that we have some sort of wearable marker, which we had already planned to do in the future, we were planning on doing something that could be clipped
-		  on rather than something like a lanyard. We're currently discussing how we should execute this to make it more user-friendly than holding a sheet of paper below their heads. 
+		  Steve also suggested that we have some sort of wearable marker, which we had already planned to do in the future, 
+      we were planning on doing something that could be clipped on rather than something like a lanyard. We're currently 
+      discussing how we should execute this to make it more user-friendly than holding a sheet of paper below their heads. 
 		  We're going to discuss this during the weekend because the open house is next week. 
-		</p>
-		<p>
+		  </p>
+		  <p>
         <span style="font-size: 1.3em"><strong>Internationalization</strong></span> <br />
-		  We imported different fonts for Korean, Japanese, and Chinese and integrated them as fallback fonts for the base font we have for the chat bubbles so that we can 
-		  support more languages in the future. Ron and Laurissa will talk about the support for more languages.
-        </p>
+		  We imported different fonts for Korean, Japanese, and Chinese and integrated them as fallback fonts for the base 
+      font we have for the chat bubbles so that we can support more languages in the future. Ron and Laurissa will talk 
+      about the support for more languages.
+      </p>
+      <p>
+        The code we wrote this week mainly consists of a <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/WebSocketManager.cs">web socket manager</a> (with Ron's help), a <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageScrollList.cs">
+        reduced list of languages</a> with proper encodings for Amazon Transcribe, <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/LanguageScrollList.cs">functions to message the server</a>, and some basic code for <a href="https://github.com/UWRealityLab/vrcapstone19sp-team3/blob/master/chatassist/ChatAssist/Assets/Scripts/smooth.cs">smoothing the transition between locations for parented objects</a>.
+      </p>
         <p>
           <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
         </p>
         <p>
-			Something something switching API to Amazon Transcribe (why?). Something something language translation. Something something hooking it up with Unity. Something something logo.
+			Something something switching API to Amazon Transcribe (why?). Something something language translation. 
+      Something something hooking it up with Unity. Something something logo.
 			Something something something
         </p>
 		
