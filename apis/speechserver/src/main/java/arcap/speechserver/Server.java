@@ -42,13 +42,25 @@ public class Server extends WebSocketServer {
                     if (lang != null && lang.length() != 0) {
                         try {
                             System.out.println("Translating " + msg + " for " + id);
-                            cm = senderId + ":" + Translator.translate(msg, "", lang);
+                            cm = senderId + ":" + Translator.translate(msg, "auto", lang);
+                            System.out.println("translated to " + cm);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
                 } else {
                     System.out.println("no id for " + addr + ' ' + Launcher.connToId.toString());
+                    String lang = Launcher.defaultLang;
+                    System.out.println("lang: " + lang);
+                    if (lang != null && lang.length() != 0) {
+                        try {
+                            System.out.println("Translating " + msg + " for " + id);
+                            cm = senderId + ":" + Translator.translate(msg, "auto", lang);
+                            System.out.println("translated to " + cm);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 ws.send(cm);
             }

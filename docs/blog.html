@@ -210,11 +210,39 @@
       </p>
         <p>
           <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
+          This week, we worked on improving our speech-to-text backend, as well as implementing translation. As before, we worked together in person on every part. However, we could say that Ron worked more on writing the code for Amazon Transcribe/Translate, while Laurissa worked more on setting up the AWS account authentication/credentials and debugging microphone issues on Mac.
         </p>
         <p>
-			Something something switching API to Amazon Transcribe (why?). Something something language translation. 
-      Something something hooking it up with Unity. Something something logo.
-			Something something something
+        <span style="font-size: 1.3em"><strong>Amazon Transcribe</strong></span> <br />
+        This week, we swapped our backend from Google Cloud to the Amazon Transcribe speech-to-text API.
+        We did this because, as discussed in prior blog posts, the Google Cloud Platform Speech-to-Text API
+        has a query limit of 1 minute of transcription at a time. It also only provides output on pauses,
+        meaning that long sentences don't provide any data to the ChatAssist user until the person is done talking.
+          <br/>
+          The Amazon Transcribe is more suitable for our needs. It offers up to 4 hours transcription for a single streaming request, meaning that we don't need to hack together some auto-restarting logic that runs every minute. It also provides transcriptions on the fly - if you say a 30 word sentence, it'll start giving you transcriptions only a couple words in. It simply sends further updates on a transcription when it detects the sentence isn't completed yet.
+          <br/>
+          This is what the transcription looks like:
+          <br/>
+        <img src="./imgs/transcribe.png"/>
+          <br/>
+          As you can see, the transcription now sends multiple responses for one spoken sentence. This helps a lot for longer sentences, like the one below:
+          <br/>
+        <img src="./imgs/transcribe-long.png"/>
+          <br/>
+          The code for this is more complicated than before. We now have to gracefully handle multiple responses on one sentence. We are still working on improving the code here, as we are running into latency issues when trying to translate all the responses we get. We will probably need some way to heuristically drop out some of the responses (if we detect longer transcriptions of the same text have already been received). We also want to avoid outputting some of the inaccurate detections - these frequently happen when Transcribe detects half a spoken word as a full word, like "say so" or "pause it" in the above screenshot. We're not sure if it's possible - we'll have to look more at the API to see if we can get some sort of confidence score about the transcription.
+          <br/>
+          Amazon Transcribe does seem slightly less accurate than GCP Speech-to-Text. However, we believe it's worth the tradeoff of losing the 1 minute restriction and long sentence issues. It's good enough to demo, and we can say it's Amazon's responsibility to make a more accurate product haha.
+
+        </p>
+
+        <p>
+        <span style="font-size: 1.3em"><strong>Amazon Translate</strong></span> <br />
+        We also set up translation this week. In the backend, the server now tracks each MagicLeap client. Each client can then request a specific language, and all requests to that client will now be translated before being sent. This introduces a minor amount of latency per request - however, when combined with the rapid partial responses from Transcribe, we are encountering latency issues, where text is detected but not sent to the MagicLeap for a couple seconds due to translation requests stalling the main thread. This will be our primary focus to fix next week.
+        <br/>
+        We first tried using the Google Translate API. Unfortunately, we ran into a mysterious 403 "Query limit exceeded" error that we were unable to resolve. Apparently, lots of other people have this issue as well, since there were a ton of StackOverflow posts about it. We decided to just use Amazon Translate instead, since neural net architectures for machine translation at this point are pretty standard and any big service provider probably uses near state-of-the-art models so there's no reason to think Amazon's offering is any worse. Amazon Translate was much easier to set up, and we have it working now with automatic detection of a source language, and user selection of a target language. If there is no translation needed, the query is not made (which reduces latency).
+        <br/>
+        Here is a screenshot of our server translating an English message received from a mic to German and forwarding it to the MagicLeap.
+        <img src="./imgs/translate.png"/>
         </p>
 		
         </p>

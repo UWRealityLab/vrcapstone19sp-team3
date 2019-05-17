@@ -13,16 +13,19 @@ public class Launcher {
     public static Map<String, String> tlLanguages = new HashMap<>();
     public static Map<String, String> connToId = new HashMap<>();
 
+    public static String defaultLang = "";
+
     public static void main(String[] args) throws IOException {
 //        SpeechHandler.request("./brooklyn.flac");
         new Thread(() -> {
             Scanner scan = new Scanner(System.in);
             while (scan.hasNextLine()) {
-                String s = scan.nextLine();
+                String s = scan.nextLine().trim();
                 for (String key : tlLanguages.keySet()) {
                     tlLanguages.put(key, s);
                 }
                 System.out.println("set langs to " + s);
+                defaultLang = s;
 //                server.broadcast(s);
             }
         }).start();
