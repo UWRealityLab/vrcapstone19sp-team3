@@ -114,13 +114,63 @@
         <p>
           <span style="font-size: 1.3em"><strong>Andrew and James</strong></span><br />
       </p>
-          <p>
-		  Something something testing out different images. (Put images we tested here, talk about conclusions we reached about testing different images.) Talk about
-		  concerns for recording future videos and testing out the Magic Leap mobile app and how it uses the camera. Talk about
-		  QR code idea where we take an image, scan, black out the QR code, scan again, to get it to detect speaker positions. Magic Leap cameras only only you to
-		  take images, so we'd have some type of latency if we did this. Latency -> not great for user experience. Something something hardware limits the distance ->
-		  if this is the best that the magic leap can do, how will QR codes be any better. Talked to Alan, need to work on UI improvements and debug text things. 
-		  Focus on UI/UX going forward. Something something hooking up sending messages from Magic Leap
+		<p>
+        <span style="font-size: 1.3em"><strong>Image Tracking <s>2</s> 3: Electric Boogaloo</strong></span> <br />
+		  We tested different images for image tracking/anchoring and learned that it was able to track images with very basic features. 
+		  </p>
+		  <p>
+		  [Insert image here]
+		  </p>
+		  <p>
+		  We find that the _____ performed the best in terms of tracking ability and range. Based on these results, our plan going forward is to utilize the current image 
+		  tracking and create images with more complex features to maximize the performance as much as possible. In order to do so, these images are planned to be different 
+		  variations of a logo for our product. 
+		  </p>
+		  <p>
+		  We attempted to program a QR code reader to track different QR codes and read from them based on something we found off of the Unity Asset Store. 
+		  As we explored this option, we found that it was infeasible with the time we had and wouldn't perform much better than the built-in image tracking
+		  features available on the Magic Leap. We say this because the image tracking is already built in there, so it is probably optimized for the hardware and if the Magic 
+		  Leap can only do this well with something built for it, it's unlikely that something we hack up over the next few weeks would be much better. We learned that the Magic 
+		  Leap only allows us to take photos instead of a video stream, so we'd have to take a photo, scan it for multiple QR codes (which QR code readers generally don't do),
+		  then realign the anchors. We felt like this would be detrimental to the user experience, as they would have to wait some period of time for the chat bubbles to be realigned.
+		  We talked to Alan about these issues and decided that it would be better to spend the next few weeks refining the UI rather than further explore improving the image tracking.
+		  Just in case we had extra time, we bought OpenCV for Unity and an example built for the Magic Leap for detecting facial landmarks so that we could improve the anchoring.
+		  </p>
+		  <p>
+		  Laurissa is making the logo for us and we also spent some more time testing the different images like QR codes and seeing how good the Magic Leap's image tracking is. We learned
+		  that if we showed it two QR codes, it could not distinguish between the two. We think that this is the case because the features of a QR code are pretty similar, i.e. black 
+		  edges/squares and white edges/squares. This means that going forward, we need to make sure that the features are fairly distinct and differentiable.
+		  </p>
+		  
+		<p>
+        <span style="font-size: 1.3em"><strong>Video Recording</strong></span><br />
+		  We tried to record the video directly off the Magic Leap by testing out the Magic Leap mobile app's beta feature, Device Streaming. We learned that this also uses
+		  the camera, so we were unable to record footage using this app. We did this because we were concerned about the final video quality of our project, since the current
+		  solution leaves things to be desired. We are going to experiment further with this by bringing a Google Cardboard to put behind the Magic Leap display to see if the 
+		  video would be more adequate than its current state. 
+		</p>
+		  
+		<p>		
+        <span style="font-size: 1.3em"><strong>UI Improvements</strong></span><br />
+		  James has created a resizable chat bubble so that the bubble will dynamically resize to the amount of text put into the bubble to prevent overflowing. Steve and Ira also
+		  suggested making the bubble image transparent so that it doesn't occlude the surroundings. Ira also pointed out that we have some unnecessary things on the UI that we
+		  kept for debugging purposes that we should take out, especially since the demo day is coming up. I encountered an error when porting the application to the Magic Leap
+		  in that is some jittering/lag that happens when updating the UI via the script connected to the controller. This issue doesn't come up when scrolling (or when receiving
+		  text from the server) and it doesn't present any major issues (especially since it doesn't do this when recording the chat log or the speech bubble), but it should still 
+		  be addressed. I think that it might have something to do with the timer I set up on the controller to send messages to the controller. He plans to move the timer outside 
+		  in the future so that there's more modularity in the methods. I'm also going to move the chat log onto the controller so that the user's field of view is less obstructed 
+		  overall and move it back from the controller a bit more in accordance with Alan's suggestions. I also need to make the scrolling through the language list more intuitive 
+		  because the current state of the scrolling is not very accurate. 
+		</p>
+		<p>
+		  Steve also suggested that we have some sort of wearable marker, which we had already planned to do in the future, we were planning on doing something that could be clipped
+		  on rather than something like a lanyard. We're currently discussing how we should execute this to make it more user-friendly than holding a sheet of paper below their heads. 
+		  We're going to discuss this during the weekend because the open house is next week. 
+		</p>
+		<p>
+        <span style="font-size: 1.3em"><strong>Internationalization</strong></span> <br />
+		  We imported different fonts for Korean, Japanese, and Chinese and integrated them as fallback fonts for the base font we have for the chat bubbles so that we can 
+		  support more languages in the future. Ron and Laurissa will talk about the support for more languages.
         </p>
         <p>
           <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
@@ -140,19 +190,18 @@
         </p>
         <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
         <p>
-          Here is the video we made for this week's update presentation. In it, you can see that the chat bubble follows the image being held, and that speaking into the microphone results in the spoken words being displayed in the chat bubble shortly after a pause. This fully meets our goals at the beginning of the project for an MVP. We're really excited to have gotten this working! We've also tested the microphone with a lot of background noise by turning up a street walk Youtube video to max volume and speaking next to the speakers, and the speech detection still works well in that scenario!
+		  Here's a video of us demoing our translation from English to German on the bubble.
         </p>
         <p>
-          Here is a hard link in case the embed doesn't work: <a href="https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview">https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview</a>.
+          Here is a hard link in case the embed doesn't work: <a href="https://drive.google.com/file/d/1hFi5NNre3yu277flu2kmQ9Sb00YpArKI/view">https://drive.google.com/file/d/1hFi5NNre3yu277flu2kmQ9Sb00YpArKI/view</a>.
         </p>
-        <figure align="center"><iframe width="700" height="500"
-            src="https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview" frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <figure align="center"><iframe src="https://drive.google.com/file/d/1hFi5NNre3yu277flu2kmQ9Sb00YpArKI/preview" width="640" height="480"></iframe>
         </figure>
         </p>
         <p>
           <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
         </p>
+		Generally, get ready for the open house:
         <p>
           Ron and Laurissa will:
           <ul>
@@ -161,7 +210,10 @@
           <br />
           Andrew and James will:
           <ul>
-            <li></li>
+            <li>Process language change requests by sending to server</li>
+			<li>Testing out how much space we will need for the demo (before Tuesday)</li>
+			<li>Adjust offsets and UI to improve user experience</li>
+			<li>Test out transparency of the text and depending on results, add controls for changing opacity</li>
           </ul>
         </p>
 
@@ -169,7 +221,9 @@
           <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
         </p>
         <p>
-			
+			<li>We're not sure about how to isolate the voices of the speaker for the microphones, i.e. decreasing microphone sensitivity. </li>
+			<li>We need more people to test this so that we can get feedback on our project. </li>
+			<li>Amazon Transcribe's transcription is not very accurate, but we can't exactly fix this, and it might be possibly worse for other languages.</li>
         </p>
       </div>
 	
