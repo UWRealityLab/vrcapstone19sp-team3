@@ -4,7 +4,6 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 public class MicWSClient extends WebSocketClient {
 
@@ -16,6 +15,7 @@ public class MicWSClient extends WebSocketClient {
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         System.out.println("opened connection");
+        this.send("open " + Launcher.ID);
     }
 
     @Override

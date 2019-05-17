@@ -160,7 +160,7 @@ public class TranscribeStreamingClientWrapper {
      */
     private StartStreamTranscriptionRequest getRequest(Integer mediaSampleRateHertz) {
         return StartStreamTranscriptionRequest.builder()
-                .languageCode(LanguageCode.EN_US.toString())
+                .languageCode(LanguageCode.FR_FR.toString())
                 .mediaEncoding(MediaEncoding.PCM)
                 .mediaSampleRateHertz(mediaSampleRateHertz)
                 .build();
