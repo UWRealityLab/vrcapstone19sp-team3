@@ -14,6 +14,7 @@
     <uses-privilege ml:name="GesturesConfig" />
     
     <uses-privilege ml:name="Internet" />
+    <uses-privilege ml:name="LocalAreaNetwork" />
     
     <uses-privilege ml:name="PwFoundObjRead" />
     

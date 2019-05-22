@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
-using System.Timers;
 using WebSocketSharp;
 
 namespace MagicLeap
@@ -29,8 +28,6 @@ namespace MagicLeap
         public float rightIndex = 0;
         private LanguageToggle currTog;
         private Text currText;
-        private Timer timer;
-        private bool languageAck;
 
         #endregion
 
@@ -64,11 +61,9 @@ namespace MagicLeap
             currTog.languageName.fontStyle = FontStyle.Bold;
             selection = 0.0f;
             leftIndex = 1.0f;
-            // Set how frequent you want to set the timer.
-            timer = new Timer(50);
-            timer.Elapsed += onTimer;
-            timer.AutoReset = false;
-            languageAck = true;
+
+            // Makes sure that the WebSocket is initialized
+            WebSocketManager.initialize();
         }
 
         // Update is called once per frame
@@ -97,11 +92,11 @@ namespace MagicLeap
                     //Debug.Log("active controller: " + controller.Touch1Active);
 
                     // TODO: Make the fade away nicer
-                    if (selection > -0.5f) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.0f ? languageMenuOpacity.alpha - 0.01f : 0.0f;
-                    else languageMenuOpacity.alpha += 0.1f;
+                    if (selection > -0.5f) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.0f ? languageMenuOpacity.alpha - 0.4f : 0.0f;
+                    else languageMenuOpacity.alpha += 0.4f;
 
-                    if (selection < 0.5f) chatLogOpacity.alpha = chatLogOpacity.alpha > 0.0f ? chatLogOpacity.alpha - 0.01f : 0.0f;
-                    else chatLogOpacity.alpha += 0.1f;
+                    if (selection < 0.5f) chatLogOpacity.alpha = chatLogOpacity.alpha > 0.0f ? chatLogOpacity.alpha - 0.4f : 0.0f;
+                    else chatLogOpacity.alpha += 0.4f;
                     //Debug.Log(selection);
                     if (!controller.Touch1Active) return;
                     if (dir == MLInputControllerTouchpadGestureDirection.Down)
@@ -141,7 +136,7 @@ namespace MagicLeap
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
                             if (rightIndex > 0) rightIndex -= SCROLL_LENGTH;
-                            Debug.Log(rightIndex);
+                            //Debug.Log(rightIndex);
                             if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
                             if (currText != null) currText.fontStyle = FontStyle.Bold;
                         }
@@ -283,10 +278,7 @@ namespace MagicLeap
                 if (selection < -0.5f)
                 {
                     lsl.SetLanguage((int)leftIndex);
-                    languageAck = false;
-                    // TODO: Send to server
-                    // ws.Send(lsl.GetLanguageCode());
-                    // timer.Enabled = true;
+                    WebSocketManager.send(lsl.GetLanguageCode());
                 }
                 if (selection > 0.5f) addText(count++ + "");
             }
@@ -302,26 +294,6 @@ namespace MagicLeap
                 currText = cl.list[(int)rightIndex];
             }
             if (currText != null) currText.fontStyle = FontStyle.Bold;
-        }
-
-        public void onTimer(object source, System.Timers.ElapsedEventArgs e)
-        {
-            if (!languageAck)
-            {
-                // TODO: Send to server
-                // Maybe add some prepended thing so that you know it's a language code
-                // ws.Send(lsl.GetLanguageCode());
-                timer.Enabled = true;
-            }
-        }
-
-        // TODO: Add server reply handler.
-        private void reseponse_get(object sender, MessageEventArgs mssg)
-        {
-            if (mssg.Data.Equals(lsl.GetLanguageCode()))
-            {
-                languageAck = true;
-            }
         }
         #endregion
     }
