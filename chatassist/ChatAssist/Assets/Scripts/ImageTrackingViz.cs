@@ -28,16 +28,16 @@ namespace MagicLeap
         private MLImageTrackerBehavior _trackerBehavior = null;
         private bool _targetFound = false;
 
-        [SerializeField, Tooltip("Text to update on ImageTracking changes.")]
-        private Text _statusLabel = null;
+        //[SerializeField, Tooltip("Text to update on ImageTracking changes.")]
+        //private Text _statusLabel = null;
         // Stores initial text
         private string _prefix;
         private string _eventString;
 
-        [SerializeField, Tooltip("Game Object showing the axis")]
-        private GameObject _axis = null;
-        [SerializeField, Tooltip("Game Object showing the tracking cube")]
-        private GameObject _trackingCube = null;
+        //[SerializeField, Tooltip("Game Object showing the axis")]
+        //private GameObject _axis = null;
+        //[SerializeField, Tooltip("Game Object showing the tracking cube")]
+        //private GameObject _trackingCube = null;
         [SerializeField, Tooltip("Game Object showing the demo")]
         private GameObject _demo = null;
 
@@ -50,6 +50,7 @@ namespace MagicLeap
         /// </summary>
         void Awake()
         {
+            /*
             if (null == _axis)
             {
                 Debug.LogError("Error: ImageTrackingVisualizer._axis is not set, disabling script.");
@@ -62,18 +63,21 @@ namespace MagicLeap
                 enabled = false;
                 return;
             }
+            */
             if (null == _demo)
             {
                 Debug.LogError("Error: ImageTrackingVisualizer._demo is not set, disabling script.");
                 enabled = false;
                 return;
             }
+            /*
             if (null == _statusLabel)
             {
                 Debug.LogError("Error: ImageTrackingVisualizer._statusLabel is not set, disabling script.");
                 enabled = false;
                 return;
             }
+            */
         }
 
         /// <summary>
@@ -81,8 +85,8 @@ namespace MagicLeap
         /// </summary>
         void Start()
         {
-            _prefix = _statusLabel.text;
-            _statusLabel.text = _prefix + "Target Lost";
+            //_prefix = _statusLabel.text;
+            //_statusLabel.text = _prefix + "Target Lost";
             _eventString = "";
             _trackerBehavior = GetComponent<MLImageTrackerBehavior>();
             _trackerBehavior.OnTargetFound += OnTargetFound;
@@ -93,7 +97,7 @@ namespace MagicLeap
 
         private void Update()
         {
-            _statusLabel.text = String.Format("{0}[{1}/{2}] {3}", _prefix, _trackerBehavior.IsTracking, _trackerBehavior.TrackingStatus, _eventString);
+            //_statusLabel.text = String.Format("{0}[{1}/{2}] {3}", _prefix, _trackerBehavior.IsTracking, _trackerBehavior.TrackingStatus, _eventString);
         }
 
         /// <summary>
@@ -127,23 +131,23 @@ namespace MagicLeap
             switch (_lastViewMode)
             {
                 case ImageTracking.ViewMode.All:
-                    _axis.SetActive(_targetFound);
-                    _trackingCube.SetActive(_targetFound);
+                    //_axis.SetActive(_targetFound);
+                    //_trackingCube.SetActive(_targetFound);
                     _demo.SetActive(_targetFound);
                     break;
                 case ImageTracking.ViewMode.AxisOnly:
-                    _axis.SetActive(_targetFound);
-                    _trackingCube.SetActive(false);
+                    //_axis.SetActive(_targetFound);
+                    //_trackingCube.SetActive(false);
                     _demo.SetActive(false);
                     break;
                 case ImageTracking.ViewMode.TrackingCubeOnly:
-                    _axis.SetActive(false);
-                    _trackingCube.SetActive(_targetFound);
+                    //_axis.SetActive(false);
+                    //_trackingCube.SetActive(_targetFound);
                     _demo.SetActive(false);
                     break;
                 case ImageTracking.ViewMode.DemoOnly:
-                    _axis.SetActive(false);
-                    _trackingCube.SetActive(false);
+                    //_axis.SetActive(false);
+                    //_trackingCube.SetActive(false);
                     _demo.SetActive(_targetFound);
                     break;
             }

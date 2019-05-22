@@ -36,19 +36,23 @@ public class LanguageScrollList : MonoBehaviour
         //}
         //stream.Close();
 
-        
+
         languageList.Add("English");
-        languageEncode.Add("en-US");
+        languageEncode.Add("tl en");
+        languageList.Add("Japanese");
+        languageEncode.Add("tl ja");
+        languageList.Add("Chinese");
+        languageEncode.Add("tl zh-TW");
         languageList.Add("French");
-        languageEncode.Add("fr-FR");
+        languageEncode.Add("tl fr");
         languageList.Add("German");
-        languageEncode.Add("de-DE");
+        languageEncode.Add("tl de");
         languageList.Add("Italian");
-        languageEncode.Add("it-IT");
+        languageEncode.Add("tl it");
         languageList.Add("Korean");
-        languageEncode.Add("ko-KR");
+        languageEncode.Add("tl ko");
         languageList.Add("Spanish");
-        languageEncode.Add("es-US");
+        languageEncode.Add("tl es");
         //Debug.Log(languageList.Count);
     }
     

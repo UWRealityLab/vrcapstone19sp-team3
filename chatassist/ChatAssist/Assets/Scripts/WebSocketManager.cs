@@ -46,11 +46,11 @@ public class WebSocketManager
     private static void response_get(object sender, MessageEventArgs mssg)
     {
         // TODO: should look for acks here
-        if (mssg.Data.Equals(languageCode))
-        {
-            ack = true;
-            return;
-        }
+        //if (mssg.Data.Equals(languageCode))
+        //{
+        //    ack = true;
+        //    return;
+        //}
 
         string data = mssg.Data;
         Debug.Log("speech server says2: " + data);
@@ -79,7 +79,8 @@ public class WebSocketManager
     {
         ws.Send(languageCode);
         WebSocketManager.languageCode = languageCode;
-        ack = false;
+        //ack = false;
+        //timer.Enabled = true;
     }
 
 

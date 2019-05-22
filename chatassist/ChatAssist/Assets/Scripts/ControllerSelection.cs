@@ -35,6 +35,7 @@ namespace MagicLeap
         private const float TRIGGER_DOWN_MIN_VALUE = 0.4f;
         // TODO: Change this to make the scroll easier to use;
         private const float SCROLL_LENGTH = 0.2f;
+        private const float L_SCROLL_LENGTH = 0.1f;
 
         // UpdateLED - Constants
         private const float HALF_HOUR_IN_DEGREES = 15.0f;
@@ -104,7 +105,7 @@ namespace MagicLeap
                         // Move down list
                         if (selection < -0.5f) {
                             currTog.languageName.fontStyle = FontStyle.Normal;
-                            if (leftIndex + SCROLL_LENGTH < lsl.toggles.Count) leftIndex += SCROLL_LENGTH;
+                            if (leftIndex + L_SCROLL_LENGTH < lsl.toggles.Count) leftIndex += L_SCROLL_LENGTH;
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
@@ -125,7 +126,7 @@ namespace MagicLeap
                         if (selection < -0.5f)
                         {
                             currTog.languageName.fontStyle = FontStyle.Normal;
-                            if (leftIndex > 0) leftIndex -= SCROLL_LENGTH;
+                            if (leftIndex > 0) leftIndex -= L_SCROLL_LENGTH;
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
@@ -266,7 +267,7 @@ namespace MagicLeap
         /// </summary>
         /// <param name="controller_id">The id of the controller.</param>
         /// <param name="value">The value of the trigger button.</param>
-        int count = 0;
+        //int count = 0;
         private void HandleOnTriggerDown(byte controllerId, float value)
         {
             MLInputController controller = _controllerConnectionHandler.ConnectedController;
@@ -280,7 +281,7 @@ namespace MagicLeap
                     lsl.SetLanguage((int)leftIndex);
                     WebSocketManager.send(lsl.GetLanguageCode());
                 }
-                if (selection > 0.5f) addText(count++ + "");
+               // if (selection > 0.5f) addText(count++ + "");
             }
         }
 
