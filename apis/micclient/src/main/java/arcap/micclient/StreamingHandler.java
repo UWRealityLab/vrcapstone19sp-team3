@@ -48,27 +48,32 @@ public class StreamingHandler {
 
             @Override
             public void onStream(TranscriptResultStream event) {
-                List<Result> results = ((TranscriptEvent) event).transcript().results();
-                if (results.size() > 0) {
-                    System.out.println("res 2size: " + results.size());
-                    Result firstResult = results.get(0);
-                    if (firstResult.alternatives().size() > 0 && !firstResult.alternatives().get(0).transcript().isEmpty()) {
+                try {
+
+                    List<Result> results = ((TranscriptEvent) event).transcript().results();
+                    if (results.size() > 0) {
+                        System.out.println("res 2size: " + results.size());
+                        Result firstResult = results.get(0);
+                        if (firstResult.alternatives().size() > 0 && !firstResult.alternatives().get(0).transcript().isEmpty()) {
 //                        String transcript = firstResult.alternatives().get(0).transcript();
 //                        Alternative alternative = firstResult.alternatives().get(0);
 //                        for (SdkField<?> sdk : alternative.sdkFields()) {
 //                           System.out.println("sdk: " + sdk.locationName());
 //                        }
 //                        System.out.println(alternative.getValueForField("Items", String.class));
-                        String transcript = firstResult.alternatives().get(0).transcript();
-                        if (!transcript.isEmpty()) {
-                            System.out.println("Transcript: " + transcript + " " + firstResult.isPartial());
+                            String transcript = firstResult.alternatives().get(0).transcript();
+                            if (!transcript.isEmpty()) {
+                                System.out.println("Transcript: " + transcript + " " + firstResult.isPartial());
 //                            System.out.println("now clean and msg");
 //                            System.out.flush();
-                            cleanAndMessage(transcript, firstResult.isPartial());
+                                cleanAndMessage(transcript, firstResult.isPartial());
+                            }
+                            System.out.println("next");
                         }
-                        System.out.println("next");
+                        System.out.println("finished res2");
                     }
-                    System.out.println("finished res2");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -127,7 +132,7 @@ public class StreamingHandler {
                 // exactly the same, skip lol
                 return;
             }
-            if (transcript.substring(0, 3).equals(lastMessage.substring(0, 3))) {
+            if (lastMessage.length() >= 3 && transcript.substring(0, 3).equals(lastMessage.substring(0, 3))) {
                 // seems to be same message
                 // let's wait half a second for another...
                 final int myId = messageRepeatCounter.incrementAndGet();
@@ -153,6 +158,7 @@ public class StreamingHandler {
             lastMessage = transcript;
             send(transcript);
         } else {
+            System.out.println("down here");
             // reset message counter
             messageRepeatCounter.set(0);
             send(transcript);
