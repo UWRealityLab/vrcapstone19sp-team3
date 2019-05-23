@@ -99,7 +99,18 @@ public class StreamingHandler {
     private AtomicInteger messageRepeatCounter = new AtomicInteger();
 
     private synchronized void send(String transcript) {
-        System.out.println("sending " + transcript);
+        System.out.println("Sending " + transcript);
+        if (transcript.length() > MAX_LEN) {
+            if (transcript.length() - lastMessageIdx > MAX_LEN) {
+                lastMessageIdx += MAX_LEN;
+            }
+            int idx = transcript.indexOf(' ', lastMessageIdx - 1);
+            if (idx > -1) {
+                transcript = transcript.substring(idx);
+            }
+        }
+        System.out.println("Trimmed to: " + transcript);
+        Launcher.message(transcript);
 //        int lastLen = 0;
 //        while (transcript.length() > MAX_LEN) {
 //            System.out.println("trimming " + transcript);
@@ -118,17 +129,17 @@ public class StreamingHandler {
     }
 
     private synchronized void cleanAndMessage(String transcript, boolean partial) {
-        System.out.println("clean and msg " + transcript + " " + partial);
+//        System.out.println("clean and msg " + transcript + " " + partial);
         if (partial) {
             // filter out some partials
             // we never filter non-partials
             if (transcript.length() < 3) {
-                System.out.println("skip 1");
+//                System.out.println("skip 1");
                 // ignore short partials
                 return;
             }
             if (transcript.equals(lastMessage)) {
-                System.out.println("skip 2");
+//                System.out.println("skip 2");
                 // exactly the same, skip lol
                 return;
             }
@@ -137,16 +148,16 @@ public class StreamingHandler {
                 // let's wait half a second for another...
                 final int myId = messageRepeatCounter.incrementAndGet();
                 final String myTranscript = transcript;
-                System.out.println("launching thraed");
+//                System.out.println("launching thraed");
                 new Thread(() -> {
                     try {
-                        System.out.println("Waiting on " + myTranscript);
+//                        System.out.println("Waiting on " + myTranscript);
                         Thread.sleep(100L);
                         if (messageRepeatCounter.get() == myId) {
                             // didn't receive another partial!
                             send(myTranscript);
                         } else {
-                            System.out.println("message changed from " + myTranscript);
+                            System.out.println("Skipping: " + myTranscript);
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -154,11 +165,11 @@ public class StreamingHandler {
                 }).start();
                 return;
             }
-            System.out.println("not matched: " + transcript);
+//            System.out.println("not matched: " + transcript);
             lastMessage = transcript;
             send(transcript);
         } else {
-            System.out.println("down here");
+//            System.out.println("down here");
             // reset message counter
             messageRepeatCounter.set(0);
             send(transcript);
