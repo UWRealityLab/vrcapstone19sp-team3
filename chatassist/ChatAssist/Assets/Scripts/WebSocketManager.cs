@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WebSocketSharp;
+using System.Timers;
 
 
 public class WebSocketManager 
@@ -9,8 +10,11 @@ public class WebSocketManager
     public static WebSocket ws;
     public static List<SpeechToText> ls;
     public static bool initialized;
-    // Start is called before the first frame update
+    private static Timer timer;
+    private static bool ack;
+    private static string languageCode;
 
+    // Start is called before the first frame update
     public static void initialize()
     {
         if (initialized)
@@ -22,6 +26,13 @@ public class WebSocketManager
         ws.OnMessage += response_get;
         ws.Connect();
         initialized = true;
+
+        // Set how frequent you want to set the timer.
+        timer = new Timer(50);
+        timer.Elapsed += onTimer;
+        timer.AutoReset = false;
+        ack = true;
+        languageCode = "en-US";
     }
 
 
@@ -34,6 +45,13 @@ public class WebSocketManager
 
     private static void response_get(object sender, MessageEventArgs mssg)
     {
+        // TODO: should look for acks here
+        if (mssg.Data.Equals(languageCode))
+        {
+            ack = true;
+            return;
+        }
+
         string data = mssg.Data;
         Debug.Log("speech server says2: " + data);
         Debug.Log("step1: " + data);
@@ -56,4 +74,24 @@ public class WebSocketManager
             st.updateCurrText(msg);
         }
     }
+
+    public static void send(string languageCode)
+    {
+        ws.Send(languageCode);
+        WebSocketManager.languageCode = languageCode;
+        ack = false;
+    }
+
+
+    public static void onTimer(object source, System.Timers.ElapsedEventArgs e)
+    {
+        if (!ack)
+        {
+            // TODO: Send to server
+            // Maybe add some prepended thing so that you know it's a language code
+            ws.Send(languageCode);
+            timer.Enabled = true;
+        }
+    }
+
 }
