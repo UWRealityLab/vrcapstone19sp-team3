@@ -89,7 +89,7 @@ public class StreamingHandler {
 
     private AtomicInteger messageRepeatCounter = new AtomicInteger();
 
-    private void send(String transcript) {
+    private synchronized void send(String transcript) {
         System.out.println("sending " + transcript);
 //        int lastLen = 0;
 //        while (transcript.length() > MAX_LEN) {
@@ -108,7 +108,7 @@ public class StreamingHandler {
 //        Launcher.message(transcript);
     }
 
-    private void cleanAndMessage(String transcript, boolean partial) {
+    private synchronized void cleanAndMessage(String transcript, boolean partial) {
         if (partial) {
             // filter out some partials
             // we never filter non-partials
