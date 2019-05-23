@@ -50,7 +50,7 @@ public class StreamingHandler {
             public void onStream(TranscriptResultStream event) {
                 List<Result> results = ((TranscriptEvent) event).transcript().results();
                 if (results.size() > 0) {
-                    System.out.println("res size: " + results.size());
+                    System.out.println("res 2size: " + results.size());
                     Result firstResult = results.get(0);
                     if (firstResult.alternatives().size() > 0 && !firstResult.alternatives().get(0).transcript().isEmpty()) {
 //                        String transcript = firstResult.alternatives().get(0).transcript();
@@ -68,6 +68,7 @@ public class StreamingHandler {
                         }
                         System.out.println("next");
                     }
+                    System.out.println("finished res2");
                 }
             }
 
