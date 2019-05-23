@@ -109,6 +109,7 @@ public class StreamingHandler {
     }
 
     private synchronized void cleanAndMessage(String transcript, boolean partial) {
+        System.out.println("clean and msg " + transcript + " " + partial);
         if (partial) {
             // filter out some partials
             // we never filter non-partials
@@ -142,6 +143,7 @@ public class StreamingHandler {
                         e.printStackTrace();
                     }
                 }).start();
+                return;
             }
             System.out.println("not matched: " + transcript);
             lastMessage = transcript;
