@@ -62,9 +62,11 @@ public class StreamingHandler {
                         String transcript = firstResult.alternatives().get(0).transcript();
                         if (!transcript.isEmpty()) {
                             System.out.println("Transcript: " + transcript + " " + firstResult.isPartial());
-                            System.out.println("now clean and msg");
-                            cleanAndMessage(transcript, firstResult.isPartial());
+//                            System.out.println("now clean and msg");
+//                            System.out.flush();
+//                            cleanAndMessage(transcript, firstResult.isPartial());
                         }
+                        System.out.println("next");
                     }
                 }
             }
