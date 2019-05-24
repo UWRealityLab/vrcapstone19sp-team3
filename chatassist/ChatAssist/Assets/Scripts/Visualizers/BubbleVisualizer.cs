@@ -45,7 +45,7 @@ namespace MagicLeap
             //_planetInstance = Instantiate(_planetPrefabAnimator.transform, GetPosition(), Quaternion.identity);
             if (null != _bubbleInstance)
             {
-                _bubbleInstance.gameObject.SetActive(true);
+                _bubbleInstance.GetComponent<CanvasGroup>().alpha = 1.0f;
             }
             else
             {
@@ -62,7 +62,8 @@ namespace MagicLeap
             if (null != _bubbleInstance)
             {
                 //_planetInstance.GetComponent<Animator>().Play("EarthShrinking");
-                _bubbleInstance.gameObject.SetActive(false);
+                //_bubbleInstance.gameObject.SetActive(false);
+                _bubbleInstance.GetComponent<CanvasGroup>().alpha = 0.0f;
                 //Destroy(_explorerInstance.gameObject, 1.1f);
                 //_explorerInstance = null;
             }

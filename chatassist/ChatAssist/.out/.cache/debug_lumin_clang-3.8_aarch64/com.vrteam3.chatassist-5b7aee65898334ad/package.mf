@@ -2,16 +2,16 @@
  "entries": [
   {
    "compression": 8,
-   "hash": "558c45862d412f087656a7eadee1cc28461602f6",
+   "hash": "3e186ebeedbe5c283d1d72681dbd8ef02d243674",
    "pkgpath": "Data/Managed/Metadata/global-metadata.dat",
-   "size": 3859276,
+   "size": 3858212,
    "src": "C:/Users/vrteam3/Documents/vrcapstone19sp-team3/chatassist/ChatAssist/Temp/StagingArea/Data/Managed/Metadata/global-metadata.dat"
   },
   {
    "compression": 8,
-   "hash": "9b49d6bde53c27867ef46179aa877685edf33d1a",
+   "hash": "debb5bc55631afa07e58919687512c293326697c",
    "pkgpath": "bin/libil2cpp.so",
-   "size": 58066472,
+   "size": 58065728,
    "src": "C:/Users/vrteam3/Documents/vrcapstone19sp-team3/chatassist/ChatAssist/Temp/StagingArea/Data/Native/libil2cpp.so",
    "xfrm_flags": {
     "signed": {
@@ -23,9 +23,9 @@
      "version": 3
     }
    },
-   "xfrm_hash": "704eaa80a198fe8f9e41e5f7e8f1c4044e9bbb0b",
+   "xfrm_hash": "86a6f59f195c924b46fce78ed81b61a2f1fca735",
    "xfrm_path": "C:/Users/vrteam3/Documents/vrcapstone19sp-team3/chatassist/ChatAssist/.out/.cache/debug_lumin_clang-3.8_aarch64/com.vrteam3.chatassist-5b7aee65898334ad\\libil2cpp.so-7e35a335767ae8f3",
-   "xfrm_size": 58067230
+   "xfrm_size": 58066486
   },
   {
    "compression": 8,
@@ -158,28 +158,28 @@
   },
   {
    "compression": 8,
-   "hash": "4a5649f5e507ed46f94e56d2a1374ddfcdbfd863",
+   "hash": "29548ca750ff5ae61272053636056a0dbfebb7a8",
    "pkgpath": "Data/globalgamemanagers",
-   "size": 54192,
+   "size": 54176,
    "src": "C:/Users/vrteam3/Documents/vrcapstone19sp-team3/chatassist/ChatAssist/Temp/StagingArea/Data/globalgamemanagers"
   },
   {
    "compression": 8,
-   "hash": "3a28923ced4d6b5f9efb7d8249353f1483c76b7a",
+   "hash": "7d9fa3dfa4b57bb475ad126c14531e57ade6c9e0",
    "pkgpath": "Data/globalgamemanagers.assets",
    "size": 71864,
    "src": "C:/Users/vrteam3/Documents/vrcapstone19sp-team3/chatassist/ChatAssist/Temp/StagingArea/Data/globalgamemanagers.assets"
   },
   {
    "compression": 8,
-   "hash": "97d9efcac6e679c19843e1ebb568b0ad8f9cbe2e",
+   "hash": "174c403e86d8c7f32d5741ab75d4644a047e7c94",
    "pkgpath": "Data/level0",
    "size": 46476,
    "src": "C:/Users/vrteam3/Documents/vrcapstone19sp-team3/chatassist/ChatAssist/Temp/StagingArea/Data/level0"
   },
   {
    "compression": 8,
-   "hash": "5c89dc425fc02c52ca787a9659c6750c4032ac50",
+   "hash": "223e0c3f4bc81b986115a61f3e874cf6bda422de",
    "pkgpath": "Data/resources.assets",
    "size": 703128,
    "src": "C:/Users/vrteam3/Documents/vrcapstone19sp-team3/chatassist/ChatAssist/Temp/StagingArea/Data/resources.assets"
@@ -193,9 +193,9 @@
   },
   {
    "compression": 8,
-   "hash": "b545669080c63c39ce3e5d39f3fe189736a2acd3",
+   "hash": "f56d0fbc3a3a9426cee88e573fe0a4620c8ab3c0",
    "pkgpath": "Data/sharedassets0.assets",
-   "size": 58596976,
+   "size": 59022432,
    "src": "C:/Users/vrteam3/Documents/vrcapstone19sp-team3/chatassist/ChatAssist/Temp/StagingArea/Data/sharedassets0.assets"
   },
   {

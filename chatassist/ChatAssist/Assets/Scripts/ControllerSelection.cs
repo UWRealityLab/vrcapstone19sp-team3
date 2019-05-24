@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 using WebSocketSharp;
+using System;
 
 namespace MagicLeap
 {
@@ -77,6 +78,7 @@ namespace MagicLeap
             if (_controllerConnectionHandler.IsControllerValid())
             {
                 MLInputController controller = _controllerConnectionHandler.ConnectedController;
+                Debug.Log("distance " + controller.TouchpadGesture.Distance + " force " + controller.TouchpadGesture.PosAndForce + " speed " + controller.TouchpadGesture.Speed);
                 if (controller.Type == MLInputControllerType.Control)
                 {
                     // None = 0,
@@ -92,6 +94,8 @@ namespace MagicLeap
                     MLInputControllerTouchpadGestureDirection dir = controller.TouchpadGesture.Direction;
                     //Debug.Log("active controller: " + controller.Touch1Active);
 
+                    float scroll_len = Math.Abs(controller.TouchpadGesture.Speed) / 20;
+
                     // TODO: Make the fade away nicer
                     if (selection > -0.5f) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.0f ? languageMenuOpacity.alpha - 0.4f : 0.0f;
                     else languageMenuOpacity.alpha += 0.4f;
@@ -105,7 +109,7 @@ namespace MagicLeap
                         // Move down list
                         if (selection < -0.5f) {
                             currTog.languageName.fontStyle = FontStyle.Normal;
-                            if (leftIndex + L_SCROLL_LENGTH < lsl.toggles.Count) leftIndex += L_SCROLL_LENGTH;
+                            if (leftIndex + scroll_len < lsl.toggles.Count) leftIndex += scroll_len;
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
@@ -115,7 +119,7 @@ namespace MagicLeap
                         if (selection > 0.5f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
-                            if (rightIndex + SCROLL_LENGTH < cl.list.Count) rightIndex += SCROLL_LENGTH;
+                            if (rightIndex + scroll_len < cl.list.Count) rightIndex += scroll_len;
                             if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
                             if (currText != null) currText.fontStyle = FontStyle.Bold;
                         }
@@ -126,7 +130,7 @@ namespace MagicLeap
                         if (selection < -0.5f)
                         {
                             currTog.languageName.fontStyle = FontStyle.Normal;
-                            if (leftIndex > 0) leftIndex -= L_SCROLL_LENGTH;
+                            if (leftIndex > 0) leftIndex -= scroll_len;
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
@@ -136,7 +140,7 @@ namespace MagicLeap
                         if (selection > 0.5f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
-                            if (rightIndex > 0) rightIndex -= SCROLL_LENGTH;
+                            if (rightIndex > 0) rightIndex -= scroll_len;
                             //Debug.Log(rightIndex);
                             if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
                             if (currText != null) currText.fontStyle = FontStyle.Bold;
@@ -146,12 +150,12 @@ namespace MagicLeap
                     {
                         // move to left menu
                         // TODO: Maybe check for two consecutive lefts or rights before switching
-                        if (selection > -1.0f) selection -= 0.1f;
+                        if (selection > -1.0f) selection -= scroll_len * 0.5f;
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Right)
                     {
                         // move to right menu
-                        if (selection < 1.0f) selection += 0.1f;
+                        if (selection < 1.0f) selection += scroll_len * 0.5f;
                         else if (selection + 0.1f > 1.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
@@ -289,6 +293,7 @@ namespace MagicLeap
         {
             cl.AddChatBox(text);
             if ((int)rightIndex == cl.list.Count - 2) rightIndex++;
+            if ((int)rightIndex > cl.list.Count) rightIndex = cl.list.Count - 1;
             if (currText != null) currText.fontStyle = FontStyle.Normal;
             if (rightIndex > 0 && (int)rightIndex < cl.list.Count)
             {

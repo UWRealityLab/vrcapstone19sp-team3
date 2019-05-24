@@ -223,8 +223,8 @@ namespace MagicLeap
         {
             if (_controllerConnectionHandler.IsControllerValid(controllerId) && button == MLInputControllerButton.Bumper)
             {
-                _viewMode = (ViewMode)((int)(_viewMode + 1) % Enum.GetNames(typeof(ViewMode)).Length);
-                _viewModeLabel.text = string.Format("View Mode: {0}", _viewMode.ToString());
+                //_viewMode = (ViewMode)((int)(_viewMode + 1) % Enum.GetNames(typeof(ViewMode)).Length);
+                //_viewModeLabel.text = string.Format("View Mode: {0}", _viewMode.ToString());
             }
             UpdateVisualizers();
         }

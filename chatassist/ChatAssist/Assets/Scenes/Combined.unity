@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 780297702, guid: d2693ba6024983942ac9e154580fa026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Image: {fileID: 2800000, guid: 17f0a990a2687bc41af0a3669162b6b4, type: 3}
+  Image: {fileID: 2800000, guid: de0ba5151d5bb894cb5eafb125635d54, type: 3}
   IsStationary: 1
   AutoUpdate: 1
   LongerDimensionInSceneUnits: 0.265
@@ -3582,7 +3582,7 @@ MonoBehaviour:
   m_Script: {fileID: 780297702, guid: d2693ba6024983942ac9e154580fa026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Image: {fileID: 2800000, guid: 2b6ddfc87fcd74540ae60b686698d0fc, type: 3}
+  Image: {fileID: 2800000, guid: e5333840666b3c941adceb617253bfbc, type: 3}
   IsStationary: 1
   AutoUpdate: 1
   LongerDimensionInSceneUnits: 0.265
@@ -3749,19 +3749,24 @@ PrefabInstance:
     - target: {fileID: 9079597325439080487, guid: dc4ea6624bfc3784ab5caa1e83d5ce3a,
         type: 3}
       propertyPath: _positionOffset.x
-      value: -0.3
+      value: -0.35
       objectReference: {fileID: 0}
     - target: {fileID: 9079597325439080487, guid: dc4ea6624bfc3784ab5caa1e83d5ce3a,
         type: 3}
       propertyPath: _positionOffset.z
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9079597325439080487, guid: dc4ea6624bfc3784ab5caa1e83d5ce3a,
         type: 3}
       propertyPath: _bubblePrefab
       value: 
-      objectReference: {fileID: 7880180988512256226, guid: c3eb6707c5bd97e40b18af739de5f854,
+      objectReference: {fileID: 966000929770270632, guid: 78b49ee0d35ba4c49b2518135092062d,
         type: 3}
+    - target: {fileID: 9079597325439080487, guid: dc4ea6624bfc3784ab5caa1e83d5ce3a,
+        type: 3}
+      propertyPath: _positionOffset.y
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc4ea6624bfc3784ab5caa1e83d5ce3a, type: 3}
 --- !u!1 &1455486062
@@ -4466,7 +4471,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580313706}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2b582946681e6945974eebd4287cee6, type: 3}
   m_Name: 
@@ -4719,6 +4724,12 @@ PrefabInstance:
       propertyPath: _positionOffset.z
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 9079597325439080487, guid: dc4ea6624bfc3784ab5caa1e83d5ce3a,
+        type: 3}
+      propertyPath: _bubblePrefab
+      value: 
+      objectReference: {fileID: 966000929770270632, guid: 78b49ee0d35ba4c49b2518135092062d,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc4ea6624bfc3784ab5caa1e83d5ce3a, type: 3}
 --- !u!4 &1677564638 stripped
