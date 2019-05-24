@@ -127,15 +127,43 @@
           <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
         </p>
         <p>
-		  Something something text chunking
+          As in prior weeks, we worked together in person on this part. We especially found it useful to have two people figuring out the response filtering logic (discussed below). We 
+          After getting translation to work last week, in our tests we found that translation API calls result in unacceptably-high latency. This is because of the nature of the Amazon Transcribe service - although it sends "incremental responses" (i.e. 1-word, then 2-words, then 3-words), it often sends 10+ responses all at once. Our server then tries to run make 10 translation calls. While one translation only takes about 100ms - acceptable latency, doing 10 at once obviously causes much more lag. Add in the possibility of the mic client sending even more messages while the translations are pending, and we end up with absurdly high latencies (more than 10 seconds, sometimes).
+          <br/>
+          So, this week we primarily focused on avoiding issues with latency. The only extra information beyond the words themselves that the Amazon Transcribe Streaming API provides is a boolean flag of "partial", where "partial" indicates a speech endpoint was not detected yet. Using the partial flag, our logic for handling this was as follows:
+          <ol>
+            <li>When a message is received, check if it is a partial.</li>
+            <li>If it is not a partial, send it to server (so we never miss a full sentence).</li>
+            <li>If it is a partial, then...</li>
+            <li>If the message is shorter than 3 characters, we assume there will be more and just skip it.</li>
+            <li>If it's exactly the same as the last message, skip it. The last message is already being processed.</li>
+            <li>If the first 3 characters ARE NOT the same as the last message (indicator of similarity), then send it. It's probably the start of a new sentence.</li>
+            <li>If the first 3 characters ARE the same as the last message, then...</li>
+            <li>Assign and increment a global (atomic) ID to the current message as the "latest message id received".</li>
+            <li>Start a new thread that sleeps for 100ms.</li>
+            <li>After the thread wakes, check if the global ID has changed. If it has, we don't want to send this message anymore! This is because we know newer messages were received, and based on our observations of the Amazon Transcribe API behavior, one of them was either:</li>
+            <ol>
+              <li>the end (non-partial) of this current sentence, or</li>
+              <li>a longer version of this current sentence.</li>
+            </ol>
+            <li>If the global ID hasn't changed, then send the message to the server. It's determined to be sufficiently "non-spammy".</li>
+          </ol>
+          This essentially forces a 100ms delay to allow us to filter out repetitive responses from Amazon Transcribe. This solves the major issue with it, which is that it sends like 20 responses for a 12 word sentence. This also gives us the benefit of filtering more of the inaccurate transcriptions, as they often are followed immediately by a corrected version (and we used to send both, but now just send the later one).
+          <br/>
+          Below are the results we managed to achieve. In the screenshot, "Transcript:" is for responses (transcriptions) from Amazon Transcribe. "Skipping: " is for transcriptions that were received by the mic, but not sent to the server for translation and display. "Sending" is for transcriptions that are forwarded to the server, where they will be translated (if a translation language is specified) and sent to the Magic Leap for display.
+          <br/>
+          This screenshot is taken in the middle of the output to demonstrate its useful ability to strip out a bunch of inaccurate partial transcriptions such as "This is an example rather than four". <strong>Instead, of the 10 transcriptions that are processed, only 2 are forwarded to the server.</strong> Yet, those 2 are sufficient to make the transcriptions for the user feel real-time, as they are separated by just a couple words. Last week, we would have sent all 10 of those transcriptions, causing serious lag on the server-side due to stalling for translation requests.
+          <br/>
+          <img src="./imgs/skips.png"/>
         </p>
 		
         </p>
         <span style="font-size: 1.3em"><strong>Update on ideas: </strong></span><br />
         <p>
-		  General feedback: "It's cool when it works." 
+          We did an in-class demo with plenty of people this Thursday. Our primary observation was that image tracking is still mediocre and often buggy - sometimes not working for several minutes. We believe, at this point, we should implement something that can force a chat bubble to be visible. This way, people can at least experience the speech-to-text component of the project if the image tracking / chat bubble display doesn't work. Hopefully we can continue to improve the image tracking as well.
           <ul>
-            <li></li>
+            <li>Get a toggle to force a camera-centered chat bubble display, or</li>
+            <li>Make the chat bubble not disappear when image tracking is lost</li>
           </ul>
         </p>
         <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
@@ -154,7 +182,8 @@
         <p>
           Ron and Laurissa will:
           <ul>
-            <li></li>
+            <li>Make some more improvements to transcription response trimming / filtering (still buggy with long transcriptions)</li>
+            <li>Advise on how to improve the UI/UX more</li>
           </ul>
           <br />
           Andrew and James will:
