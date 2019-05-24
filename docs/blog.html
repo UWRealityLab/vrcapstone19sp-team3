@@ -117,11 +117,31 @@
 		  is to have the bubble always be visible, but track when it sees the image. Then have an option to make it not do that so it doesn't stay around
 		  forever. 
 		  Talk to Alan about why the Magic Leap camera crashes
-		  Figure out why the image floats off into the corner
-		  Get something more stable for the image tracking
-		  Implement alternate controls like scrolling in a circle to scroll. 
-		  Better controller controls. Move the menu so that it's always visible on the controller and let the user selection left or right to choose 
-		  which one to select things on. Highlight which one is selected. 
+      Something something logo something
+        </p>
+        <p>
+          What I learned from the demo today is that the Magic Leap is pretty janky. For example, the camera randomly crashes in the application, which seems to not occur when running it otherwise. We're not too sure about how to go about debugging this because it seems to only happen when we get out of zero iteration on the Magic Leap, but restarting the app seems to fix the problem. Then there's this new bug that showed up, where the chat bubble seemed to float into the corner (without needing to see the image), which again doesn't happen during zero iteration. The funny part was that when people tried to look at it, it'd keep floating away, which was a little fun to watch, but probably did not make for a very good user experience. We're not sure if these bugs were apparent all along and we simply haven't run the program for long enough or if things are simply different in zero iteration vs. completely on the hardware. We think that it's partially both, but the initial reason definitely contributed to this, as there are some things that we didn't notice because we never stress-tested it. 
+        </p>
+        <p> 
+          One thing that the staff pointed out was that the application seems to lag, which Ron attributed to the web server getting overloaded with messages. Then there was one more thing that I realized as we ran it for longer, that the chat log was actually growing to a point where it was non-neglibible. I ended up changing it so that it cuts half the messages in thet log whenever it gets to 400 messages because there were probably too many things that the Magic Leap had to keep track of in memory, which slowed things down. Removing it seemed to have improved the performance of the application, but there are still several hurdles to cross before we are ready for the final product demonstration.
+        </p>
+        <p>
+          For the strange color I said I noticed a while back, I think I narrowed it down to being how the Magic Leap renders things. The Magic Leap renders things on focus planes, so it tries to make things at different depths in focus and that the weird color switching is going from one focus plane to another. Even if this wasn't the real reason for why it did that, we noticed that the Magic Leap did that regardless of being within our application or not, so we think that it might be related to a bug that was originally on the Magic Leap anyways. 
+        </p>
+        <p>
+          We got some adjustable necklace things and used those as a part of our demos. It seemed to generally work, but the paper that the image we were tracking was on was a little flimsy and not really durable. Steve suggested possibly putting it on some cardboard and hanging the cardboard around our necks instead of a sheet of paper. We also wanted to get a colored version of our tracked image, since that would have made the tracking better, but we couldn't print it in time. 
+        </p>
+        <p>
+          I got a lot of feedback on what to do with the controller from Alan. I spent some time trying to implement the updates for the selections to be on the handlers for the Magic Leap touchpad (the continuous event handler), but that seemed to generally fail and it didn't get called when I was continually touching the touchpad. I'm not sure why that is, but that's how it went. I also changed the scrolling to scale on the speed of the swipe. This resulted in something that was way too coarse to use and people had a hard time selecting exactly what they wanted to use. I'm not sure what Alan was talking about for scrolling down once and only going down one selection, since almost everyone at the demo said that it was too hard to select stuff because it kept overshooting their desired selection. I learned that distance wasn't too great either because it would keep the total distance your finger has been on the touchpad rather than the current and previous updates. 
+        </p>
+        <p>
+          I also got some criticism about how the menu wasn't visible all the time. In an earlier iteration of the menu and chat log, they were fixed on the camera and you didn't even need to see the controller and they could become transparent, but I guess different problems arise from different implementations. There's this weird issue where the Magic Leap won't detect the controller even though it's in front of it unless it's around an arm's length away from it. Alan also pointed out that the menu drifted away, which we didn't notice until we put it on after him. We fixed this by removing the script that was supposed to help smooth the location of the menu and chat log. I think that a similar issue might have happened with the chat bubble. 
+        </p>
+        <p>
+          I plan to explore scrolling in a circle like those old iPods used for song selections, since that was what was recommended by Alan. There was also this suggestion to make both the chat log and the language selection to be next to each other and have one highlighted when you're selecting things in that one and have the other selected when selecting things on the other. Then James recommended adding lines between the chat log lines to actually make it more clear what the separation between each entry was, which is a valid suggestion. I also learned that apparently the when given a Magic Leap remote, scrolling via the touchpad is not the first thing that they would consider when needing to scroll through things. This was a little shocking, but I guess this is just how I always imagined doing something like this with a device like a remote, but I guess I didn't prepare for what others would consider first. We also learned that we need to give a better explanation of what things like "swiping" on the Magic Leap controller means and help users differentiate between the trigger and the bumper.
+        </p>
+        <p>
+          We did everything that we said we would do from the plan we made last week, but now we need to work extra hard because Ron and Laurissa are essentially done with their parts and the rest of the product relies on us. What's pretty much left is to expand to multiple users, fix all of the glitches that we didn't notice until it was tested by a lot of people, and improve the UI/UX significantly. 
         </p>
         <p>
           <span style="font-size: 1.3em"><strong>Ron and Laurissa:</strong></span><br />
@@ -164,6 +184,7 @@
           <ul>
             <li>Get a toggle to force a camera-centered chat bubble display, or</li>
             <li>Make the chat bubble not disappear when image tracking is lost</li>
+            <li>We can charge the Magic Leap while it's in use so that it doesn't go inactive</li>
           </ul>
         </p>
         <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
@@ -188,7 +209,15 @@
           <br />
           Andrew and James will:
           <ul>
-            <li></li>
+            <li>Work on the UI/UX extensively</li>
+            <ul>
+              <li>Change the displays on the controller to show both the chat log and menu at the same time</li>
+              <li>Change the scrolling to circle/iPod-scrolling</li>
+              <li>Allow anchoring into previously tracked locations (toggle on/off via bumper)</li>
+            </ul>
+            <li>Try to figure out why the camera crashes</li>
+            <li>Come up with instructions on how to use our product</li>
+            <li>Ask more people to give us UI/UX feedback</li>
           </ul>
         </p>
 
@@ -196,7 +225,12 @@
           <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
         </p>
         <p>
-
+          The largest issue that we currently face is that the camera crashes and we don't know why. We believe
+          that this is the main thing blocking our progress for a complete demo, since that sort of undermines
+          the reliability of the application. The server will still work without it and changing it to have the 
+          chat bubble still be displayed even though it isn't being tracked is fine, but it would be ideal that
+          the camera is reliable. We are unsure if it is a hardware issue, is something that only shows up outside
+          of zero-iteration, or is a problem with our program. 
         </p>
       </div>
 
