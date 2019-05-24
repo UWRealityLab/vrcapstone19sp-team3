@@ -113,23 +113,45 @@
           <span style="font-size: 1.3em"><strong>Andrew and James</strong></span><br />
         </p>
         <p>
-		  Implement alternate view modes to not completely rely on image tracking, because it's generally unreliable. Maybe set it so that the default
-		  is to have the bubble always be visible, but track when it sees the image. Then have an option to make it not do that so it doesn't stay around
-		  forever. 
-		  Talk to Alan about why the Magic Leap camera crashes
-      Something something logo something
+          This week, we mainly worked on getting the demo working for the open house by applying feedback given on the controller menus and getting the demo set up working. Andrew worked on applying feedback that we got for the menus on the controller while James worked on adding features to the logo that Laurissa made to maximize the image tracking capabilities of it on the Magic Leap, and making the bubble both transparent and resizable for a given amount of general text.
         </p>
         <p>
-          What I learned from the demo today is that the Magic Leap is pretty janky. For example, the camera randomly crashes in the application, which seems to not occur when running it otherwise. We're not too sure about how to go about debugging this because it seems to only happen when we get out of zero iteration on the Magic Leap, but restarting the app seems to fix the problem. Then there's this new bug that showed up, where the chat bubble seemed to float into the corner (without needing to see the image), which again doesn't happen during zero iteration. The funny part was that when people tried to look at it, it'd keep floating away, which was a little fun to watch, but probably did not make for a very good user experience. We're not sure if these bugs were apparent all along and we simply haven't run the program for long enough or if things are simply different in zero iteration vs. completely on the hardware. We think that it's partially both, but the initial reason definitely contributed to this, as there are some things that we didn't notice because we never stress-tested it. 
+          What we learned from the demo on Thursday is that the Magic Leap is pretty janky. For example, the camera randomly crashes in the application, which seems to not occur when running it otherwise. We're not too sure about how to go about debugging this because it seems to only happen when we get out of zero iteration on the Magic Leap, but restarting the app seems to fix the problem. Then there's this new bug that showed up, where the chat bubble seemed to float into the corner (without needing to see the image), which again doesn't happen during zero iteration. The funny part was that when people tried to look at it, it'd keep floating away, which was a little fun to watch, but did not make for a very good user experience. We're not sure if these bugs were apparent all along and we simply haven't run the program for long enough or if things are simply different in zero iteration vs. completely on the hardware. We think that it's partially both, but the initial reason definitely contributed to this, as there are some things that we didn't notice because we never stress-tested it. 
         </p>
         <p> 
-          One thing that the staff pointed out was that the application seems to lag, which Ron attributed to the web server getting overloaded with messages. Then there was one more thing that I realized as we ran it for longer, that the chat log was actually growing to a point where it was non-neglibible. I ended up changing it so that it cuts half the messages in thet log whenever it gets to 400 messages because there were probably too many things that the Magic Leap had to keep track of in memory, which slowed things down. Removing it seemed to have improved the performance of the application, but there are still several hurdles to cross before we are ready for the final product demonstration.
+          One thing that the staff pointed out was that the application seems to lag, which Ron attributed to the web server getting overloaded with messages. Then there was one more thing that we realized as we ran it for longer, that the chat log was actually growing to a point where it was non-neglibible. Andrew ended up changing it so that it cuts half the messages in thet log whenever it gets to 400 messages because there were probably too many things that the Magic Leap had to keep track of in memory, which slowed things down. Removing it seemed to have improved the performance of the application, but there are still several hurdles to cross before we are ready for the final product demonstration.
         </p>
         <p>
-          For the strange color I said I noticed a while back, I think I narrowed it down to being how the Magic Leap renders things. The Magic Leap renders things on focus planes, so it tries to make things at different depths in focus and that the weird color switching is going from one focus plane to another. Even if this wasn't the real reason for why it did that, we noticed that the Magic Leap did that regardless of being within our application or not, so we think that it might be related to a bug that was originally on the Magic Leap anyways. 
+          For the strange color Andrew said he noticed a while back, he thinks he narrowed it down to being how the Magic Leap renders things. The Magic Leap renders things on focus planes, so it tries to make things at different depths in focus and that the weird color switching is going from one focus plane to another. Even if this wasn't the real reason for why it did that, we noticed that the Magic Leap did that regardless of being within our application or not, so we think that it might be related to a bug that was originally on the Magic Leap anyways. 
         </p>
         <p>
-          We got some adjustable necklace things and used those as a part of our demos. It seemed to generally work, but the paper that the image we were tracking was on was a little flimsy and not really durable. Steve suggested possibly putting it on some cardboard and hanging the cardboard around our necks instead of a sheet of paper. We also wanted to get a colored version of our tracked image, since that would have made the tracking better, but we couldn't print it in time. 
+          We got some adjustable necklace things and printed pictures of our logo as seen below and used those as a part of our demos. It seemed to generally work, but the paper that the image we were tracking was on was a little flimsy and not really durable. Steve suggested putting it on some cardboard and hanging the cardboard around our necks instead of a sheet of paper. We also wanted to get a colored version of our tracked image, since that would have made the tracking better, but we couldn't print it in time. 
+        </p>
+        <p>
+          <figure align="center">
+            <img width="60%" height="60%" src="./imgs/logo-cool-crazy-bg.png"/>
+            <img width="60%" height="60%" src="./imgs/logo-neon-light-city-wide.png"/>
+            <img src="./imgs/logo-surreal-background.png"/>
+            <figcaption>Logos for Image Tracking</figcaption>
+          </figure>
+        </p>
+        <p>
+          <span style="font-size: 1.3em"><strong>James</strong></span><br />
+        </p>
+        <p>
+          Due to the feedback from the demo, considering that it could get really frustrating to try and re-acquire the bubble again when image tracking gets lost, as currently, if the person loses track of the image, the bubble disappears, I am thinking of implementing two things to hopefully improve the UX. First, the above functionality described above is going to be removed, so once a person initially gets the bubble, it will not disappear. This is mainly to improve the demo experience and keep it running smoothly, because worst-case, even if the image tracking is bugging out, the demo will still be presentable in that case. The second thing that I am thinking of implementing is an alternate view mode where you can move the bubble to a location that best suits the user's needs, and has the bubble in that location regardless of the image tracking. By doing it this way, even though it may not be the seamless experience that would be ideal in the end, it would still be able to display the bubble in a comfortable manner to best suit there needs. We can still have the current view mode, but for functionality, it may be best to have the first view that I described, with the image tracking functionality not making the bubble, be the default view to speed the demo along.
+        </p>
+        <p>
+          Other than the feedback from the demo, Alan gave some input for a new feature where we can have an arrow in the UI point to the last position that the bubble was at, so that the user will be able to have an easier time finding the bubble again. I believe this can be done by recording the location of the bubble in the visualizer script, and drawing an arrow accordingly to their position. This is a feature that I plan on implementing and testing in the upcoming week. 
+        </p>
+        <p>
+          We then need to improve the demo setup and durability as said above. I am planning on testing out the logo images in black and white, color, and in various different sizes, with the smallest being the current size as well, to see how the current setup may handle under stress, and how it will be able to handle multiple users at once. The testing above should be very simple, as once multiple visualizers are registered, it should be very seamless to see all of the chat bubbles corresponding to each image. Once a size is set for the image, we can then move on to printing it out on a some cardboard or maybe putting a clear protector around the image/laminate the image to make it more durable.
+        </p>
+        <p>
+          On a more positive note, it seems like the bubble seems to be sized comfortably during the demo, and the text appears in the bubble appropriately. The translation feature as well seems to be working smoothly, so the bubble can display the languages that we desire, so that feature is settled for the most part, so we can primarily work on the UX of the product.
+        </p>
+        <p>
+          <span style="font-size: 1.3em"><strong>Andrew</strong></span><br />
         </p>
         <p>
           I got a lot of feedback on what to do with the controller from Alan. I spent some time trying to implement the updates for the selections to be on the handlers for the Magic Leap touchpad (the continuous event handler), but that seemed to generally fail and it didn't get called when I was continually touching the touchpad. I'm not sure why that is, but that's how it went. I also changed the scrolling to scale on the speed of the swipe. This resulted in something that was way too coarse to use and people had a hard time selecting exactly what they wanted to use. I'm not sure what Alan was talking about for scrolling down once and only going down one selection, since almost everyone at the demo said that it was too hard to select stuff because it kept overshooting their desired selection. I learned that distance wasn't too great either because it would keep the total distance your finger has been on the touchpad rather than the current and previous updates. 
@@ -180,7 +202,7 @@
         </p>
         <span style="font-size: 1.3em"><strong>Update on ideas: </strong></span><br />
         <p>
-          We did an in-class demo with plenty of people this Thursday. Our primary observation was that image tracking is still mediocre and often buggy - sometimes not working for several minutes. We believe, at this point, we should implement something that can force a chat bubble to be visible. This way, people can at least experience the speech-to-text component of the project if the image tracking / chat bubble display doesn't work. Hopefully we can continue to improve the image tracking as well.
+          We did an in-class demo with plenty of people this Thursday. Our primary observation was that image tracking is still mediocre and often buggy - sometimes not working for several minutes. We believe, at this point, we should implement something that can force a chat bubble to be visible. This way, people can at least experience the speech-to-text component of the project if the image tracking / chat bubble display doesn't work during Demo Day. Before then, we can continue to improve the image tracking as well by testing out and tweeking our demo design, particularly with the way the image is being held and the image itself.
           <ul>
             <li>Get a toggle to force a camera-centered chat bubble display, or</li>
             <li>Make the chat bubble not disappear when image tracking is lost</li>
@@ -188,6 +210,8 @@
           </ul>
         </p>
         <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
+        <p>
+          Current results: We currently have a demo that is able to work when set up accordingly, but if something goes wrong while the user is using the application, they may not be able to use the app again, which is concerning. From what we observed on Thursday, this can result from a variety of things from the image tracking going haywire or the camera on the Magic Leap appearing to be stopping for some reason. Our goal for the next week is to solve this entirely so that the user will be able to use the demo seamlessly for a smooth experience, through the improvements and patches to our product as said above to make the bubble always in the scene of the user, to make it possibly have a customizable location, and to improve the demo setup to improve the image tracking.
         <p>
           
         </p>
@@ -215,6 +239,7 @@
               <li>Change the scrolling to circle/iPod-scrolling</li>
               <li>Allow anchoring into previously tracked locations (toggle on/off via bumper)</li>
             </ul>
+            <li>Make a more durable and comfortable version of our product to use</li>
             <li>Try to figure out why the camera crashes</li>
             <li>Come up with instructions on how to use our product</li>
             <li>Ask more people to give us UI/UX feedback</li>
