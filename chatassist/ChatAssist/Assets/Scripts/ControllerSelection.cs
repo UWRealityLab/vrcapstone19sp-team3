@@ -35,7 +35,7 @@ namespace MagicLeap
         #region Const Variables
         private const float TRIGGER_DOWN_MIN_VALUE = 0.4f;
         // TODO: Change this to make the scroll easier to use;
-        private const float SCROLL_LENGTH = 0.2f;
+        private const float SCROLL_LENGTH = 0.3f;
         private const float L_SCROLL_LENGTH = 0.1f;
 
         // UpdateLED - Constants
@@ -93,18 +93,25 @@ namespace MagicLeap
                     // Clockwise = 7,
                     // CounterClockwise = 8
                     // controller.TouchpadGesture.Direction
+
+                    // Get the direction
                     MLInputControllerTouchpadGestureDirection dir = controller.TouchpadGesture.Direction;
-                    //Debug.Log("active controller: " + controller.Touch1Active);
+
                     float scroll_len = Math.Abs(controller.TouchpadGesture.Distance - prevDist);
+                    float speed = Math.Abs(controller.TouchpadGesture.Speed) * 0.1f;
                     prevDist = controller.TouchpadGesture.Distance;
-                    // TODO: Make the fade away nicer
+
+                    // Changes opacity depending on which is selected
                     if (selection > 0.0f) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.7f ? languageMenuOpacity.alpha - 0.1f : 0.7f;
                     else languageMenuOpacity.alpha += 0.2f;
 
                     if (selection <= 0.0f) chatLogOpacity.alpha = chatLogOpacity.alpha > 0.7f ? chatLogOpacity.alpha - 0.1f : 0.7f;
                     else chatLogOpacity.alpha += 0.2f;
-                    //Debug.Log(selection);
+
+                    // If the controller isn't active, just return right away
                     if (!controller.Touch1Active) return;
+
+                    // Checks if clockwise and otherwise
                     if (dir == MLInputControllerTouchpadGestureDirection.Clockwise)
                     {
                         // Move down list
@@ -131,7 +138,8 @@ namespace MagicLeap
                         if (selection <= 0.0f)
                         {
                             currTog.languageName.fontStyle = FontStyle.Normal;
-                            if (leftIndex > 0) leftIndex -= scroll_len;
+                            if (leftIndex - scroll_len > -0.5f) leftIndex -= scroll_len;
+                            if (leftIndex - scroll_len <= -0.5f) leftIndex = 0.0f;
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
@@ -141,8 +149,34 @@ namespace MagicLeap
                         if (selection > 0.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
-                            if (rightIndex > 0) rightIndex -= scroll_len;
+                            if (rightIndex > cl.list.Count) rightIndex = cl.list.Count - 1;
+                            if (rightIndex - scroll_len > -0.5f) rightIndex -= scroll_len;
+                            if (rightIndex - scroll_len <= -0.5f) rightIndex = 0.0f;
                             //Debug.Log(rightIndex);
+                            if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
+                            if (currText != null) currText.fontStyle = FontStyle.Bold;
+                        }
+                    }
+                    else if (dir == MLInputControllerTouchpadGestureDirection.Up)
+                    {
+
+                        if (selection > 0.0f)
+                        {
+                            if (currText != null) currText.fontStyle = FontStyle.Normal;
+                            if (rightIndex > cl.list.Count) rightIndex = cl.list.Count - 1;
+                            if (rightIndex - speed > -0.5f) rightIndex -= speed;
+                            if (rightIndex - speed <= -0.5f) rightIndex = 0.0f;
+                            //Debug.Log(rightIndex);
+                            if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
+                            if (currText != null) currText.fontStyle = FontStyle.Bold;
+                        }
+                    }
+                    else if (dir == MLInputControllerTouchpadGestureDirection.Down)
+                    {
+                        if (selection > 0.0f)
+                        {
+                            if (currText != null) currText.fontStyle = FontStyle.Normal;
+                            if (rightIndex + speed < cl.list.Count) rightIndex += speed;
                             if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
                             if (currText != null) currText.fontStyle = FontStyle.Bold;
                         }
@@ -279,14 +313,18 @@ namespace MagicLeap
             if (controller != null && controller.Id == controllerId)
             {
                 // TODO: CHANGE INTENSITY to just be a slight buzz.
-                MLInputControllerFeedbackIntensity intensity = (MLInputControllerFeedbackIntensity)((int)(value * 2.0f));
+                MLInputControllerFeedbackIntensity intensity = (MLInputControllerFeedbackIntensity)((int)(value * 1.0f));
                 controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.Buzz, intensity);
                 if (selection <= 0.0f)
                 {
                     lsl.SetLanguage((int)leftIndex);
                     WebSocketManager.send(lsl.GetLanguageCode());
                 }
-               // if (selection > 0.5f) addText(count++ + "");
+                //if (selection > 0.0f)
+                //{
+                //    for (int i = 0; i < 10; i++)
+                //        addText(count++ + "");
+                //}
             }
         }
 
