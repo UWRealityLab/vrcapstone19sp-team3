@@ -3,8 +3,7 @@ using UnityEngine;
 namespace MagicLeap
 {
     /// <summary>
-    /// This class is responsible for creating the planet, moving the planet, and destroying the planet
-    /// as well as creating the explorers
+    /// This class is responsible for creating the bubble, moving the bubble, and destroying the bubble
     /// </summary>
     public class BubbleVisualizer : MonoBehaviour
     {
@@ -38,11 +37,10 @@ namespace MagicLeap
         }
 
         /// <summary>
-        /// Creates an instance of the planet
+        /// Creates an instance of the bubble
         /// </summary>
         void OnEnable()
         {
-            //_planetInstance = Instantiate(_planetPrefabAnimator.transform, GetPosition(), Quaternion.identity);
             if (null != _bubbleInstance)
             {
                 _bubbleInstance.GetComponent<CanvasGroup>().alpha = 1.0f;
@@ -63,7 +61,7 @@ namespace MagicLeap
             {
                 //_planetInstance.GetComponent<Animator>().Play("EarthShrinking");
                 //_bubbleInstance.gameObject.SetActive(false);
-                _bubbleInstance.GetComponent<CanvasGroup>().alpha = 0.0f;
+                //_bubbleInstance.GetComponent<CanvasGroup>().alpha = 0.0f;
                 //Destroy(_explorerInstance.gameObject, 1.1f);
                 //_explorerInstance = null;
             }
@@ -76,10 +74,17 @@ namespace MagicLeap
         {
             Vector3 position = GetPosition();
             //Debug.Log("Updating position from " + _bubbleInstance.position);
-            // Update planet position
-            _bubbleInstance.position = Vector3.SmoothDamp(_bubbleInstance.position, position, ref _bubbleVel, 1.0f);
+            _bubbleInstance.position = Vector3.SmoothDamp(_bubbleInstance.position, position, ref _bubbleVel, 0.2f);
             _bubbleInstance.LookAt(m_Camera.transform);
             _bubbleInstance.RotateAround(_bubbleInstance.position, _bubbleInstance.up, 180f);
+
+            // Change local scale of bubble with respect to the camera, should be compared to original bubble size, not current
+            /*
+            float distFromBubbleToCamera = Vector3.Distance(m_Camera.transform.position, _bubbleInstance.position);
+            distFromBubbleToCamera /= 1;
+            Debug.Log("distance from bubble to camera: " + distFromBubbleToCamera);
+            _bubbleInstance.localScale = Vector3.Scale(_bubbleInstance.localScale, new Vector3(distFromBubbleToCamera, distFromBubbleToCamera, distFromBubbleToCamera));
+            */
 
             // Debug.Log("Updating position to " + _bubbleInstance.position);
         }

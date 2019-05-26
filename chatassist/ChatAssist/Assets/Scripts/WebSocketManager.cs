@@ -32,7 +32,8 @@ public class WebSocketManager
         timer.Elapsed += onTimer;
         timer.AutoReset = false;
         ack = true;
-        languageCode = "en-US";
+        languageCode = "tl en";
+        send(languageCode);
     }
 
 

@@ -68,6 +68,7 @@ namespace MagicLeap
             WebSocketManager.initialize();
         }
 
+        float prevDist = 0.0f;
         // Update is called once per frame
         void Update()
         {
@@ -78,7 +79,8 @@ namespace MagicLeap
             if (_controllerConnectionHandler.IsControllerValid())
             {
                 MLInputController controller = _controllerConnectionHandler.ConnectedController;
-                Debug.Log("distance " + controller.TouchpadGesture.Distance + " force " + controller.TouchpadGesture.PosAndForce + " speed " + controller.TouchpadGesture.Speed);
+                Debug.Log("distance " + controller.TouchpadGesture.Distance + " prevDist " + prevDist + " direction " + controller.TouchpadGesture.Direction
+                     + " leftindex " + leftIndex + " rightindex " + rightIndex);
                 if (controller.Type == MLInputControllerType.Control)
                 {
                     // None = 0,
@@ -93,21 +95,20 @@ namespace MagicLeap
                     // controller.TouchpadGesture.Direction
                     MLInputControllerTouchpadGestureDirection dir = controller.TouchpadGesture.Direction;
                     //Debug.Log("active controller: " + controller.Touch1Active);
-
-                    float scroll_len = Math.Abs(controller.TouchpadGesture.Speed) / 20;
-
+                    float scroll_len = Math.Abs(controller.TouchpadGesture.Distance - prevDist);
+                    prevDist = controller.TouchpadGesture.Distance;
                     // TODO: Make the fade away nicer
-                    if (selection > -0.5f) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.0f ? languageMenuOpacity.alpha - 0.4f : 0.0f;
-                    else languageMenuOpacity.alpha += 0.4f;
+                    if (selection > 0.0f) languageMenuOpacity.alpha = languageMenuOpacity.alpha > 0.7f ? languageMenuOpacity.alpha - 0.1f : 0.7f;
+                    else languageMenuOpacity.alpha += 0.2f;
 
-                    if (selection < 0.5f) chatLogOpacity.alpha = chatLogOpacity.alpha > 0.0f ? chatLogOpacity.alpha - 0.4f : 0.0f;
-                    else chatLogOpacity.alpha += 0.4f;
+                    if (selection <= 0.0f) chatLogOpacity.alpha = chatLogOpacity.alpha > 0.7f ? chatLogOpacity.alpha - 0.1f : 0.7f;
+                    else chatLogOpacity.alpha += 0.2f;
                     //Debug.Log(selection);
                     if (!controller.Touch1Active) return;
-                    if (dir == MLInputControllerTouchpadGestureDirection.Down)
+                    if (dir == MLInputControllerTouchpadGestureDirection.Clockwise)
                     {
                         // Move down list
-                        if (selection < -0.5f) {
+                        if (selection <= 0.0f) {
                             currTog.languageName.fontStyle = FontStyle.Normal;
                             if (leftIndex + scroll_len < lsl.toggles.Count) leftIndex += scroll_len;
                             currTog = lsl.toggles[(int)leftIndex];
@@ -116,7 +117,7 @@ namespace MagicLeap
 
                         //if (!languageSelection && rightIndex > 0) rightIndex--;
                         //ShowInLanguageScroll((int)leftIndex);
-                        if (selection > 0.5f)
+                        if (selection > 0.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
                             if (rightIndex + scroll_len < cl.list.Count) rightIndex += scroll_len;
@@ -124,10 +125,10 @@ namespace MagicLeap
                             if (currText != null) currText.fontStyle = FontStyle.Bold;
                         }
                     }
-                    else if (dir == MLInputControllerTouchpadGestureDirection.Up)
+                    else if (dir == MLInputControllerTouchpadGestureDirection.CounterClockwise)
                     {
                         // move up list
-                        if (selection < -0.5f)
+                        if (selection <= 0.0f)
                         {
                             currTog.languageName.fontStyle = FontStyle.Normal;
                             if (leftIndex > 0) leftIndex -= scroll_len;
@@ -137,7 +138,7 @@ namespace MagicLeap
                         // if (!languageSelection && rightIndex < csl.log.Count - 1) rightIndex++;
                         // Maybe need scrollbar incrementer 
                         //ShowInLanguageScroll((int)leftIndex);
-                        if (selection > 0.5f)
+                        if (selection > 0.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
                             if (rightIndex > 0) rightIndex -= scroll_len;
@@ -150,12 +151,12 @@ namespace MagicLeap
                     {
                         // move to left menu
                         // TODO: Maybe check for two consecutive lefts or rights before switching
-                        if (selection > -1.0f) selection -= scroll_len * 0.5f;
+                        if (selection > -1.0f) selection -= scroll_len;
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Right)
                     {
                         // move to right menu
-                        if (selection < 1.0f) selection += scroll_len * 0.5f;
+                        if (selection < 1.0f) selection += scroll_len;
                         else if (selection + 0.1f > 1.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
@@ -173,7 +174,7 @@ namespace MagicLeap
             }
             if (reset)
             {
-                leftIndex = 2.0f;
+                leftIndex = 0.0f;
                 reset = false;
             }
         }
@@ -280,7 +281,7 @@ namespace MagicLeap
                 // TODO: CHANGE INTENSITY to just be a slight buzz.
                 MLInputControllerFeedbackIntensity intensity = (MLInputControllerFeedbackIntensity)((int)(value * 2.0f));
                 controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.Buzz, intensity);
-                if (selection < -0.5f)
+                if (selection <= 0.0f)
                 {
                     lsl.SetLanguage((int)leftIndex);
                     WebSocketManager.send(lsl.GetLanguageCode());
