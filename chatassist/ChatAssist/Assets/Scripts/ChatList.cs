@@ -19,10 +19,10 @@ public class ChatList : MonoBehaviour
         GameObject textBox = (GameObject)GameObject.Instantiate(prefab, contentPanel);
         textBox.GetComponent<Text>().text = text;
         list.Add(textBox.GetComponent<Text>());
-        if (list.Count > 400)
+        if (list.Count > 75)
         {
             List<Text> newList = new List<Text>();
-            for (int i = 200; i < 400; i++)
+            for (int i = 50; i < 75; i++)
             {
                 newList.Add(list[i]);
             }

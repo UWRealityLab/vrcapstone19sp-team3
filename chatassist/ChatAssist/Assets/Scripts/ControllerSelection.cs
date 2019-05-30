@@ -17,7 +17,9 @@ namespace MagicLeap
         public ChatList cl;
         public CanvasGroup languageMenuOpacity;
         public CanvasGroup chatLogOpacity;
-
+        public Text instructions;
+        public Text tracking;
+        public Text tracking2; 
         #endregion
 
         #region Private Variables
@@ -185,12 +187,12 @@ namespace MagicLeap
                     {
                         // move to left menu
                         // TODO: Maybe check for two consecutive lefts or rights before switching
-                        if (selection > -1.0f) selection -= scroll_len;
+                        if (selection > -1.0f) selection -= scroll_len * 2;
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Right)
                     {
                         // move to right menu
-                        if (selection < 1.0f) selection += scroll_len;
+                        if (selection < 1.0f) selection += scroll_len * 2;
                         else if (selection + 0.1f > 1.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
@@ -280,6 +282,9 @@ namespace MagicLeap
             {
                 // Demonstrate haptics using callbacks.
                 controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.ForceDown, MLInputControllerFeedbackIntensity.Medium);
+                instructions.gameObject.SetActive(!instructions.IsActive());
+                tracking.gameObject.SetActive(!tracking.IsActive());
+                tracking2.gameObject.SetActive(!tracking2.IsActive());
                 // Toggle UseCFUIDTransforms
                 controller.UseCFUIDTransforms = !controller.UseCFUIDTransforms;
             }

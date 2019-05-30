@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WebSocketSharp;
 using System.Timers;
+using System;
 
 
 public class WebSocketManager 
@@ -54,26 +55,37 @@ public class WebSocketManager
         //}
 
         string data = mssg.Data;
-        Debug.Log("speech server says2: " + data);
-        Debug.Log("step1: " + data);
+        //Debug.Log("speech server says2: " + data);
+        //Debug.Log("step1: " + data);
         //this.mydude.text = data;
-        Debug.Log("step2: " + data);
+        //Debug.Log("step2: " + data);
         //this.currString = data;
-        Debug.Log("step3: " + data);
-        Debug.Log("set currtext to " + data);
+        //Debug.Log("step3: " + data);
+        //Debug.Log("set currtext to " + data);
         //this.mydude.text = "helloabc!!!";
         //this.mydude.text = data;
-        string msg = data.Substring(data.IndexOf(":") + 1);
+        int index = data.IndexOf(":");
+        int head = 0;
+        Int32.TryParse(data.Substring(index - 1, 1), out head);
+        head -= 1;
+        //data.Substring(data.IndexOf(":"))
+        string msg = data.Substring(index + 1);
+
+        //Debug.Log("About to send the message to " + head);
         //Debug.Log("preparing sending to 5" + msg);
 
-        Debug.Log("This is an in-between message");
-        Debug.Log("list size2: " + ls.Count);
+        //Debug.Log("This is an in-between message");
+        //Debug.Log("list size2: " + ls.Count);
 
+        ls[head].updateCurrText(msg);
+        /*
+        
         foreach (SpeechToText st in ls)
         {
             Debug.Log("sending to something 10");
             st.updateCurrText(msg);
         }
+        */
     }
 
     public static void send(string languageCode)

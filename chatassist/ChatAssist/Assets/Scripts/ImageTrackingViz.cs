@@ -28,8 +28,8 @@ namespace MagicLeap
         private MLImageTrackerBehavior _trackerBehavior = null;
         private bool _targetFound = false;
 
-        //[SerializeField, Tooltip("Text to update on ImageTracking changes.")]
-        //private Text _statusLabel = null;
+        [SerializeField, Tooltip("Text to update on ImageTracking changes.")]
+        private Text _statusLabel = null;
         // Stores initial text
         private string _prefix;
         private string _eventString;
@@ -85,8 +85,8 @@ namespace MagicLeap
         /// </summary>
         void Start()
         {
-            //_prefix = _statusLabel.text;
-            //_statusLabel.text = _prefix + "Target Lost";
+            _prefix = _statusLabel.text;
+            _statusLabel.text = _prefix + "Target Lost";
             _eventString = "";
             _trackerBehavior = GetComponent<MLImageTrackerBehavior>();
             _trackerBehavior.OnTargetFound += OnTargetFound;
@@ -97,7 +97,7 @@ namespace MagicLeap
 
         private void Update()
         {
-            //_statusLabel.text = String.Format("{0}[{1}/{2}] {3}", _prefix, _trackerBehavior.IsTracking, _trackerBehavior.TrackingStatus, _eventString);
+            _statusLabel.text = String.Format("{0}[{1}/{2}] {3}", _prefix, _trackerBehavior.IsTracking, _trackerBehavior.TrackingStatus, _eventString);
         }
 
         /// <summary>
