@@ -114,10 +114,17 @@
           <span style="font-size: 1.3em"><strong>What we've done this week</strong></span><br />
       </p>
           <p>
-           The previous weekend, James and Andrew worked on the UI extensively, taking pointers/suggestions from Alan's feedback from last week. Explicitly, 
-           the bubble now stays present even if the image is not tracked so that it doesn't suddenly disappear when the cameras fail to track the image even
-           though it's in front of it; the language selection and chat logs are now both displayed on the menu and the language selection now uses radial 
-           scrolling (like an iPod); and the location of the bubble was made variable depending on user distance. 
+            We learned a lot from last week's open house and listened to their feedback. Most people who got it to work generally enjoyed the application,
+            but there were still some concerning things like the application lagging and the UI not being super-friendly.
+          </p>
+          <p>
+           We will address the lag later, but over the previous weekend, James and Andrew worked on the UI extensively, taking pointers/suggestions from 
+           Alan's feedback as well as people's feedback from the open house from last week. Explicitly, the bubble now stays present even if the image 
+           is not tracked so that it doesn't suddenly disappear when the cameras fail to track the image even though it's in front of it; the language 
+           selection and chat logs are now both displayed on the menu and the language selection now uses radial scrolling (like an iPod); and the location 
+           of the bubble was made variable depending on user distance. 
+
+           [Maybe write something about the orientation of the bubble.]
          </p>
         <p>
            Then James also stress-tested the Magic Leap over the weekend to try to determine the source of the problem for why the camera randomly crashes. 
@@ -127,16 +134,52 @@
         <p>
           Regarding the changes we made, the bubble staying after losing track of the image makes our application rely less on the hardware's image tracking
           capabilities, which makes the application significantly more reliable. The language selection with radial scrolling is also a lot better in that 
-          users are now able to more consistenly select what language they want the speech to be translated and transcribed to. 
+          users are now able to more consistenly select what language they want the speech to be translated and transcribed into. 
+          
+          [James, write something about the bubble resizing]. 
+
+          Ron and Laurissa tried out the application after these changes and gave some feedback for what we should do. We felt like we were in a relatively 
+          decent place after these changes. 
         </p>
         <p>
-          
+          [Ron and Laurissa, write something about testing mics or something?]
         </p>
-    
+        <p>
+          [Something something _____]
+        </p>
+        <p> 
+          We learned quite a bit from the dry run on Thursday about what we should do during our demo, since it's one thing to plan to do something and 
+          another to actually do it. We'll describe it more below, but the gist of it is that we will introduce the controller to them later and just
+          give them the Magic Leap with the app loaded in to begin with. 
+        </p>
         </p>
         <span style="font-size: 1.3em"><strong>Update on ideas: </strong></span><br />
+
         <p>
-    
+          <p> 
+            We can't do much about the application lagging, as we believe that this is what happens when the Magic Leap has been running an application
+            for too long and overheats. We at first thought that it might've been a memory issue, since everything was lagging and we were unsure about 
+            whether Unity was garbage collecting properly. We ended up reducing the number of things we store in the chat log down, but the application 
+            still ended up lagging. We think that there might be a memory leak somewhere, but are unsure about where it could be, since it seems to run 
+            well over prolonged periods in zero iteration. Anyways, our workaround for that is to restart the application once it gets too laggy, since 
+            that seems to fix that issue. We may investigate these issues going forward, but we believe that it is fine if we just make sure to restart
+            the application if it's too laggy before we give it to people.
+          </p>
+          <p>
+            Then another major issue is that the camera stops working/the entire system seems to slow down when the Magic Leap gets too hot, so we need 
+            to restart the application regardless, but it may have also been a problem with the manifest. If so, we wonder why the problem didn't come 
+            up earlier, like when we initially loaded the application onto the Magic Leap. 
+          </p>
+          <p>
+            One thing we realized is that we need to keep the Magic Leaps plugged into something like a charger for the demo so that it doesn't go 
+            inactive every every 30 seconds or so. We don't know of any way around this, but keeping it plugged in seems to be the simplest solution. 
+            We also need to let the Magic Leap cool off after, so we still need to switch off Magic Leaps to let it cool off. Ideally, we are able to
+            use one of the rooms adjacent to the atrium because noise from other groups could potentially interefere with our microphone setup. We are
+            still unsure about where we will be placed for the demo, so we may need to change some things around depending on where we're located.
+          </p>
+          <p>
+            As for the demo, we're 
+          </p>
           <ul>
             <li></li>
           </ul>
@@ -169,7 +212,7 @@
           <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
         </p>
         <p>
-
+          [James, do you know anything about the bubble coming in and out when it got laggy?]
         </p>
       </div>
 
