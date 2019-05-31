@@ -156,7 +156,11 @@
           decent place after these changes. 
         </p>
         <p>
-          <!--[Ron and Laurissa, write something about testing mics or something?]-->
+          For the speech-to-text part, we were having some latency issues when there are long messages. After some debugging, we found out that there is a memory leak when the messages are being stored in the server for too long. Normally, Amazon Transcribe chunks the messages by detecting if there are pauses. However, when the messages are too long, it doesn't section the text well. Therefore, we fixed the memory leak issue and did some improvement on text chunking. 
+
+          For hardware, we ordered two bluetooth microphones that are compatible with our computers since the one we got before could not connect to our laptops at all. However, since they have the same device names, we were having trouble connecting them simultaneously. It was slightly confusing which microphone was connected to which laptop but we figured out that we should connect each microphone at a time to avoid confusion. While both microphones are running, we tested the performance by running our application in the lab with noises and outside the lab where it was more quiet. It appeared that one of the  microphone was not picking up what we were saying. After some debugging, we found out that each time we connect to a new microphone, we need to re-run the server so that it will reset the program with the microphone as the input. 
+
+
         </p>
         <p>
           <!--[Something something _____]-->
