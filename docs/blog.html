@@ -121,17 +121,24 @@
            We will address the lag later, but over the previous weekend, James and Andrew worked on the UI extensively, taking pointers/suggestions from 
            Alan's feedback as well as people's feedback from the open house from last week. Explicitly, the bubble now stays present even if the image 
            is not tracked so that it doesn't suddenly disappear when the cameras fail to track the image even though it's in front of it; the language 
-           selection and chat logs are now both displayed on the menu and the language selection now uses radial scrolling (like an iPod); and the location 
+           selection and chat logs are now both displayed on the menu and the language selection now uses radial scrolling (like an iPod); and the location and scale 
            of the bubble was made variable depending on user distance. 
 
-           [Maybe write something about the orientation of the bubble.]
+           We also changed the offset of the bubble with respect to the image to make the bubble appear so that it overlaps the other persons head just a little bit. This is to make sure that the user could see the bubble without breaking eye contact with the other person, as before they had to look to the side sometime to read the bubble, which not only caused them to break eye contact, but also may cause them to lose track of the image as well. 
          </p>
+         <p>
+          We also added and tested another image marker to be used for the tracking, and added a second chat bubble that can be produced in the application, so now the user can see the speech of two speakers now instead of one! This was really exciting to see in action, but due to the lag issues, which will be addressed later, even though adding more speakers is relatively easy, we think two speakers is enough.
+         </p>
+         <figure align="center">
+            <img width="60%" height="60%" src="./imgs/very-colorful-abstract-modern-art-style-background-logo.png"/>
+            <figcaption>New Marker for Image Tracking</figcaption>
+          </figure>
          <p>
           From the feedback we got regarding the paper not being too sturdy, we made new wearable things to track. We printed out some new images and cut 
           out some cardboard and glued them on there. The necklace setup is the same, with the adjustable knot in the back, but we're still considering 
           something more secure/easy to use, like a paper clip or some type of clip. We'll discuss this in the coming week.
 
-          [Maybe put a picture here.]
+          <!--[Maybe put a picture here.]-->
          </p>
         <p>
            Then James also stress-tested the Magic Leap over the weekend to try to determine the source of the problem for why the camera randomly crashes. 
@@ -143,16 +150,16 @@
           capabilities, which makes the application significantly more reliable. The language selection with radial scrolling is also a lot better in that 
           users are now able to more consistenly select what language they want the speech to be translated and transcribed into. 
           
-          [James, write something about the bubble resizing]. 
+          A problem that we saw in the open house was that many people would have the bubble not appear within their view, even though the image was being tracked. This was because the bubble before did not take the distance between the image and the camera into account, thus the bubble and its position pushed the bubble out of view. This has been changed so that the bubble will now resize depending on how far away the user is from the image. Thus, if the user was really far from the image, the bubble will be larger, and if the image is closer to the user, the bubble will be smaller. We also added a threshold to the distance that the image needed to change position for the bubble to change position, and tweaked some values to make the bubble's change in position smoother when the image is moving.
 
           Ron and Laurissa tried out the application after these changes and gave some feedback for what we should do. We felt like we were in a relatively 
           decent place after these changes. 
         </p>
         <p>
-          [Ron and Laurissa, write something about testing mics or something?]
+          <!--[Ron and Laurissa, write something about testing mics or something?]-->
         </p>
         <p>
-          [Something something _____]
+          <!--[Something something _____]-->
         </p>
         <p> 
           We learned quite a bit from the dry run on Thursday about what we should do during our demo, since it's one thing to plan to do something and 
@@ -167,7 +174,7 @@
             We can't do much about the application lagging, as we believe that this is what happens when the Magic Leap has been running an application
             for too long and overheats. We at first thought that it might've been a memory issue, since everything was lagging and we were unsure about 
             whether Unity was garbage collecting properly. We ended up reducing the number of things we store in the chat log down, but the application 
-            still ended up lagging. We think that there might be a memory leak somewhere, but are unsure about where it could be, since it seems to run 
+            still ended up lagging, albeit less than before. We think that there might be a memory leak somewhere, but are unsure about where it could be, since it seems to run 
             well over prolonged periods in zero iteration. Anyways, our workaround for that is to restart the application once it gets too laggy, since 
             that seems to fix that issue. We may investigate these issues going forward, but we believe that it is fine if we just make sure to restart
             the application if it's too laggy before we give it to people.
@@ -193,9 +200,9 @@
             <figcaption>Ideal setup pre-dryrun (minus the cords for charging)</figcaption>
           </figure>
           <p>
-            This actually worked when we tested it, and it can actually do something like this, but then we encountered several problems, like it's 
+            Our original setup for the demo was to have two people wearing Magic Leap devices, and using the app with each other to maintain and augment their conversation. It worked when we tested it, and it can actually do something like this, but then we encountered several problems that may occur during the demo day with this approach, like it's 
             hard to explain to two people at a time how something works. In order for Amazon Transcribe to work well, the users had to speak loudly 
-            and clearly and it could get overheard from the other person's microphone. We had to adjust the person's wearable marker for the Magic 
+            and clearly and one person's voice could get overheard from the other person's microphone. We also had to adjust the person's wearable marker for the Magic 
             Leap to track properly, which may violate some people's personal space/sense of security. We couldn't really control what they see because 
             it's harder to anticipate what could happen from two users. It's fun to have two people speak at once, but setting it up might be too much
             of a hassle. 
@@ -220,13 +227,13 @@
             cut the controller because learning how to use it takes too much time out of the demo, but Alan wanted us to possibly introduce it later on 
             as an additional feature. We're fine with either approach, but we're still hammering out which approach we want to take.
           </p>
-          <ul>
-            <li></li>
-          </ul>
+          <p>
+            Finally, the resizing of the bubble is a bit too active, as the bubble tends to resize even though the image is at a fixed distance. This is most likely due to the fact that the image tracking lags a bit in getting the position of the image, and thus the distance between it and the user, and thus it resizes the bubble accordingly due to that. The solution that we will be working on to improve this is to implement more smoothing the the resizing of the bubble to make the experience more smoother.
+          </p>
         </p>
         <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
         <p>
-         Here we have a photo of our project taken from the Magic Leap. 
+         We have a system that now does transcribe the text that a person speaks, changes the language of that text to whatever the user desires, and renders that within a visible display for the user. We also now have the display, the bubble, anchored to an object in the real world that the user can see, the image, and we have support for multiple speakers, so that the user can see the speech for multiple people at once. By leveraging this, it is now also possible for two Magic Leap users to wear these markers, and as long as they are different, be able to see the speech of the other user. There are a few things that can be improved with the UI, like smoothing the resizing, but given the current circumstances, and with the proposed demo plan above, we have a functional application and a fun demo ready for it! 
         </p>
         <!-- <figure align="center"><iframe width="700" height="500"
             src="https://drive.google.com/file/d/10cmtmWWeUHPfuJ4AtT_5Nd3uNWAx-9rr/preview" frameborder="0"
@@ -237,23 +244,15 @@
           <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
         </p>
         <p>
-          Ron and Laurissa will:
-          <ul>
-            <li></li>
-          </ul>
-          <br />
-          Andrew and James will:
-          <ul>
-            <li>[Yo, James, idk what to put here]</li>
-          </ul>
+          The ChatAssist project is in its final stage, the group as a whole will continue to improve the UI and demo setup 
+          based on the feedback we received in this week's dry run for the final demo and make the final demo video.
         </p>
 
         <p>
           <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
         </p>
         <p>
-          [James, do you know anything about the bubble coming in and out when it got laggy?]
-          [Idk what put here either]
+          Currently there are no blocking issues at this moment.
         </p>
       </div>
 
