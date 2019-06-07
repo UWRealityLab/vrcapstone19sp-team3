@@ -107,7 +107,7 @@
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <div class="deliverable">
-          Deliverable: Video and poster
+          Deliverable: Video (forthcoming, since it's due on Monday at noon) and poster
         </div>
         <p>
           <span style="font-size: 1.3em"><strong>What we've done this week</strong></span><br />
@@ -133,10 +133,12 @@
 		<figcaption>Draft of poster</figcaption>
 		</figure>
 		<p>
-    We will include some clips from the video below.
+    We will include some clips from the video below. 
 		We also talked to Alan and decided that we should disable the image tracking for the sake of 
-		taking the video from the Magic Leap. We did that and made a video. The premise of our video is someone
-		asking where the bathroom is in France and the desk attendant doesn't speak English. They try to have
+		taking the video from the Magic Leap. We did that and made a video. We all came together to try to 
+    figure out what would make for a good display of our product and we all agreed that we should show 
+    off the language translation feature, as that would probably be the most useful. The premise of our video is 
+    someone asking where the bathroom is in France and the desk attendant doesn't speak English. They try to have
 		a conversation, but they can't understand each other because they don't speak each other's language.
 		Then the desk attendant brings up the Magic Leap ChatAssist app and the visitor repeats their question.
 		After that, the desk attendant sees the translated text next to them and answers the question.
@@ -148,7 +150,7 @@
 		<p>
 		The translation is actually closer to, "What is a bathroom?", but this is sort of a problem with AWS Transcribe or 
 		their translation feature and we didn't have enough time to retake it because we had prior obligations to fulfill.
-    We got some feedback from Laura from Magic Leap that we'll write about below.
+    We got some feedback from Laura from Magic Leap that we'll write about below. Laurissa is working on video editing.
 		</p>
     <span style="font-size: 1.3em"><strong>Update on ideas: </strong></span><br />
       <p>
@@ -164,18 +166,79 @@
         this was a decent idea and had similar plans a few weeks ago, but thought that it take away from the image
         tracking portion of the project. Then we faced the jittering problem, but considering that even people 
         from the Magic Leap recognize this as a problem and suggested just disabling image tracking, we think
-        that they also recognize that there might be some issues with their image tracking.  
+        that they also recognize that there might be some issues with their image tracking. 
       </p>
       <p>
-
+        If someone suggested this a few weeks ago, we probably could've done it and tested it easily, but right now 
+        we need to focus on refining what we have and prepare for the demo. The idea is interesting though, but we're 
+        not too sure about how limited it is by the Magic Leap's 1.5m stable tracking limit, so we're not sure how well 
+        it would work anyways. The larger image will probably track better, but it's likely that it won't be as stable 
+        because of the limited tracking distance. Having the speaker speak in front of the marker/near the marker 
+        might've made it a lot easier for the demo though, but I guess it sort of loses the conversational aspect of 
+        our product. This would seem like it would be better in terms of a lecture-style demo though, but we originally
+        wanted this to help with conversations between people who spoke different languages or were hard of hearing, and
+        not make it as one-sided. This would make for an easier demo, but we wanted our demo to be more  
       </p>
       <p>
-        We still need to talk more
+        As for the iOS app, we know that we are able to do something like it, especially since the mic clients are separate; 
+        but we would be unable to support the costs of expanding it to more than a handful of users because of how much it 
+        would cost to use the Amazon Transcribe and Translate in the long-run. Thus, we believe that it would be difficult 
+        to put this up as an application on the Magic Leap store. We would probably need to talk more amongst ourselves though.
       </p>
     <span style="font-size: 1.3em"><strong>Current results: </strong></span><br />
       <p>
         We've been working on stuff that Alan suggested last week, like making the menu larger and working on 
-        the jittering.
+        the jittering. On top of that, we've been working on the script for our demo: 
+      </p>
+      <p>  
+        <b>Phase 1</b> (2 minutes 50 seconds)
+      </p>
+      <p>
+        <ul>
+        <li>talk about our goal to help people with hearing impairments or people overcome language barriers (25 seconds)</li>
+        <li type="none">Ex. "Hi! We're ChatAssist and we wanted to make an application that would help people with hearing impairments
+        or people who aren't fluent in a language overcome language barriers. We imagine that people might use this when they haven't
+        quite mastered a language and it helps them connect what they hear with words or if they have a hard time hearing what other 
+        people are saying."</li>
+        <li>restart the ChatAssist application to make sure that it doesn't lag for the user [someone does this while the other is talking about it]</li>
+        <li>hand them the Magic Leap and get the image tracking to work (or make it default to some location on start-up) (10 seconds)</li>
+        <li>talk about what our product does and its features </li>
+          <ul>
+            <li>talk about how it works (25 seconds) 
+            <ul>
+              <li>marker is tracked by the Magic Leap and displays a bubble near the marker</li>
+              <li type="none">Ex. "We use this marker to figure out where to put the chat bubble."</li>
+              <li>microphone picks up speech and it gets processed and displayed on the chat bubble</li>
+              <li type="none">Ex. "This microphone picks up what I say and it gets transcribed and put on the bubble."</li>
+            </ul>
+            <li>Talk about it transcribing English or translating English into different languages (maybe mention AWS) (20 seconds)</li>
+              <li type="none">Ex. "Our application can transcribe what we say in English or translate it into another language."</li>
+            <ul>
+              <li>Maybe mention some errors that might come up so that they don't get blind-sided</li>
+              <li type="none">Ex. "We use Amazon's transcription and translation services and they came out last year, so they might
+              not be completely accurate. Also, NLP is hard."</li>
+            </ul>
+          </ul> 
+        <li>Ask them if they know a different language and switch it to show that language (20 seconds)</li>
+        <li type="none">Ex. "Do you know another language?"</li>
+        <li>Talk for a bit longer or let their friend use it (60 seconds)</li>
+        <li>Switch it back to English (10 seconds)</li>
+        <li type="none">Ex. "We're going to switch it back to English now, but show you the controller so that you can select
+        another language by yourself."</li>
+        </ul>
+      </p>
+      <p>
+        <b>Phase 2</b> (1 minute 40 seconds or more...)
+      </p>
+        <ul>
+        <li>Show them the controller and teach them how to select things and switch between menus (40 seconds)</li>
+        <li type="none">Ex. "You can scroll up by moving your thumb counterclockwise on the track pad and down by moving your thumb
+        clockwise, like one of those old iPods. You can switch between the language selection and the chat log by swiping left and right."</li>
+        <li>Give them some time to play around with it with a friend or talk to them longer so that they can test it out more (1+ minutes depending on how 
+        many people want to try our application)</li>
+        </ul>
+        Overall, we plan for around a five minute demo, but we plan to give the users more time with it if we don't get many people around in 
+        our neck of the woods. 
       </p>
       <p>
     <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
@@ -188,18 +251,19 @@
             <li>All of us will come and demo from 4:30pm to 7:00pm</li>
     			  <ul>
     			   <li>We will be running two demos at a time:</li>
-    		    <ul>
-    			   <li>if they're friends, they can interact with each other after we explain how it works, or</li> 
-    			   <li>we can just explain how it works to them individually</li>
-    			 </ul>
-          </ul>
+      		    <ul>
+      			   <li>if they're friends, they can interact with each other after we explain how it works, or</li> 
+      			   <li>we can just explain how it works to them individually</li>
+      			 </ul>
+            </ul>
+          <li>Refine the demo script a bit more</li>
         </ul>
       </p>
       <p>
         <span style="font-size: 1.3em"><strong>Blocking issues:</strong></span><br />
       </p>
       <p>
-
+        None that we can think of. 
       </p>
       </div>
 
