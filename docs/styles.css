@@ -12,25 +12,26 @@ body {
   /* background-color: #e8e3d3; */
   font-family: "Raleway", sans-serif;
   height: 100%;
-  background-color: #e8e3d3;
+  /* background-color: #e8e3d3; */
+  background-color: #f4f4f4;
   /* background-image: url("https://www.transparenttextures.com/patterns/az-subtle.png"); */
   /* background-image: url("https://www.transparenttextures.com/patterns/little-pluses.png"); */
   background-image: url("./little-pluses.png");
 }
 
 .wrap {
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
-  background-color: #f4f4f4;
+  /* background-color: #f4f4f4; */
+  background-color: #ffffff;
   /* border-left: 5px solid #e8e3d3; */
   /* border-right: 5px solid #e8e3d3; */
   position: relative;
   min-height: 100%;
-  padding-bottom: 2rem;
 }
 
 .inner-wrap {
-  padding: 2rem 3rem 0;
+  padding: 2rem 10rem 0;
 }
 
 .header {
