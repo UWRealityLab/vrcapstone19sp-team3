@@ -19,7 +19,8 @@ namespace MagicLeap
         public CanvasGroup chatLogOpacity;
         public Text instructions;
         public Text tracking;
-        public Text tracking2; 
+        public Text tracking2;
+
         #endregion
 
         #region Private Variables
@@ -53,18 +54,15 @@ namespace MagicLeap
         // Start is called before the first frame update
         void Start()
         {
-            //Debug.Log("DOES THIS EVER CALL START?");
             _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
             MLInput.OnControllerButtonUp += HandleOnButtonUp;
             MLInput.OnControllerButtonDown += HandleOnButtonDown;
             MLInput.OnTriggerDown += HandleOnTriggerDown;
             currText = null;
             currTog = lsl.toggles[(int)leftIndex]; // TODO: Possibly change this so that it isn't 0 initially;
-            //Debug.Log(lsl.toggles.Count);
-            //Debug.Log("DOES THIS EVER CALL START?");
             currTog.languageName.fontStyle = FontStyle.Bold;
             selection = 0.0f;
-            leftIndex = 1.0f;
+            leftIndex = 0.0f;
 
             // Makes sure that the WebSocket is initialized
             WebSocketManager.initialize();
@@ -75,8 +73,6 @@ namespace MagicLeap
         void Update()
         {
             UpdateLED();
-            // TODO: Look at ControllerStatsText for how to get direction of motion
-            // Then after that, MLInputController -> MLInputControllerTouchpadGesture -> MLInputControllerTouchpadGestureDirection
 
             if (_controllerConnectionHandler.IsControllerValid())
             {
@@ -124,8 +120,6 @@ namespace MagicLeap
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
 
-                        //if (!languageSelection && rightIndex > 0) rightIndex--;
-                        //ShowInLanguageScroll((int)leftIndex);
                         if (selection > 0.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
@@ -145,16 +139,14 @@ namespace MagicLeap
                             currTog = lsl.toggles[(int)leftIndex];
                             currTog.languageName.fontStyle = FontStyle.Bold;
                         }
-                        // if (!languageSelection && rightIndex < csl.log.Count - 1) rightIndex++;
+
                         // Maybe need scrollbar incrementer 
-                        //ShowInLanguageScroll((int)leftIndex);
                         if (selection > 0.0f)
                         {
                             if (currText != null) currText.fontStyle = FontStyle.Normal;
                             if (rightIndex > cl.list.Count) rightIndex = cl.list.Count - 1;
                             if (rightIndex - scroll_len > -0.5f) rightIndex -= scroll_len;
                             if (rightIndex - scroll_len <= -0.5f) rightIndex = 0.0f;
-                            //Debug.Log(rightIndex);
                             if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
                             if (currText != null) currText.fontStyle = FontStyle.Bold;
                         }
@@ -168,7 +160,6 @@ namespace MagicLeap
                             if (rightIndex > cl.list.Count) rightIndex = cl.list.Count - 1;
                             if (rightIndex - speed > -0.5f) rightIndex -= speed;
                             if (rightIndex - speed <= -0.5f) rightIndex = 0.0f;
-                            //Debug.Log(rightIndex);
                             if (rightIndex > 0 && (int)rightIndex < cl.list.Count) currText = cl.list[(int)rightIndex];
                             if (currText != null) currText.fontStyle = FontStyle.Bold;
                         }
@@ -186,7 +177,6 @@ namespace MagicLeap
                     else if (dir == MLInputControllerTouchpadGestureDirection.Left)
                     {
                         // move to left menu
-                        // TODO: Maybe check for two consecutive lefts or rights before switching
                         if (selection > -1.0f) selection -= scroll_len * 2;
                     }
                     else if (dir == MLInputControllerTouchpadGestureDirection.Right)
@@ -287,7 +277,9 @@ namespace MagicLeap
                 tracking2.gameObject.SetActive(!tracking2.IsActive());
                 // Toggle UseCFUIDTransforms
                 controller.UseCFUIDTransforms = !controller.UseCFUIDTransforms;
+                
             }
+           
         }
 
         /// <summary>
@@ -317,7 +309,6 @@ namespace MagicLeap
             MLInputController controller = _controllerConnectionHandler.ConnectedController;
             if (controller != null && controller.Id == controllerId)
             {
-                // TODO: CHANGE INTENSITY to just be a slight buzz.
                 MLInputControllerFeedbackIntensity intensity = (MLInputControllerFeedbackIntensity)((int)(value * 1.0f));
                 controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.Buzz, intensity);
                 if (selection <= 0.0f)
@@ -325,11 +316,6 @@ namespace MagicLeap
                     lsl.SetLanguage((int)leftIndex);
                     WebSocketManager.send(lsl.GetLanguageCode());
                 }
-                //if (selection > 0.0f)
-                //{
-                //    for (int i = 0; i < 10; i++)
-                //        addText(count++ + "");
-                //}
             }
         }
 

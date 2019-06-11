@@ -700,7 +700,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250057393}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2598,7 +2598,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.26, y: 0.13}
+  m_AnchoredPosition: {x: -0.155, y: 0.114}
   m_SizeDelta: {x: 300, y: 138}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &850317930
@@ -2634,13 +2634,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Bumper:\n  -  Show/Hide instructions\nTrigger:\n  -  Select language\nRegister
-    Image:\n  -  Hold image at arms length in front of you\nScrolling: \n  -  Move
-    thumb clockwise or counterclockwise to\n      scroll through language selection
-    or chat log\n      -  Swiping up/down works for the chat log\n      -  Hold up/down
-    after swipe to continue scrolling\nSwapping between chat log and language selection:
-    \n  -  Swipe left/right twice\n      -  Left for language selection\n      -  Right
-    for chat log\n"
+  m_Text: "Bumper:\n  -  Show/Hide instructions\n  -  Enable/Disable image tracking\nTrigger:\n
+    \ -  Select language\nRegister Image:\n  -  Hold image at arms length in front
+    of you\nScrolling: \n  -  Move thumb clockwise or counterclockwise to\n      scroll
+    through language selection or chat log\n      -  Swiping up/down works for the
+    chat log\n      -  Hold up/down after swipe to continue scrolling\nSwapping between
+    chat log and language selection: \n  -  Swipe left/right twice\n      -  Left
+    for language selection\n      -  Right for chat log\n"
 --- !u!222 &850317931
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4428,7 +4428,7 @@ RectTransform:
   m_GameObject: {fileID: 1580313706}
   m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
   m_LocalPosition: {x: 0, y: 0, z: 0.1254}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2425, y: 1.2674, z: 1}
   m_Children:
   - {fileID: 870452589}
   - {fileID: 1564623637}
@@ -4695,6 +4695,11 @@ PrefabInstance:
       propertyPath: far clip plane
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 20294507499185110, guid: 24158fb1437dc8e418d893939758764d,
+        type: 3}
+      propertyPath: near clip plane
+      value: 0.38
+      objectReference: {fileID: 0}
     - target: {fileID: 4214550324010282, guid: 24158fb1437dc8e418d893939758764d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4941,7 +4946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.26, y: -0.138}
+  m_AnchoredPosition: {x: -0.155, y: -0.173}
   m_SizeDelta: {x: 300, y: 16.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1744929191
@@ -4977,7 +4982,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Chat Bubble Status: '
+  m_Text: 'Chat Bubble 1 Status: '
 --- !u!222 &1744929192
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5097,7 +5102,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.26, y: -0.17}
+  m_AnchoredPosition: {x: -0.155, y: -0.202}
   m_SizeDelta: {x: 300, y: 16.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1813373407
@@ -5819,7 +5824,9 @@ MonoBehaviour:
   - {fileID: 122863388}
   - {fileID: 1358570010}
   _viewModeLabel: {fileID: 1084949891}
-  _trackerStatusLabel: {fileID: 1744929191}
+  _trackerStatusLabels:
+  - {fileID: 1744929191}
+  - {fileID: 1813373407}
   _controllerConnectionHandler: {fileID: 513103303}
 --- !u!114 &2080226703
 MonoBehaviour:

@@ -1,14 +1,3 @@
-// %BANNER_BEGIN%
-// ---------------------------------------------------------------------
-// %COPYRIGHT_BEGIN%
-//
-// Copyright (c) 2019 Magic Leap, Inc. All Rights Reserved.
-// Use of this file is governed by the Creator Agreement, located
-// here: https://id.magicleap.com/creator-terms
-//
-// %COPYRIGHT_END%
-// ---------------------------------------------------------------------
-// %BANNER_END%
 
 using System;
 using UnityEngine;
@@ -46,7 +35,7 @@ namespace MagicLeap
         private Text _viewModeLabel = null;
 
         [SerializeField, Tooltip("The Tracker Status text.")]
-        private Text _trackerStatusLabel = null;
+        public Text[] _trackerStatusLabels;
 
         [Space, SerializeField, Tooltip("ControllerConnectionHandler reference.")]
         private ControllerConnectionHandler _controllerConnectionHandler = null;
@@ -82,7 +71,7 @@ namespace MagicLeap
         void OnDestroy()
         {
             MLInput.OnControllerButtonDown -= HandleOnButtonDown;
-            MLInput.OnTriggerDown -= HandleOnTriggerDown;
+
             if (_privilegeRequester != null)
             {
                 _privilegeRequester.OnPrivilegesDone -= HandlePrivilegesDone;
@@ -100,7 +89,6 @@ namespace MagicLeap
             if (pause)
             {
                 MLInput.OnControllerButtonDown -= HandleOnButtonDown;
-                MLInput.OnTriggerDown -= HandleOnTriggerDown;
 
                 UpdateImageTrackerBehaviours(false);
 
@@ -154,7 +142,7 @@ namespace MagicLeap
                     enabled = false;
                     return;
                 }
-                if (_trackerStatusLabel == null)
+                if (_trackerStatusLabels == null)
                 {
                     Debug.LogError("Error: ImageTrackingExample._trackerStatusLabel is not set, disabling script.");
                     enabled = false;
@@ -162,7 +150,6 @@ namespace MagicLeap
                 }
 
                 MLInput.OnControllerButtonDown += HandleOnButtonDown;
-                MLInput.OnTriggerDown += HandleOnTriggerDown;
 
                 _hasStarted = true;
             }
@@ -192,27 +179,14 @@ namespace MagicLeap
             StartCapture();
         }
 
-        /// <summary>
-        /// Handles the event for trigger down.
-        /// </summary>
-        /// <param name="controllerId">The id of the controller.</param>
-        /// <param name="triggerValue">The value of the trigger.</param>
-        private void HandleOnTriggerDown(byte controllerId, float triggerValue)
+        void UpdateText(String t)
         {
-            if (_hasStarted && MLImageTracker.IsStarted && _controllerConnectionHandler.IsControllerValid(controllerId))
+            foreach (Text text in _trackerStatusLabels)
             {
-                if (MLImageTracker.GetTrackerStatus())
-                {
-                    MLImageTracker.Disable();
-                    _trackerStatusLabel.text = "Tracker Status: Disabled";
-                }
-                else
-                {
-                    MLImageTracker.Enable();
-                    _trackerStatusLabel.text = "Tracker Status: Enabled";
-                }
+                text.text = t;
             }
         }
+
 
         /// <summary>
         /// Handles the event for button down.
@@ -223,8 +197,19 @@ namespace MagicLeap
         {
             if (_controllerConnectionHandler.IsControllerValid(controllerId) && button == MLInputControllerButton.Bumper)
             {
-                //_viewMode = (ViewMode)((int)(_viewMode + 1) % Enum.GetNames(typeof(ViewMode)).Length);
-                //_viewModeLabel.text = string.Format("View Mode: {0}", _viewMode.ToString());
+                if (_hasStarted && MLImageTracker.IsStarted && _controllerConnectionHandler.IsControllerValid(controllerId))
+                {
+                    if (MLImageTracker.GetTrackerStatus())
+                    {
+                        MLImageTracker.Disable();
+                        UpdateImageTrackerBehaviours(false);
+                    }
+                    else
+                    {
+                        MLImageTracker.Enable();
+                        UpdateImageTrackerBehaviours(true);
+                    }
+                }
             }
             UpdateVisualizers();
         }

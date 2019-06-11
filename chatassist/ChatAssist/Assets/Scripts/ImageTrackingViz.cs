@@ -1,15 +1,3 @@
-// %BANNER_BEGIN%
-// ---------------------------------------------------------------------
-// %COPYRIGHT_BEGIN%
-//
-// Copyright (c) 2019 Magic Leap, Inc. All Rights Reserved.
-// Use of this file is governed by the Creator Agreement, located
-// here: https://id.magicleap.com/creator-terms
-//
-// %COPYRIGHT_END%
-// ---------------------------------------------------------------------
-// %BANNER_END%
-
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +7,7 @@ namespace MagicLeap
 {
     /// <summary>
     /// This class handles visibility on image tracking, displaying and hiding prefabs
-    /// when images are detected or lost.
+    /// when images are detected or lost. Based on Magic Leap Image Tracking example
     /// </summary>
     [RequireComponent(typeof(MLImageTrackerBehavior))]
     public class ImageTrackingViz : MonoBehaviour
@@ -34,10 +22,6 @@ namespace MagicLeap
         private string _prefix;
         private string _eventString;
 
-        //[SerializeField, Tooltip("Game Object showing the axis")]
-        //private GameObject _axis = null;
-        //[SerializeField, Tooltip("Game Object showing the tracking cube")]
-        //private GameObject _trackingCube = null;
         [SerializeField, Tooltip("Game Object showing the demo")]
         private GameObject _demo = null;
 
@@ -50,34 +34,12 @@ namespace MagicLeap
         /// </summary>
         void Awake()
         {
-            /*
-            if (null == _axis)
-            {
-                Debug.LogError("Error: ImageTrackingVisualizer._axis is not set, disabling script.");
-                enabled = false;
-                return;
-            }
-            if (null == _trackingCube)
-            {
-                Debug.LogError("Error: ImageTrackingVisualizer._trackingCube is not set, disabling script.");
-                enabled = false;
-                return;
-            }
-            */
             if (null == _demo)
             {
                 Debug.LogError("Error: ImageTrackingVisualizer._demo is not set, disabling script.");
                 enabled = false;
                 return;
             }
-            /*
-            if (null == _statusLabel)
-            {
-                Debug.LogError("Error: ImageTrackingVisualizer._statusLabel is not set, disabling script.");
-                enabled = false;
-                return;
-            }
-            */
         }
 
         /// <summary>
@@ -131,23 +93,15 @@ namespace MagicLeap
             switch (_lastViewMode)
             {
                 case ImageTracking.ViewMode.All:
-                    //_axis.SetActive(_targetFound);
-                    //_trackingCube.SetActive(_targetFound);
                     _demo.SetActive(_targetFound);
                     break;
                 case ImageTracking.ViewMode.AxisOnly:
-                    //_axis.SetActive(_targetFound);
-                    //_trackingCube.SetActive(false);
                     _demo.SetActive(false);
                     break;
                 case ImageTracking.ViewMode.TrackingCubeOnly:
-                    //_axis.SetActive(false);
-                    //_trackingCube.SetActive(_targetFound);
                     _demo.SetActive(false);
                     break;
                 case ImageTracking.ViewMode.DemoOnly:
-                    //_axis.SetActive(false);
-                    //_trackingCube.SetActive(false);
                     _demo.SetActive(_targetFound);
                     break;
             }

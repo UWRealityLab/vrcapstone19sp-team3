@@ -8,9 +8,8 @@ using WebSocketSharp;
 
 public class SpeechToText : MonoBehaviour
 {
-    // Script to grab text from Google API and display text to user via TextMeshPro component
-    // Note: Following is just an example, still need to hook up Google API via getSpeechToText call on Update
-    // Can check with parent if we are looking at the target, and start grabbing text from there via text.tranform.parent
+    // Script to grab text from AWS Transcribe API and display text to user via TextMeshPro component
+    // Starts grabbing text via updateCurrText call once connection is established
     public TextMeshProUGUI text;
     private string currString;
     private WebSocket ws;
@@ -20,7 +19,6 @@ public class SpeechToText : MonoBehaviour
     {
         currString =  "Hello! This chat bubble should have speech from the person speaking to you in just a moment";
         Debug.Log("connecting to ws...");
-        //ws.Send("./peter.flac");
         WebSocketManager.initialize();
         WebSocketManager.Register(this);
     }
