@@ -86,7 +86,69 @@
 
 
 <body>
+
+    <nav id="cd-vertical-nav">
+      <ul>
+        <li>
+          <a href="#W10">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 10</span>
+          </a>
+        </li>
+        <li>
+          <a href="#W9">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 9</span>
+          </a>
+        </li>
+        <li>
+          <a href="#W8">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 8</span>
+          </a>
+        </li>
+        <li>
+          <a href="#W7">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 7</span>
+          </a>
+        </li>
+        <li>
+          <a href="#W6">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 6</span>
+          </a>
+        </li>
+        <li>
+          <a href="#W5">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 5</span>
+          </a>
+        </li>
+        <li>
+          <a href="#W4">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 4</span>
+          </a>
+        </li>
+        <li>
+          <a href="#W3">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 3</span>
+          </a>
+        </li>
+        <li>
+          <a href="#W1">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 1-2</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
   <div class="wrap">
+
+  
     <div class="header">
       ChatAssist
       <div class="navbar">
@@ -103,11 +165,11 @@
     </div>
     <div class="inner-wrap">
 
-		<div class="blog-header">Week 10: June 3 - June 7, 2019</div>
+		<div class="blog-header" id="W10">Week 10: June 3 - June 7, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <div class="deliverable">
-          Deliverable: Video (forthcoming, since it's due on Monday at noon) and poster
+          Deliverable: Video (on front page) and poster
         </div>
         <p>
           <span style="font-size: 1.3em"><strong>What we've done this week</strong></span><br />
@@ -145,7 +207,7 @@
 		Here's the clip from the video showcasing the translation feature: 
 		</p>
 		<figure align="center">
-		<iframe src="https://drive.google.com/file/d/1wz98wkrsbbtJV9cJnbrlW1ypmNTx_rz2/preview" width="800" height="480"></iframe>
+		<iframe src="https://drive.google.com/file/d/1wz98wkrsbbtJV9cJnbrlW1ypmNTx_rz2/preview" width="100%" height="480"></iframe>
 		</figure>
 		<p>
 		The translation is actually closer to, "What is a bathroom?", but this is sort of a problem with AWS Transcribe or 
@@ -271,7 +333,7 @@
       </p>
       </div>
 
-  <div class="blog-header">Week 9: May 27 - May 31, 2019</div>
+  <div class="blog-header" id="W9">Week 9: May 27 - May 31, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <div class="deliverable">
@@ -366,7 +428,7 @@
           </p>
 
           <figure align="center">
-            <img src="./imgs/pre-dryrun_setup.PNG"/>
+            <img src="./imgs/pre-dryrun_setup.PNG" width=100%/>
             <figcaption>Ideal setup pre-dryrun (minus the cords for charging)</figcaption>
           </figure>
           <p>
@@ -388,7 +450,7 @@
           <!-- I'm going to put another stick figure drawing here. -->
 
           <figure align="center">
-            <img src="./imgs/proposed_demo_setup.PNG"/>
+            <img src="./imgs/proposed_demo_setup.PNG" width=100%/>
             <figcaption>Proposed setup for the demo (minus the cords for charging)</figcaption>
           </figure>
           <p>
@@ -428,7 +490,7 @@
 
 
 
-      	<div class="blog-header">Week 8: May 20 - May 24, 2019</div>
+      	<div class="blog-header" id="W8">Week 8: May 20 - May 24, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <div class="deliverable">
@@ -584,7 +646,7 @@
         </p>
       </div>
 
-      <div class="blog-header">Week 7: May 13 - May 17, 2019</div>
+      <div class="blog-header" id="W7">Week 7: May 13 - May 17, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <div class="deliverable">
@@ -697,7 +759,7 @@
         </p>
         <p>
           <figure align="center">
-            <img src="./imgs/language_support.png" />
+            <img src="./imgs/language_support.png" width=100%/>
             <figcaption>Example of language support</figcaption>
           </figure>
         </p>
@@ -736,12 +798,12 @@
           <br />
           This is what the transcription looks like:
           <br />
-          <img src="./imgs/transcribe.png" />
+          <img src="./imgs/transcribe.png" width=100%/>
           <br />
           As you can see, the transcription now sends multiple responses for one spoken sentence. This helps a lot for
           longer sentences, like the one below:
           <br />
-          <img src="./imgs/transcribe-long.png" />
+          <img src="./imgs/transcribe-long.png" width=100%/>
           <br />
           The code for this is more complicated than before. We now have to gracefully handle multiple responses on one
           sentence. We are still working on improving the code here, as we are running into latency issues when trying
@@ -778,7 +840,7 @@
           <br />
           Here is a screenshot of our server translating an English message received from a mic to German and forwarding
           it to the MagicLeap.
-          <img src="./imgs/translate.png" />
+          <img src="./imgs/translate.png" width=100%/>
         </p>
         <p>
           <span style="font-size: 1.3em"><strong>Full integration with MagicLeap</strong></span> <br />
@@ -852,7 +914,7 @@
       </div>
 
 
-      <div class="blog-header">Week 6: May 6 - May 10, 2019</div>
+      <div class="blog-header" id="W6">Week 6: May 6 - May 10, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <div class="deliverable">
@@ -924,7 +986,7 @@
             and finally an image tracking visualizer script</a>.
         </p>
         <figure align="center">
-          <img src="./imgs/current_setup.PNG" />
+          <img src="./imgs/current_setup.PNG" width=100%/>
           <figcaption>Fig.4 - Current diagram of setup minus servers/API calls</figcaption>
         </figure>
         <p>
@@ -965,7 +1027,7 @@
           <br />
           The streaming transcription looks something like this:
           <br />
-          <img src="./imgs/mic-transcribe.png" />
+          <img src="./imgs/mic-transcribe.png" width=100% />
         </p>
 
         <p>
@@ -991,7 +1053,7 @@
           corresponding to the microphone client. The disconnection at the end happens because of the 60 second time
           limit on GCP API calls that we discussed above.
           <br />
-          <img src="./imgs/server.png" />
+          <img src="./imgs/server.png" width=100%/>
         </p>
 
         <p>
@@ -1078,7 +1140,7 @@
 
 
 
-      <div class="blog-header">Week 5: April 29 - May 3, 2019</div>
+      <div class="blog-header" id="W5">Week 5: April 29 - May 3, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <div class="deliverable">
@@ -1108,7 +1170,7 @@
           the image recognition to work for the anchoring.
           <br />
           <figure align="center">
-            <img src="./imgs/initial_ui.png" />
+            <img src="./imgs/initial_ui.png" width=100%/>
             <figcaption>Fig.2 - Magic Leap Week 5 ChatAssist UI</figcaption>
           </figure>
           <br />
@@ -1245,7 +1307,7 @@
             Powerpoint):
             <br />
             <figure align="center">
-              <img src="./imgs/design.png" />
+              <img src="./imgs/design.png" width=100%/>
               <figcaption>Fig.3 - Overall Infrastructure Design</figcaption>
             </figure>
             <br />
@@ -1310,7 +1372,7 @@
             <br />
             <figure align="center"><iframe width="700" height="500" src="https://www.youtube.com/embed/bW56ecAwUH4"
                 frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe></figure>
+                allowfullscreen align="center"></iframe></figure>
           </p>
           <p>
             <span style="font-size: 1.3em"><strong>Plan for next week:</strong></span><br />
@@ -1343,7 +1405,7 @@
           </p>
       </div>
 
-      <div class="blog-header">Week 4: April 22 - 26, 2019</div>
+      <div class="blog-header" id="W4">Week 4: April 22 - 26, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
 
@@ -1404,7 +1466,7 @@
         </div>
       </div>
 
-      <div class="blog-header">Week 3: April 15 - 19, 2019</div>
+      <div class="blog-header" id="W3">Week 3: April 15 - 19, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
 
@@ -1457,7 +1519,7 @@
       </div>
 
 
-      <div class="blog-header">Week 1 + 2: April 1 - 12, 2019</div>
+      <div class="blog-header" id="W1">Week 1 + 2: April 1 - 12, 2019</div>
       <div class="horizontal-divider"></div>
       <div class="blog-entry">
         <!-- 
